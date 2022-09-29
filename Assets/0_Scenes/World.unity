@@ -3485,6 +3485,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hexGrid: {fileID: 1571186511}
+  cam: {fileID: 2102140320}
   mapName:
   - middle1
   - middle2

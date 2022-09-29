@@ -7,12 +7,15 @@ public class BuildCity : MonoBehaviour
 {
     const int mapFileVersion = 5;
     public HexGrid hexGrid;
+    public HexMapCamera cam;
     [SerializeField] string[] mapName;
+    HexCell cell;
 
     public void OnclickLoadMap()
     {
         string path = Path.Combine(
-            Application.persistentDataPath, mapName[Random.Range(0, 3)]+".map"
+            // Application.persistentDataPath, mapName[Random.Range(0, 3)]+".map"
+            Application.dataPath, mapName[Random.Range(0, 3)]+".map"
         );
         Load(path);
     }
@@ -20,12 +23,15 @@ public class BuildCity : MonoBehaviour
     public void OnclickBuildCity()
     {
         // 인접한 7개 타일이 있는 곳을 선택해서 도시 벽 세우기
-        int randomX = Random.Range(0, hexGrid.cellCountX);
-        int randomZ = Random.Range(0, hexGrid.cellCountZ);
-        HexCell cell = hexGrid.GetCell(randomX, randomZ);
+        do {
+            int randomX = Random.Range(0, hexGrid.cellCountX);
+            int randomZ = Random.Range(0, hexGrid.cellCountZ);
+            cell = hexGrid.GetCell(randomX, randomZ);
+            Debug.Log(string.Format("({0}, {1})", randomX, randomZ));
+        } while (cell.IsUnderwater);
         cell.Walled = true;
         
-        Debug.Log(string.Format("({0}, {1})", randomX, randomZ));
+        cam.transform.localPosition = cam.ClampPosition(cell.transform.localPosition);
     }
 
     void Load (string path) {

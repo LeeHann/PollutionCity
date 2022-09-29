@@ -94,7 +94,7 @@ public class HexMapCamera : MonoBehaviour {
 			grid.wrapping ? WrapPosition(position) : ClampPosition(position);
 	}
 
-	Vector3 ClampPosition (Vector3 position) {
+	public Vector3 ClampPosition (Vector3 position) {
 		float xMax = (grid.cellCountX - 0.5f) * HexMetrics.innerDiameter;
 		position.x = Mathf.Clamp(position.x, 0f, xMax);
 
