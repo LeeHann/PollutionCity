@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class DisableSystemUI
 {
+    // https://m.blog.naver.com/ateliersera/220477980266
 #if UNITY_ANDROID
     static AndroidJavaObject activityInstance;
     static AndroidJavaObject windowInstance;
