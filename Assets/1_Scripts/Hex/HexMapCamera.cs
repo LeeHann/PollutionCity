@@ -104,7 +104,7 @@ public class HexMapCamera : MonoBehaviour {
 		return position;
 	}
 
-	Vector3 WrapPosition (Vector3 position) {
+	public Vector3 WrapPosition (Vector3 position) {
 		float width = grid.cellCountX * HexMetrics.innerDiameter;
 		while (position.x < 0f) {
 			position.x += width;

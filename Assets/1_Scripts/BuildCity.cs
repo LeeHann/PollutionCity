@@ -6,6 +6,7 @@ using System.IO;
 public class BuildCity : MonoBehaviour
 {
     const int mapFileVersion = 5;
+    public Material terrainMaterial;
     public HexGrid hexGrid;
     public HexMapCamera cam;
     [SerializeField] string[] mapName;
@@ -13,6 +14,9 @@ public class BuildCity : MonoBehaviour
 
     public void OnclickLoadMap()
     {
+        terrainMaterial.DisableKeyword("GRID_ON");
+		Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
+
         string path = Path.Combine(
             // Application.persistentDataPath, mapName[Random.Range(0, 3)]+".map"
             Application.dataPath, mapName[Random.Range(0, 3)]+".map"
@@ -22,16 +26,52 @@ public class BuildCity : MonoBehaviour
 
     public void OnclickBuildCity()
     {
-        // 인접한 7개 타일이 있는 곳을 선택해서 도시 벽 세우기
+        GenerateCities();
+    }
+
+    public void GenerateCities()
+    {
+        bool invalid;
         do {
             int randomX = Random.Range(0, hexGrid.cellCountX);
             int randomZ = Random.Range(0, hexGrid.cellCountZ);
             cell = hexGrid.GetCell(randomX, randomZ);
-            Debug.Log(string.Format("({0}, {1})", randomX, randomZ));
-        } while (cell.IsUnderwater);
-        cell.Walled = true;
+
+            invalid = false;
+            invalid |= cell.IsUnderwater;
+            for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+            {
+                if (invalid) break;
+                HexCell neighbor = cell.GetNeighbor(d);
+                if (neighbor == null) 
+                {
+                    invalid = true;
+                    break;
+                }
+                invalid |= neighbor.IsUnderwater;
+            }
+        } while (invalid);
         
-        cam.transform.localPosition = cam.ClampPosition(cell.transform.localPosition);
+        cell.Walled = true;
+        for (HexDirection d=HexDirection.NE; d<=HexDirection.NW; d++)
+        {
+            HexCell neighbor = cell.GetNeighbor(d);
+            neighbor.Walled = true;
+        }
+        cam.transform.localPosition = 
+            hexGrid.wrapping ? 
+            cam.WrapPosition(cell.transform.localPosition) : 
+            cam.ClampPosition(cell.transform.localPosition);
+    }
+
+    public void OnclickSetCities()
+    {
+        int citiesNum = 3;
+        
+        for (int i=0; i<citiesNum; i++)
+        {
+            GenerateCities();
+        }
     }
 
     void Load (string path) {
