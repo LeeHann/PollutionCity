@@ -41,11 +41,34 @@ public class HexMapCamera : MonoBehaviour {
 	}
 
 	void Update () {
+#if UNITY_ANDROID
+		int touchCount = Input.touchCount;
+		// ray; UI 있는 곳에서는 패닝, 줌 무시
+
+		// zoom
+		if (touchCount >= 2)
+		{
+			float zoomDelta = CalculateZoomValue();
+			if (zoomDelta != 0f) {
+				AdjustZoom(zoomDelta);
+			}
+		}
+
+		// panning
+		if (touchCount >= 1)
+		{
+			float xDelta = Input.GetTouch(0).deltaPosition.x;
+			float zDelta = Input.GetTouch(0).deltaPosition.y;
+			if (xDelta != 0f || zDelta != 0f) {
+				AdjustPosition(xDelta, zDelta);
+			}
+		}
+#else
 		float zoomDelta = Input.GetAxis("Mouse ScrollWheel");
 		if (zoomDelta != 0f) {
 			AdjustZoom(zoomDelta);
 		}
-
+		
 		float rotationDelta = Input.GetAxis("Rotation");
 		if (rotationDelta != 0f) {
 			AdjustRotation(rotationDelta);
@@ -56,7 +79,29 @@ public class HexMapCamera : MonoBehaviour {
 		if (xDelta != 0f || zDelta != 0f) {
 			AdjustPosition(xDelta, zDelta);
 		}
+#endif
 	}
+
+	float CalculateZoomValue()
+	{
+		var curTouchAPos = Input.GetTouch(0).position;                      // 현재 터치 중인 터치 1번 손가락
+        var curTouchBPos = Input.GetTouch(1).position;                      // 현재 터치 중인 터치 2번 손가락
+        var prevTouchAPos = curTouchAPos - Input.GetTouch(0).deltaPosition; // 이전 프레임 1번 손가락
+        var prevTouchBPos = curTouchBPos - Input.GetTouch(1).deltaPosition; // 이전 프레임 2번 손가락
+        var deltaDistance =
+        Vector2.Distance(Normalize(curTouchAPos), Normalize(curTouchBPos))
+        - Vector2.Distance(Normalize(prevTouchAPos), Normalize(prevTouchBPos));
+
+		return deltaDistance;
+	}
+
+	 private Vector2 Normalize(Vector2 position) { // 해상도 표준화
+        var normalizedPos = new Vector2(
+            (position.x - Screen.width * 0.5f) / (Screen.width * 0.5f),
+            (position.y - Screen.height * 0.5f) / (Screen.height * 0.5f));
+        return normalizedPos;
+    }
+
 
 	void AdjustZoom (float delta) {
 		zoom = Mathf.Clamp01(zoom + delta);
