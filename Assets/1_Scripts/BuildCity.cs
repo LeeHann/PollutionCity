@@ -9,7 +9,7 @@ public class BuildCity : MonoBehaviour
     public Material terrainMaterial;
     public HexGrid hexGrid;
     public HexMapCamera cam;
-    [SerializeField] string[] mapName;
+    [SerializeField] string[] maps;
     HexCell cell;
 
     public void OnclickLoadMap()
@@ -19,7 +19,7 @@ public class BuildCity : MonoBehaviour
 
         string path = Path.Combine(
             // Application.persistentDataPath, mapName[Random.Range(0, 3)]+".map"
-            Application.dataPath, mapName[Random.Range(0, 3)]+".map"
+            Application.dataPath, maps[Random.Range(0, maps.Length)]+".map"
         );
         Load(path);
     }

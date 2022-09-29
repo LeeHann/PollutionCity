@@ -3744,10 +3744,7 @@ MonoBehaviour:
   terrainMaterial: {fileID: 2100000, guid: 6a3f5c7892e4b478e9e745026e6fe9f7, type: 2}
   hexGrid: {fileID: 1571186511}
   cam: {fileID: 2102140320}
-  mapName:
-  - middle1
-  - middle2
-  - middle3
+  maps: []
 --- !u!1 &429045662
 GameObject:
   m_ObjectHideFlags: 0
