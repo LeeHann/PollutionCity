@@ -8,6 +8,7 @@ public class Title : MonoBehaviour
     {
         Screen.SetResolution(1920, 1080, false);
         Screen.fullScreen = false;
+        DisableSystemUI.DisableNavUI();
     }
 
     public void OnClickStartButton()
