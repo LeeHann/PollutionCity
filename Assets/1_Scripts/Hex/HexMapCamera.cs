@@ -48,7 +48,7 @@ public class HexMapCamera : MonoBehaviour {
 		// zoom
 		if (touchCount >= 2)
 		{
-			float zoomDelta = CalculateZoomValue();
+			float zoomDelta = CalculateZoomValue() * 0.01f;
 			if (zoomDelta != 0f) {
 				AdjustZoom(zoomDelta);
 			}
@@ -57,8 +57,8 @@ public class HexMapCamera : MonoBehaviour {
 		// panning
 		if (touchCount >= 1)
 		{
-			float xDelta = Input.GetTouch(0).deltaPosition.x;
-			float zDelta = Input.GetTouch(0).deltaPosition.y;
+			float xDelta = Input.GetTouch(0).deltaPosition.x * -0.01f;
+			float zDelta = Input.GetTouch(0).deltaPosition.y * -0.01f;
 			if (xDelta != 0f || zDelta != 0f) {
 				AdjustPosition(xDelta, zDelta);
 			}
