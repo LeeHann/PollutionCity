@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using TMPro;
+using UnityEngine.Networking;
 
 public class BuildCity : MonoBehaviour
 {
@@ -12,16 +14,62 @@ public class BuildCity : MonoBehaviour
     [SerializeField] string[] maps;
     HexCell cell;
 
-    public void OnclickLoadMap()
+    public TextMeshProUGUI errorText;
+
+    private void Start() 
     {
         terrainMaterial.DisableKeyword("GRID_ON");
 		Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
+    }
 
-        string path = Path.Combine(
-            // Application.persistentDataPath, mapName[Random.Range(0, 3)]+".map"
-            Application.streamingAssetsPath, "Maps/" + maps[Random.Range(0, maps.Length)] + ".map"
-        );
+    public void OnclickLoadMap()
+    {
+        string fileName = "Maps/" + maps[UnityEngine.Random.Range(0, maps.Length)]  + ".map";
+
+#if ( UNITY_EDITOR || UNITY_STANDALONE_WIN )
+        string path = (Application.streamingAssetsPath + "/" + fileName);
         Load(path);
+#else
+        StartCoroutine(LoadFileOnAndroid(fileName));
+#endif
+    }
+
+    void Load (string path) {
+		if (!File.Exists(path)) {
+			Debug.LogError("File does not exist " + path);
+            errorText.text = "File does not exist " + path;
+			return;
+		}
+		using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
+            errorText.text = "open file!";
+			int header = reader.ReadInt32();
+			if (header <= mapFileVersion) {
+				hexGrid.Load(reader, header);
+				HexMapCamera.ValidatePosition();
+			}
+			else {
+				Debug.LogWarning("Unknown map format " + header);
+			}
+		}
+	}
+
+    IEnumerator LoadFileOnAndroid(string fileName)
+    {
+        string path =  "jar:file://" + Application.dataPath + "!/assets/" + fileName;
+        using (WWW file = new WWW(path))
+        {
+            yield return file;
+            MemoryStream ms = new MemoryStream(file.bytes);
+            BinaryReader reader = new BinaryReader(ms);
+            int header = reader.ReadInt32();
+    		if (header <= mapFileVersion) {
+    			hexGrid.Load(reader, header);
+    			HexMapCamera.ValidatePosition();
+    		}
+    		else {
+    			Debug.LogWarning("Unknown map format " + header);
+    		}
+        }
     }
 
     public void OnclickBuildCity()
@@ -33,8 +81,8 @@ public class BuildCity : MonoBehaviour
     {
         bool invalid;
         do {
-            int randomX = Random.Range(0, hexGrid.cellCountX);
-            int randomZ = Random.Range(0, hexGrid.cellCountZ);
+            int randomX = UnityEngine.Random.Range(0, hexGrid.cellCountX);
+            int randomZ = UnityEngine.Random.Range(0, hexGrid.cellCountZ);
             cell = hexGrid.GetCell(randomX, randomZ);
 
             invalid = false;
@@ -73,21 +121,4 @@ public class BuildCity : MonoBehaviour
             GenerateCities();
         }
     }
-
-    void Load (string path) {
-		if (!File.Exists(path)) {
-			Debug.LogError("File does not exist " + path);
-			return;
-		}
-		using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
-			int header = reader.ReadInt32();
-			if (header <= mapFileVersion) {
-				hexGrid.Load(reader, header);
-				HexMapCamera.ValidatePosition();
-			}
-			else {
-				Debug.LogWarning("Unknown map format " + header);
-			}
-		}
-	}
 }
