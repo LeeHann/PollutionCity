@@ -19,7 +19,7 @@ public class BuildCity : MonoBehaviour
 
         string path = Path.Combine(
             // Application.persistentDataPath, mapName[Random.Range(0, 3)]+".map"
-            Application.dataPath, maps[Random.Range(0, maps.Length)]+".map"
+            Application.dataPath, "Resources/" + maps[Random.Range(0, maps.Length)]+".map"
         );
         Load(path);
     }
