@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class City : MonoBehaviour
 {
+    public PlayerSit Sit {
+        get {
+            return sit;
+        }
+        private set {
+            sit = value;
+        }
+    }
+
+    private PlayerSit sit;
     public int Money {
         get {
             return money;
@@ -14,4 +24,7 @@ public class City : MonoBehaviour
     }
     private int money;
 
+    private void Start() 
+    {
+    }
 }
