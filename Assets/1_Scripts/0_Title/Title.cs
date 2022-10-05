@@ -46,13 +46,11 @@ public class Title : MonoBehaviour
         while (value > -1f)
         {
             time += Time.deltaTime;
-
             value = Mathf.Lerp(0.5f, -1f, time);
             bi.fontMaterial.SetFloat(ShaderUtilities.ID_FaceDilate, value);
             
             color.a = Mathf.Lerp(1f, 0f, time);
             bi.color = color;
-
             audioSource.volume = Mathf.Lerp(1f, 0f, time);
             yield return null;
         }
