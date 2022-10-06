@@ -568,5 +568,3 @@ public class HexCell : MonoBehaviour {
 		ShaderData.SetMapData(this, data);
 	}
 }
-
-//test
