@@ -1,41 +1,69 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class BGSound : MonoBehaviour
 {
     public float duration = 1f;
-    public AudioSource audioSource;
-    public AudioClip[] bgmClips;
+    [SerializeField] AudioSource audioSource;
+    [SerializeField] AudioClip[] commonClips;
+    [SerializeField] AudioClip[] warningClips;
+    
+    List<AudioClip[]> clips = new List<AudioClip[]>();
+    WaitForSeconds _1s = new WaitForSeconds(1f);
 
     private void Start() 
     {
+        clips.Add(commonClips);
+        clips.Add(warningClips);
+
         DontDestroyOnLoad(this);
         this.gameObject.name += " (Singleton)";
 
+        StartCoroutine(NextTrack());
     }
 
-    public void ChangeBGM(int clipNum)
-    {
-        // Sound Fade Out
-        // Sound Fade In
+    IEnumerator NextTrack()
+    {   
+        while (true)
+        {
+            yield return _1s;
+            if (!audioSource.isPlaying) {
+                int next = Random.Range(0, clips[(int)MetaAI.State].Length);
+                audioSource.clip = clips[(int)MetaAI.State][next];
+                audioSource.Play();
+            }
+        }
     }
 
-    public void PlayFade(int clipNum)
+    public void ChangeBGM()
     {
-        StartCoroutine(SoundFade(false));
-        StartCoroutine(SoundFade(true, clipNum));
+        StartCoroutine(SoundFade());
     }
 
-    IEnumerator SoundFade(bool fadeIn, int clipNum = -1)
+    IEnumerator SoundFade()
     {
-        float currentTime = 0;
+        float currentTime = 0f;
         float start = audioSource.volume;
+        
+        // fade out
         while (currentTime < duration)
         {
             yield return null;
             currentTime += Time.deltaTime;
             audioSource.volume = Mathf.Lerp(start, 0.0f, currentTime / duration);
+        }
+
+        audioSource.clip = clips[(int)MetaAI.State][0];
+
+        // fade in
+        currentTime = 0f;
+        while (currentTime < duration)
+        {
+            yield return null;
+            currentTime += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(0.0f, start, currentTime / duration);
         }
     }
 }

@@ -23,6 +23,7 @@ public class Title : MonoBehaviour
 
     public void OnClickStartButton()
     {
+        GameInfo.Difficulty = Difficulty.Easy;
         StartCoroutine(StartSFX());
     }
 

@@ -1,4 +1,4 @@
-public class Trash
+public struct Trash
 {
     public int paper;
     public int can;

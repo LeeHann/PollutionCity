@@ -367,7 +367,7 @@ AudioSource:
   m_PlayOnAwake: 1
   m_Volume: 1
   m_Pitch: 1
-  Loop: 1
+  Loop: 0
   Mute: 0
   Spatialize: 0
   SpatializePostEffects: 0
@@ -477,8 +477,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   duration: 1
-  audioSource: {fileID: 0}
-  bgmClips: []
+  audioSource: {fileID: 312966951}
+  commonClips:
+  - {fileID: 8300000, guid: 2d09cca0ec4834e41b987b5ece1cf32c, type: 3}
+  - {fileID: 8300000, guid: ff770f1e4f1a4473184d27bd212e026b, type: 3}
+  - {fileID: 8300000, guid: 04b200fe351b6498882830201139fdc0, type: 3}
+  warningClips:
+  - {fileID: 8300000, guid: 20d97a47318d94664b39f451e01085c9, type: 3}
+  - {fileID: 8300000, guid: 460f452a6514d43fca36a09f94342bea, type: 3}
 --- !u!1 &371089598
 GameObject:
   m_ObjectHideFlags: 0
