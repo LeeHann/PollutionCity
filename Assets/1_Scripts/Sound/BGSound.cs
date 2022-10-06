@@ -1,10 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class BGSound : MonoBehaviour
 {
+    public static BGSound instance = null;
+
     public float duration = 1f;
     [SerializeField] AudioSource audioSource;
     [SerializeField] AudioClip[] commonClips;
@@ -15,12 +16,12 @@ public class BGSound : MonoBehaviour
 
     private void Start() 
     {
-        clips.Add(commonClips);
-        clips.Add(warningClips);
-
+        instance = this;
         DontDestroyOnLoad(this);
         this.gameObject.name += " (Singleton)";
 
+        clips.Add(commonClips);
+        clips.Add(warningClips);
         StartCoroutine(NextTrack());
     }
 
@@ -36,7 +37,6 @@ public class BGSound : MonoBehaviour
             }
         }
     }
-
     public void ChangeBGM()
     {
         StartCoroutine(SoundFade());

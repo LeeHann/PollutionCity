@@ -11,15 +11,15 @@ public class MetaAI : MonoBehaviour
         set {
             if (state == value) return;
             state = value;
-            if (state == GameState.Common)
-            {
-                // 일반 사운드
-            }
-            else if (state == GameState.Warning)
-            {
-                // 경고 사운드
-            }
+            BGSound.instance.ChangeBGM();
         }
     }
     private static GameState state = GameState.Common;
+
+    public void onclickstate()
+    {
+        if (State == GameState.Common)
+            State = GameState.Warning;
+        else State = GameState.Common;
+    }
 }
