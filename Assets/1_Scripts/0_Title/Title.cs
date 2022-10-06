@@ -9,10 +9,15 @@ public class Title : MonoBehaviour
     [SerializeField] GameObject setting;
     [SerializeField] TextMeshProUGUI bi;
     [SerializeField] AudioSource audioSource;
-    
+
     private void Start() 
     {
         Screen.SetResolution(1920, 1080, false);
+
+        DisableSystemUI.DisableNavUI();
+    }
+    void OnApplicationFocus(bool focus)
+    {
         DisableSystemUI.DisableNavUI();
     }
 

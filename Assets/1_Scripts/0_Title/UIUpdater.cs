@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class UIUpdator : MonoBehaviour
+public class UIUpdater : MonoBehaviour
 {
     
     [Header("Image")]
