@@ -15,11 +15,4 @@ public class MetaAI : MonoBehaviour
         }
     }
     private static GameState state = GameState.Common;
-
-    public void onclickstate()
-    {
-        if (State == GameState.Common)
-            State = GameState.Warning;
-        else State = GameState.Common;
-    }
 }
