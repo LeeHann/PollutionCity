@@ -41,29 +41,29 @@ public class HexMapCamera : MonoBehaviour {
 	}
 
 	void Update () {
-// #if UNITY_ANDROID
-// 		int touchCount = Input.touchCount;
-// 		// ray; UI 있는 곳에서는 패닝, 줌 무시
+#if UNITY_ANDROID
+		int touchCount = Input.touchCount;
+		// ray; UI 있는 곳에서는 패닝, 줌 무시
 
-// 		// zoom
-// 		if (touchCount >= 2)
-// 		{
-// 			float zoomDelta = CalculateZoomValue() * 0.1f;
-// 			if (zoomDelta != 0f) {
-// 				AdjustZoom(zoomDelta);
-// 			}
-// 		}
+		// zoom
+		if (touchCount >= 2)
+		{
+			float zoomDelta = CalculateZoomValue();
+			if (zoomDelta != 0f) {
+				AdjustZoom(zoomDelta);
+			}
+		}
 
-// 		// panning
-// 		if (touchCount >= 1)
-// 		{
-// 			float xDelta = Input.GetTouch(0).deltaPosition.x * -0.05f;
-// 			float zDelta = Input.GetTouch(0).deltaPosition.y * -0.05f;
-// 			if (xDelta != 0f || zDelta != 0f) {
-// 				AdjustPosition(xDelta, zDelta);
-// 			}
-// 		}
-// #else
+		// panning
+		if (touchCount >= 1)
+		{
+			float xDelta = Input.GetTouch(0).deltaPosition.x * -0.05f;
+			float zDelta = Input.GetTouch(0).deltaPosition.y * -0.05f;
+			if (xDelta != 0f || zDelta != 0f) {
+				AdjustPosition(xDelta, zDelta);
+			}
+		}
+#else
 		float zoomDelta = Input.GetAxis("Mouse ScrollWheel");
 		if (zoomDelta != 0f) {
 			AdjustZoom(zoomDelta);
@@ -79,7 +79,7 @@ public class HexMapCamera : MonoBehaviour {
 		if (xDelta != 0f || zDelta != 0f) {
 			AdjustPosition(xDelta, zDelta);
 		}
-// #endif
+#endif
 	}
 
 	float CalculateZoomValue()
