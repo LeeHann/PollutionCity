@@ -4,8 +4,6 @@ using UnityEngine.UI;
 public class HexGridChunk : MonoBehaviour {
 
 	public HexMesh terrain, rivers, roads, water, waterShore, estuaries;
-	public HexMesh bulding;
-
 
 	public HexFeatureManager features;
 
