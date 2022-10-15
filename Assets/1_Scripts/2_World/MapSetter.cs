@@ -9,7 +9,7 @@ public class MapSetter : MonoBehaviour
     public Material terrainMaterial;
     public HexGrid hexGrid;
     public HexMapCamera cam;
-    public List<City> cities;
+    public List<City> cities = new List<City>();
     private List<PlayerSit> sits = new List<PlayerSit>() {
         PlayerSit.Blue, PlayerSit.Red, PlayerSit.White, PlayerSit.Yellow
     };
@@ -34,12 +34,12 @@ public class MapSetter : MonoBehaviour
 
 #endif
 
-        cities[0] = GenerateCities(true);
+        cities[0] = GenerateCity(isPlayer:true);
         for (int i = 1; i < GameInfo.cityCount; i++)
         {
-            cities[i] = GenerateCities(false);
+            cities[i] = GenerateCity();
         }
-
+        TurnSystem.cities = this.cities;
         this.enabled = false;
     }
 
@@ -81,11 +81,11 @@ public class MapSetter : MonoBehaviour
         }
     }
 
-    public City GenerateCities(bool isPlayer)
+    public City GenerateCity(bool isPlayer = false)
     {
         HexCell cell = SearchValidCityPoint();
         City city = SetCityProperty(cell, isPlayer);
-
+        cell.SetLabel(isPlayer.ToString());
         CameraPositioning(cell, isPlayer);
         return city;
     }
@@ -111,7 +111,7 @@ public class MapSetter : MonoBehaviour
                     invalid = true;
                     break;
                 }
-                invalid |= neighbor.IsUnderwater | cell.Walled;
+                invalid |= neighbor.IsUnderwater | neighbor.Walled;
             }
         } while (invalid);
 
@@ -120,7 +120,9 @@ public class MapSetter : MonoBehaviour
     
     public City SetCityProperty(HexCell cell, bool isPlayer)
     {
-        City city = isPlayer ? new PlayerCity() : new AICity();
+        // City city = isPlayer ? new PlayerCity() : new AICity();
+        City city = isPlayer ? new GameObject(name:"PlayerCity").AddComponent<PlayerCity>() 
+                                : new GameObject(name:"AICity").AddComponent<AICity>();
         int random = Random.Range(0, sits.Count);
         
         city.sit = sits[random];
