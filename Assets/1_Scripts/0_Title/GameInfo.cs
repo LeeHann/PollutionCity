@@ -23,7 +23,7 @@ public static class GameInfo
     public static int maxPA;
     public static int startPA;
     public static float PLPercent;
-    public static int cityCount;
+    public static int cityCount = 3;
     public static float winPL;
     public const float losePL = 100.0f;
     public const int startMoney = 1000;
