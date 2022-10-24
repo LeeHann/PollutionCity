@@ -14,7 +14,10 @@ public class Raycaster : MonoBehaviour
     public int GetHitLayer => hit.collider != null ? hit.collider.gameObject.layer : -1;
     public Vector3 GetHitPosition => hit.collider != null ? hit.point : Vector3.zero;
 
-    
+    void Start()
+    {
+       // HexFeatureManager.Build();
+    }
 
     void Update()
     {

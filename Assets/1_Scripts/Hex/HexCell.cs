@@ -191,6 +191,30 @@ public class HexCell : MonoBehaviour {
 	// 	}
 	// }
 
+
+	public int SpecialIndex
+	{
+		get
+		{
+			return specialIndex;
+		}
+		set
+		{
+			if (specialIndex != value && !HasRiver)
+			{
+				specialIndex = value;
+				//RemoveRoads();
+				RefreshSelfOnly();
+			}
+		}
+	}
+	public bool IsSpecial
+	{
+		get
+		{
+			return specialIndex > 0;
+		}
+	}
 	public bool Walled {
 		get {
 			return walled;
@@ -265,6 +289,8 @@ public class HexCell : MonoBehaviour {
 	int waterLevel;
 
 	// int urbanLevel, farmLevel, plantLevel;
+
+	int specialIndex;
 
 	int distance;
 

@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class HexGridChunk : MonoBehaviour {
 
 	public HexMesh terrain, rivers, roads, water, waterShore, estuaries;
-	public HexMesh bulding;
+	//public HexMesh bulding;
 
 
 	public HexFeatureManager features;
@@ -63,15 +63,18 @@ public class HexGridChunk : MonoBehaviour {
 		features.Apply();
 	}
 
-	void Triangulate (HexCell cell) {
-		for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
+	void Triangulate(HexCell cell)
+	{
+		for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+		{
 			Triangulate(d, cell);
 		}
-		// if (!cell.IsUnderwater) {
-		// 	if (!cell.HasRiver && !cell.HasRoads) {
-		// 		features.AddFeature(cell, cell.Position);
-		// 	}
-		// }
+		//features.AddFeature(cell, cell.Position);
+		if (cell.IsSpecial)
+		{
+			features.AddSpecialFeature(cell, cell.Position);
+		}
+
 	}
 
 	void Triangulate (HexDirection direction, HexCell cell) {

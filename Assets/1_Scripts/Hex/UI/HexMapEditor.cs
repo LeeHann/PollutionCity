@@ -10,7 +10,7 @@ public class HexMapEditor : MonoBehaviour {
 
 	int activeElevation;
 	int activeWaterLevel;
-
+	int activeSpecialIndex;
 	// int activeUrbanLevel, activeFarmLevel, activePlantLevel;
 
 	int activeTerrainTypeIndex;
@@ -19,6 +19,7 @@ public class HexMapEditor : MonoBehaviour {
 
 	bool applyElevation = true;
 	bool applyWaterLevel = true;
+	bool applySpecialIndex;
 
 	// bool applyUrbanLevel, applyFarmLevel, applyPlantLevel;
 
@@ -76,6 +77,16 @@ public class HexMapEditor : MonoBehaviour {
 	// 	activePlantLevel = (int)level;
 	// }
 
+	public void SetApplySpecialIndex(bool toggle)
+	{
+		applySpecialIndex = toggle;
+	}
+
+	public void SetSpecialIndex(float index)
+	{
+		activeSpecialIndex = (int)index;
+	}
+
 	public void SetBrushSize (float size) {
 		brushSize = (int)size;
 	}
@@ -96,20 +107,28 @@ public class HexMapEditor : MonoBehaviour {
 		enabled = toggle;
 	}
 
-	public void ShowGrid (bool visible) {
-		if (visible) {
-			terrainMaterial.EnableKeyword("GRID_ON");
-		}
-		else {
-			terrainMaterial.DisableKeyword("GRID_ON");
-		}
-	}
+    public void ShowGrid(bool visible)
+    {
+        if (visible)
+        {
+            terrainMaterial.EnableKeyword("GRID_ON");
+        }
+        else
+        {
+            terrainMaterial.DisableKeyword("GRID_ON");
+        }
+    }
 
-	void Awake () {
-		terrainMaterial.DisableKeyword("GRID_ON");
-		Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
-		SetEditMode(true);
-	}
+    public void ShowUI(bool visible)
+    {
+        hexGrid.ShowUI(visible);
+    }
+
+    void Awake () {
+        terrainMaterial.DisableKeyword("GRID_ON");
+        Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
+        SetEditMode(true);
+    }
 
 	void Update () {
 		if (!EventSystem.current.IsPointerOverGameObject()) {
@@ -134,6 +153,7 @@ public class HexMapEditor : MonoBehaviour {
 		return
 			hexGrid.GetCell(Camera.main.ScreenPointToRay(Input.mousePosition));
 	}
+
 
 	void CreateUnit () {
 		HexCell cell = GetCellUnderCursor();
@@ -208,6 +228,9 @@ public class HexMapEditor : MonoBehaviour {
 			}
 			if (applyWaterLevel) {
 				cell.WaterLevel = activeWaterLevel;
+			}
+			if (applySpecialIndex){
+				cell.SpecialIndex = activeSpecialIndex;
 			}
 			// if (applyUrbanLevel) {
 			// 	cell.UrbanLevel = activeUrbanLevel;

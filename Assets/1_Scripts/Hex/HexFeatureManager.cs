@@ -1,11 +1,13 @@
 ﻿using UnityEngine;
-
+using System;
 public class HexFeatureManager : MonoBehaviour {
 
-	// public HexFeatureCollection[]
+	//public HexFeatureCollection[]
 	// 	urbanCollections, farmCollections, plantCollections;
 
+
 	public HexMesh walls;
+	public Transform[] special;
 
 	Transform container;
 
@@ -21,6 +23,34 @@ public class HexFeatureManager : MonoBehaviour {
 	public void Apply () {
 		walls.Apply();
 	}
+
+
+
+
+
+
+
+	//public static Action Build;
+	//private void Awake()
+ //   {
+	//	Build = () => { AddSpecialFeature(cell, position); }; 
+ //   }
+
+
+
+
+	public void AddSpecialFeature(HexCell cell, Vector3 position)
+	{
+		HexHash hash = HexMetrics.SampleHashGrid(position);
+		Transform instance = Instantiate(special[cell.SpecialIndex - 1]);
+		instance.localPosition = HexMetrics.Perturb(position);
+		instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
+		instance.SetParent(container, false);
+	}
+
+
+
+
 
 	// Transform PickPrefab (
 	// 	HexFeatureCollection[] collection,
