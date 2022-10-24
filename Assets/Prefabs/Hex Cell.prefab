@@ -27,6 +27,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -48,6 +49,11 @@ MonoBehaviour:
     z: 0
   uiRect: {fileID: 0}
   chunk: {fileID: 0}
+  materials:
+  - {fileID: 2100000, guid: 4681d887b9fa74948b9feb14619cf935, type: 2}
+  - {fileID: 2100000, guid: e806d19bb5d025f4f98f0fb14b8c6cf7, type: 2}
+  - {fileID: 2100000, guid: 1bd53b96728dd2449913c89605322c28, type: 2}
+  - {fileID: 2100000, guid: 2f9250d1893ec4b4b9575edec650cc15, type: 2}
   neighbors:
   - {fileID: 0}
   - {fileID: 0}

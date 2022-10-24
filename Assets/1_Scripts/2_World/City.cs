@@ -33,6 +33,9 @@ public class City : MonoBehaviour
     public void AddCell(HexCell cell)
     {
         cells.Add(cell);
+
+        cell.chunk.features.walls.meshRenderer.material
+                = cell.materials[(int)sit];
         cell.Walled = true;
     }
 }
