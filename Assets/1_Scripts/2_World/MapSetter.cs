@@ -120,7 +120,6 @@ public class MapSetter : MonoBehaviour
     
     public City SetCityProperty(HexCell cell, bool isPlayer)
     {
-        // City city = isPlayer ? new PlayerCity() : new AICity();
         City city = isPlayer ? new GameObject(name:"PlayerCity").AddComponent<PlayerCity>() 
                                 : new GameObject(name:"AICity").AddComponent<AICity>();
         int random = Random.Range(0, sits.Count);

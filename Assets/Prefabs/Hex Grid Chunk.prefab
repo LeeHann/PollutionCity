@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   walls: {fileID: 114000013599494320}
+  special: []
 --- !u!1 &1000010636493760
 GameObject:
   m_ObjectHideFlags: 0
@@ -190,9 +191,6 @@ MeshRenderer:
   m_RendererPriority: 0
   m_Materials:
   - {fileID: 2100000, guid: 4681d887b9fa74948b9feb14619cf935, type: 2}
-  - {fileID: 2100000, guid: e806d19bb5d025f4f98f0fb14b8c6cf7, type: 2}
-  - {fileID: 2100000, guid: 1bd53b96728dd2449913c89605322c28, type: 2}
-  - {fileID: 2100000, guid: 2f9250d1893ec4b4b9575edec650cc15, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
