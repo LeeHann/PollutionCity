@@ -5,16 +5,18 @@ using System.IO;
 public class HexCell : MonoBehaviour {
 
 	public HexCoordinates coordinates;
-
 	public RectTransform uiRect;
+
+#region City Boundary
 
 	public HexGridChunk chunk;
 	public GameObject[] walls;
 	public PlayerSit sit = (PlayerSit)(-1);
 	public Material[] materials;
 
-	public int Index { get; set; }
+#endregion
 
+	public int Index { get; set; }
 	public int ColumnIndex { get; set; }
 
 	public int Elevation {
@@ -218,6 +220,16 @@ public class HexCell : MonoBehaviour {
 			return specialIndex > 0;
 		}
 	}
+
+	public ResourceType Resource {
+		get {
+			return resource;
+		}
+		set {
+			resource = value;
+		}	
+	}
+
 	public bool Walled {
 		get {
 			return walled;
@@ -320,6 +332,8 @@ public class HexCell : MonoBehaviour {
 	int visibility;
 
 	bool explored;
+	
+	ResourceType resource;
 
 	bool walled;
 
