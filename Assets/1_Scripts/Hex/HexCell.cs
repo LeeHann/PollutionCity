@@ -9,6 +9,8 @@ public class HexCell : MonoBehaviour {
 	public RectTransform uiRect;
 
 	public HexGridChunk chunk;
+	public GameObject[] Walls;
+	public PlayerSit sit = (PlayerSit)(-1);
 	public Material[] materials;
 
 	public int Index { get; set; }
@@ -223,7 +225,27 @@ public class HexCell : MonoBehaviour {
 		set {
 			if (walled != value) {
 				walled = value;
-				Refresh();
+				if (walled)
+				{
+					for (int child = 0; child < 6; child++)
+						Walls[child].GetComponent<MeshRenderer>().material = materials[(int)sit < 0 ? 0 : (int)sit];
+				}
+				for (HexDirection d = 0; d <= HexDirection.NW; d++)
+				{
+					HexCell neighbor = GetNeighbor(d);
+					if (neighbor.Walled != walled) 
+					{
+						Walls[(int)d].SetActive(walled);
+						neighbor.Walls[(int)(d+3)%6].SetActive(neighbor.Walled);
+					} 
+					else if (neighbor.Walled && walled) 
+					{
+						bool sitStatus = neighbor.sit != sit;
+						Walls[(int)d].SetActive(sitStatus);
+						neighbor.Walls[(int)(d+3)%6].SetActive(sitStatus);
+					}
+				}
+				// Refresh();
 			}
 		}
 	}

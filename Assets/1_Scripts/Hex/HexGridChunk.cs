@@ -640,7 +640,7 @@ public class HexGridChunk : MonoBehaviour {
 			);
 		}
 
-		features.AddWall(e1, cell, e2, neighbor, hasRiver, hasRoad);
+		// features.AddWall(direction, e1, cell, e2, neighbor);
 
 		HexCell nextNeighbor = cell.GetNeighbor(direction.Next());
 		if (direction <= HexDirection.E && nextNeighbor != null) {
@@ -748,7 +748,7 @@ public class HexGridChunk : MonoBehaviour {
 			terrain.AddTriangleCellData(indices, weights1, weights2, weights3);
 		}
 
-		features.AddWall(bottom, bottomCell, left, leftCell, right, rightCell);
+		// features.AddWall(bottom, bottomCell, left, leftCell, right, rightCell);
 	}
 
 	void TriangulateEdgeTerraces (
