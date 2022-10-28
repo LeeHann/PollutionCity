@@ -6,13 +6,16 @@ using TMPro;
 
 public class MapSetter : MonoBehaviour
 {
-    public Material terrainMaterial;
-    public HexGrid hexGrid;
-    public HexMapCamera cam;
-    public List<City> cities = new List<City>();
+    [SerializeField] Material terrainMaterial;
+    [SerializeField] HexGrid hexGrid;
+    [SerializeField] HexMapCamera cam;
+    
     private List<PlayerSit> sits = new List<PlayerSit>() {
         PlayerSit.Blue, PlayerSit.Red, PlayerSit.White, PlayerSit.Yellow
     };
+    [SerializeField] List<City> cities = new List<City>();
+    [SerializeField] GameObject[] units;
+    
     [SerializeField] string[] maps;
     const int mapFileVersion = 5;
 
@@ -137,6 +140,10 @@ public class MapSetter : MonoBehaviour
         city.Money = GameInfo.startMoney;
         city.PA = GameInfo.startPA;
         
+        // place units (explorer, lab)
+        hexGrid.AddUnit(
+            Instantiate(hexGrid.unitPrefab[(int)city.sit]), cell, Random.Range(0f, 360f)
+        );
         return city;
     } 
 

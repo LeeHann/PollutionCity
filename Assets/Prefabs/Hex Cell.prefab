@@ -55,7 +55,7 @@ MonoBehaviour:
     z: 0
   uiRect: {fileID: 0}
   chunk: {fileID: 0}
-  Walls:
+  walls:
   - {fileID: 2534647616423112972}
   - {fileID: 3335765401919842062}
   - {fileID: 7446383255507540777}
