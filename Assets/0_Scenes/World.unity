@@ -3775,6 +3775,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  units: []
   maps:
   - middle1
   - middle2
@@ -3799,6 +3800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnPlayer: 0
   boolOver: 0
+  cam: {fileID: 2102140320}
 --- !u!1 &429045662
 GameObject:
   m_ObjectHideFlags: 0
@@ -13177,7 +13179,11 @@ MonoBehaviour:
   cellPrefab: {fileID: 11422220, guid: 94c2312396697489abc866a188f80152, type: 3}
   cellLabelPrefab: {fileID: 11470134, guid: f68794ca03b6f4510b9a5bd6ee9ba2f4, type: 3}
   chunkPrefab: {fileID: 114000010052569294, guid: 7622d007cafd044a1b1189c0b93d2912, type: 3}
-  unitPrefab: {fileID: 114701888605048992, guid: 5661a1efcb9464721b4db3f694ded559, type: 3}
+  unitPrefab:
+  - {fileID: 114701888605048992, guid: 5661a1efcb9464721b4db3f694ded559, type: 3}
+  - {fileID: 114701888605048992, guid: 5f1918b98af95e14c826c18f8486c1a1, type: 3}
+  - {fileID: 114701888605048992, guid: 78822ad373859be4c9af4d27465715c8, type: 3}
+  - {fileID: 114701888605048992, guid: 70bd2a17dbe34684c977045473ff0d01, type: 3}
   noiseSource: {fileID: 2800000, guid: 38701cdeb1fb9427cbb585f917aa59cb, type: 3}
   seed: 1234
 --- !u!4 &1571186512

@@ -6,13 +6,16 @@ using TMPro;
 
 public class MapSetter : MonoBehaviour
 {
-    public Material terrainMaterial;
-    public HexGrid hexGrid;
-    public HexMapCamera cam;
-    public List<City> cities = new List<City>();
+    [SerializeField] Material terrainMaterial;
+    [SerializeField] HexGrid hexGrid;
+    [SerializeField] HexMapCamera cam;
+    
     private List<PlayerSit> sits = new List<PlayerSit>() {
         PlayerSit.Blue, PlayerSit.Red, PlayerSit.White, PlayerSit.Yellow
     };
+    [SerializeField] List<City> cities = new List<City>();
+    [SerializeField] GameObject[] units;
+    
     [SerializeField] string[] maps;
     const int mapFileVersion = 5;
 
@@ -81,7 +84,7 @@ public class MapSetter : MonoBehaviour
         }
     }
 
-    public City GenerateCity(bool isPlayer = false)
+    City GenerateCity(bool isPlayer = false)
     {
         HexCell cell = SearchValidCityPoint();
         City city = SetCityProperty(cell, isPlayer);
@@ -90,7 +93,7 @@ public class MapSetter : MonoBehaviour
         return city;
     }
 
-    public HexCell SearchValidCityPoint()
+    HexCell SearchValidCityPoint()
     {
         HexCell cell;
 
@@ -118,7 +121,7 @@ public class MapSetter : MonoBehaviour
         return cell;
     }
     
-    public City SetCityProperty(HexCell cell, bool isPlayer)
+    City SetCityProperty(HexCell cell, bool isPlayer)
     {
         City city = isPlayer ? new GameObject(name:"PlayerCity").AddComponent<PlayerCity>() 
                                 : new GameObject(name:"AICity").AddComponent<AICity>();
@@ -137,10 +140,17 @@ public class MapSetter : MonoBehaviour
         city.Money = GameInfo.startMoney;
         city.PA = GameInfo.startPA;
         
+        // place units (explorer, lab)
+        city.units.Add(
+            hexGrid.AddUnit(
+                Instantiate(hexGrid.unitPrefab[(int)city.sit]), cell, Random.Range(0f, 360f)
+            )
+        );
+
         return city;
     } 
 
-    public void CameraPositioning(HexCell cell, bool isPlayer)
+    void CameraPositioning(HexCell cell, bool isPlayer)
     {
         if (isPlayer)
             cam.transform.localPosition = 

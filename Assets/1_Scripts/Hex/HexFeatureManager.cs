@@ -109,11 +109,11 @@ public class HexFeatureManager : MonoBehaviour {
 	// }
 
 	public void AddWall (
+		HexDirection direction,
 		EdgeVertices near, HexCell nearCell,
-		EdgeVertices far, HexCell farCell,
-		bool hasRiver, bool hasRoad
+		EdgeVertices far, HexCell farCell
 	) {
-		if (
+		if (//nearCell.Walled //&& nearCell.sit != farCell.sit
 			nearCell.Walled != farCell.Walled //&&
 			// !nearCell.IsUnderwater && !farCell.IsUnderwater &&
 			// nearCell.GetEdgeType(farCell) != HexEdgeType.Cliff
@@ -124,22 +124,22 @@ public class HexFeatureManager : MonoBehaviour {
 			// 	AddWallCap(far.v4, near.v4);
 			// }
 			// else {
-				
+			nearCell.walls[(int)direction].SetActive(true);
 			// }
-			if (nearCell.GetEdgeType(farCell) == HexEdgeType.Flat)
-			{
-				AddWallSegment(near.v1, far.v1, near.v2, far.v2);
-				AddWallSegment(near.v2, far.v2, near.v3, far.v3);
-				AddWallSegment(near.v3, far.v3, near.v4, far.v4);
-				AddWallSegment(near.v4, far.v4, near.v5, far.v5);
-			}
-			else
-			{
-				AddWallSegment(near.v1, far.v1, near.v2, far.v2, nearCell, farCell);
-				AddWallSegment(near.v2, far.v2, near.v3, far.v3, nearCell, farCell);
-				AddWallSegment(near.v3, far.v3, near.v4, far.v4, nearCell, farCell);
-				AddWallSegment(near.v4, far.v4, near.v5, far.v5, nearCell, farCell);
-			}
+			// if (nearCell.GetEdgeType(farCell) == HexEdgeType.Flat)
+			// {
+			// 	AddWallSegment(near.v1, far.v1, near.v2, far.v2);
+			// 	AddWallSegment(near.v2, far.v2, near.v3, far.v3);
+			// 	AddWallSegment(near.v3, far.v3, near.v4, far.v4);
+			// 	AddWallSegment(near.v4, far.v4, near.v5, far.v5);
+			// }
+			// else
+			// {
+			// 	AddWallSegment(near.v1, far.v1, near.v2, far.v2, nearCell, farCell);
+			// 	AddWallSegment(near.v2, far.v2, near.v3, far.v3, nearCell, farCell);
+			// 	AddWallSegment(near.v3, far.v3, near.v4, far.v4, nearCell, farCell);
+			// 	AddWallSegment(near.v4, far.v4, near.v5, far.v5, nearCell, farCell);
+			// }
 		}
 		// walls.meshRenderer.material.color = Color.blue;
 	}
@@ -149,30 +149,30 @@ public class HexFeatureManager : MonoBehaviour {
 		Vector3 c2, HexCell cell2,
 		Vector3 c3, HexCell cell3
 	) {
-		if (cell1.Walled) {
-			if (cell2.Walled) {
-				if (!cell3.Walled) {
-					AddWallSegment(c3, cell3, c1, cell1, c2, cell2);
-				}
-			}
-			else if (cell3.Walled) {
-				AddWallSegment(c2, cell2, c3, cell3, c1, cell1);
-			}
-			else {
-				AddWallSegment(c1, cell1, c2, cell2, c3, cell3);
-			}
-		}
-		else if (cell2.Walled) {
-			if (cell3.Walled) {
-				AddWallSegment(c1, cell1, c2, cell2, c3, cell3);
-			}
-			else {
-				AddWallSegment(c2, cell2, c3, cell3, c1, cell1);
-			}
-		}
-		else if (cell3.Walled) {
-			AddWallSegment(c3, cell3, c1, cell1, c2, cell2);
-		}
+		// if (cell1.Walled) {
+		// 	if (cell2.Walled) {
+		// 		if (!cell3.Walled) {
+		// 			AddWallSegment(c3, cell3, c1, cell1, c2, cell2);
+		// 		}
+		// 	}
+		// 	else if (cell3.Walled) {
+		// 		AddWallSegment(c2, cell2, c3, cell3, c1, cell1);
+		// 	}
+		// 	else {
+		// 		AddWallSegment(c1, cell1, c2, cell2, c3, cell3);
+		// 	}
+		// }
+		// else if (cell2.Walled) {
+		// 	if (cell3.Walled) {
+		// 		AddWallSegment(c1, cell1, c2, cell2, c3, cell3);
+		// 	}
+		// 	else {
+		// 		AddWallSegment(c2, cell2, c3, cell3, c1, cell1);
+		// 	}
+		// }
+		// else if (cell3.Walled) {
+		// 	AddWallSegment(c3, cell3, c1, cell1, c2, cell2);
+		// }
 	}
 
 	void AddWallSegment (

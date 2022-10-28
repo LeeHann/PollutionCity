@@ -13,7 +13,7 @@ public class HexGrid : MonoBehaviour {
 	public HexCell cellPrefab;
 	public Text cellLabelPrefab;
 	public HexGridChunk chunkPrefab;
-	public HexUnit unitPrefab;
+	public HexUnit[] unitPrefab;
 
 	public Texture2D noiseSource;
 
@@ -47,17 +47,19 @@ public class HexGrid : MonoBehaviour {
 	void Awake () {
 		HexMetrics.noiseSource = noiseSource;
 		HexMetrics.InitializeHashGrid(seed);
-		HexUnit.unitPrefab = unitPrefab;
+		HexUnit.unitPrefab = unitPrefab[0];
 		cellShaderData = gameObject.AddComponent<HexCellShaderData>();
 		cellShaderData.Grid = this;
 		CreateMap(cellCountX, cellCountZ, wrapping);
 	}
 
-	public void AddUnit (HexUnit unit, HexCell location, float orientation) {
+	public HexUnit AddUnit (HexUnit unit, HexCell location, float orientation) {
 		units.Add(unit);
 		unit.Grid = this;
 		unit.Location = location;
 		unit.Orientation = orientation;
+
+		return unit;
 	}
 
 	public void RemoveUnit (HexUnit unit) {
@@ -136,7 +138,7 @@ public class HexGrid : MonoBehaviour {
 		if (!HexMetrics.noiseSource) {
 			HexMetrics.noiseSource = noiseSource;
 			HexMetrics.InitializeHashGrid(seed);
-			HexUnit.unitPrefab = unitPrefab;
+			HexUnit.unitPrefab = unitPrefab[0];
 			HexMetrics.wrapSize = wrapping ? cellCountX : 0;
 			ResetVisibility();
 		}
