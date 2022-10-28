@@ -3800,6 +3800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnPlayer: 0
   boolOver: 0
+  cam: {fileID: 2102140320}
 --- !u!1 &429045662
 GameObject:
   m_ObjectHideFlags: 0

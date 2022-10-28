@@ -4,11 +4,20 @@ using UnityEngine;
 
 public class City : MonoBehaviour
 {
+    public bool myTurn;
+
     public PlayerSit sit;
     public Trash trash = new Trash();
-    public List<HexUnit> units = new List<HexUnit>();
+    public List<Unit> units = new List<Unit>();
     public List<HexCell> cells = new List<HexCell>();
     public HexCell rootCell;
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            myTurn = false;
+        }
+    }
 
     public int Money {
         get {

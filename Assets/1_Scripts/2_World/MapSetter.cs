@@ -141,9 +141,12 @@ public class MapSetter : MonoBehaviour
         city.PA = GameInfo.startPA;
         
         // place units (explorer, lab)
-        hexGrid.AddUnit(
-            Instantiate(hexGrid.unitPrefab[(int)city.sit]), cell, Random.Range(0f, 360f)
+        city.units.Add(
+            hexGrid.AddUnit(
+                Instantiate(hexGrid.unitPrefab[(int)city.sit]), cell, Random.Range(0f, 360f)
+            )
         );
+
         return city;
     } 
 

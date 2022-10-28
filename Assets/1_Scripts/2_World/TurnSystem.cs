@@ -8,6 +8,8 @@ public class TurnSystem : MonoBehaviour
     public PlayerNum turnPlayer;
     public bool boolOver;
 
+    [SerializeField] HexMapCamera cam;
+
     private void Start() 
     {
         turnPlayer = 0;
@@ -18,7 +20,9 @@ public class TurnSystem : MonoBehaviour
     {
         Debug.Log(string.Format("turnPlayer is {0} whose sit is {1}", turnPlayer, cities[(int)turnPlayer].sit));
 
-        yield return new WaitForSeconds(1f);
+        cities[(int)turnPlayer].myTurn = true;
+        CameraPositioning(cities[(int)turnPlayer].units[0].gameObject);
+        yield return new WaitWhile(()=> cities[(int)turnPlayer].myTurn != false);
 
         bool isOver = boolOver;
         if (isOver)
@@ -31,5 +35,10 @@ public class TurnSystem : MonoBehaviour
             } while (cities[(int)turnPlayer] == null);
             StartCoroutine(SpinATurn());
         }
+    }
+
+    void CameraPositioning(GameObject obj)
+    {
+        cam.transform.localPosition = obj.transform.localPosition;
     }
 }
