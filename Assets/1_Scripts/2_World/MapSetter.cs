@@ -81,7 +81,7 @@ public class MapSetter : MonoBehaviour
         }
     }
 
-    public City GenerateCity(bool isPlayer = false)
+    City GenerateCity(bool isPlayer = false)
     {
         HexCell cell = SearchValidCityPoint();
         City city = SetCityProperty(cell, isPlayer);
@@ -90,7 +90,7 @@ public class MapSetter : MonoBehaviour
         return city;
     }
 
-    public HexCell SearchValidCityPoint()
+    HexCell SearchValidCityPoint()
     {
         HexCell cell;
 
@@ -118,7 +118,7 @@ public class MapSetter : MonoBehaviour
         return cell;
     }
     
-    public City SetCityProperty(HexCell cell, bool isPlayer)
+    City SetCityProperty(HexCell cell, bool isPlayer)
     {
         City city = isPlayer ? new GameObject(name:"PlayerCity").AddComponent<PlayerCity>() 
                                 : new GameObject(name:"AICity").AddComponent<AICity>();
@@ -140,7 +140,7 @@ public class MapSetter : MonoBehaviour
         return city;
     } 
 
-    public void CameraPositioning(HexCell cell, bool isPlayer)
+    void CameraPositioning(HexCell cell, bool isPlayer)
     {
         if (isPlayer)
             cam.transform.localPosition = 
