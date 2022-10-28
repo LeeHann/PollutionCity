@@ -124,7 +124,7 @@ public class HexFeatureManager : MonoBehaviour {
 			// 	AddWallCap(far.v4, near.v4);
 			// }
 			// else {
-			nearCell.Walls[(int)direction].SetActive(true);
+			nearCell.walls[(int)direction].SetActive(true);
 			// }
 			// if (nearCell.GetEdgeType(farCell) == HexEdgeType.Flat)
 			// {
