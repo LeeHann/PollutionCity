@@ -4799,15 +4799,13 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 559938757}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5a6370f3b7362564391393b0f5c096e7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   Panel: {fileID: 0}
-  Living: {fileID: 0}
-  Research: {fileID: 0}
-  Industrial: {fileID: 0}
+  hexGrid: {fileID: 0}
 --- !u!4 &559938759
 Transform:
   m_ObjectHideFlags: 0
@@ -9061,6 +9059,7 @@ GameObject:
   - component: {fileID: 1066353875}
   - component: {fileID: 1066353874}
   - component: {fileID: 1066353873}
+  - component: {fileID: 1066353876}
   m_Layer: 5
   m_Name: IndustrialBuilding Button
   m_TagString: Untagged
@@ -9132,7 +9131,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1066353874}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1066353876}
+        m_TargetAssemblyTypeName: Industrial_Build, Assembly-CSharp
+        m_MethodName: IndustrialBuild
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1066353874
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9171,6 +9182,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1066353871}
   m_CullTransparentMesh: 1
+--- !u!114 &1066353876
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1066353871}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: de376115e6eecf54fbe840dcd8dd0662, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 100000, guid: e29e5916b5df6014ebc74a7df781bc25, type: 3}
 --- !u!1 &1066693254
 GameObject:
   m_ObjectHideFlags: 0
@@ -12872,6 +12896,7 @@ GameObject:
   - component: {fileID: 1530205292}
   - component: {fileID: 1530205291}
   - component: {fileID: 1530205290}
+  - component: {fileID: 1530205293}
   m_Layer: 5
   m_Name: ResearchBuilding Button
   m_TagString: Untagged
@@ -12943,7 +12968,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1530205291}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1530205293}
+        m_TargetAssemblyTypeName: Research_Build, Assembly-CSharp
+        m_MethodName: ResearchBuild
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1530205291
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12982,6 +13019,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1530205288}
   m_CullTransparentMesh: 1
+--- !u!114 &1530205293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1530205288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 481941e00cb875f44b6201532c8661ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 100000, guid: 7d7f76a409f6abb49af9ea12e9f32b39, type: 3}
 --- !u!1 &1548971768
 GameObject:
   m_ObjectHideFlags: 0
@@ -13151,7 +13201,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1571186512}
   - component: {fileID: 1571186511}
-  - component: {fileID: 1571186513}
   m_Layer: 6
   m_Name: Hex Grid
   m_TagString: Untagged
@@ -13195,23 +13244,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1571186513
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1571186510}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ffbd84bd73b01c14db8dbf7c166da647, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridLayout: {fileID: 1866232935}
-  MainTilemap: {fileID: 154734187}
-  whiteTile: {fileID: 11400000, guid: 0d7208f812516564a9e8f1bec1735abc, type: 2}
-  prefab1: {fileID: 2795034541243673646, guid: 108e52b151ccf514d83eb5b2303187ff, type: 3}
-  prefab2: {fileID: 2795034541243673646, guid: 6be9fe9a7d5da2b43ab436cf9164d9df, type: 3}
 --- !u!1 &1576570166
 GameObject:
   m_ObjectHideFlags: 0
@@ -13440,9 +13472,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Panel: {fileID: 1576570166}
-  Living: {fileID: 1885594306}
-  Research: {fileID: 1530205290}
-  Industrial: {fileID: 1066353873}
+  hexGrid: {fileID: 1571186511}
 --- !u!1 &1587434539
 GameObject:
   m_ObjectHideFlags: 0
@@ -16093,7 +16123,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1865193394}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -16415,6 +16445,7 @@ GameObject:
   - component: {fileID: 1885594308}
   - component: {fileID: 1885594307}
   - component: {fileID: 1885594306}
+  - component: {fileID: 1885594309}
   m_Layer: 5
   m_Name: LiveBuilding Button
   m_TagString: Untagged
@@ -16487,13 +16518,13 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1885594304}
-        m_TargetAssemblyTypeName: 
-        m_MethodName: 
+      - m_Target: {fileID: 1885594309}
+        m_TargetAssemblyTypeName: Living_Build, Assembly-CSharp
+        m_MethodName: Live
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: 
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -16537,6 +16568,19 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1885594304}
   m_CullTransparentMesh: 1
+--- !u!114 &1885594309
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1885594304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fec334b0a2bba44bbdeb2dee7500b10, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 100000, guid: f990cc832b99eab4ea0073e7221a922b, type: 3}
 --- !u!1 &1916619403
 GameObject:
   m_ObjectHideFlags: 0

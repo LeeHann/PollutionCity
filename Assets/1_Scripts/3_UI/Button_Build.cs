@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class Button_Build : MonoBehaviour
 {
@@ -12,9 +13,12 @@ public class Button_Build : MonoBehaviour
     //public HexGrid hexgrid;
 
     public GameObject Panel;
-    public Button Living, Research, Industrial;
-  //  public HexGrid hexGrid;
-    HexFeatureManager hexFeatureManager;
+    //public Button Living, Research, Industrial;
+    public HexGrid hexGrid;
+    HexFeatureManager features;
+    HexGridChunk gridChunk;
+    HexCell cell;
+    Vector3 position;
 
     //Button button;
     //HexCell GetCellUnderCursor()
@@ -22,9 +26,16 @@ public class Button_Build : MonoBehaviour
     //    return
     //        hexGrid.GetCell(Camera.main.ScreenPointToRay(Input.mousePosition));
     //}
+
+
     void isSpecial()
     {
 
+    }
+
+    void Build()
+    {
+        
     }
 
     public void OpenPanel()
@@ -41,22 +52,11 @@ public class Button_Build : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        //button = GetComponent<Button>();
-        //button.onClick.AddListener(LiveBuilding);
+        
+
     }
 
 
-    //void LiveBuilding()
-   // {
-        //HexCell cell = GetCellUnderCursor();
-        //    if (cell && !cell.Unit)
-        //    {
-        //        hexGrid.AddUnit(
-        //            Instantiate(HexUnit.unitPrefab), cell, Random.Range(0f, 360f)
-        //        );
-
-        //    }
-  //  }
     // Update is called once per frame
     void Update()
     {

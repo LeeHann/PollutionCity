@@ -125,8 +125,9 @@ public class HexMapEditor : MonoBehaviour {
     }
 
     void Awake () {
-        terrainMaterial.DisableKeyword("GRID_ON");
-        Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
+		terrainMaterial.EnableKeyword("GRID_ON");
+		//terrainMaterial.DisableKeyword("GRID_ON");
+		Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
         SetEditMode(true);
     }
 
@@ -149,7 +150,7 @@ public class HexMapEditor : MonoBehaviour {
 		previousCell = null;
 	}
 
-	HexCell GetCellUnderCursor () {
+	public HexCell GetCellUnderCursor () {
 		return
 			hexGrid.GetCell(Camera.main.ScreenPointToRay(Input.mousePosition));
 	}
