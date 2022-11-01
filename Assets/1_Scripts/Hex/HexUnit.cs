@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 
 public class HexUnit : Unit {
-
+	[SerializeField] Animator anim;
 	const float rotationSpeed = 180f;
-	const float travelSpeed = 4f;
+	const float travelSpeed = 1.5f;
 
 	public static HexUnit unitPrefab;
 
@@ -72,6 +72,8 @@ public class HexUnit : Unit {
 		pathToTravel = path;
 		StopAllCoroutines();
 		StartCoroutine(TravelPath());
+
+		anim.SetInteger ("AnimationPar", 1);
 	}
 
 	IEnumerator TravelPath () {
@@ -135,6 +137,7 @@ public class HexUnit : Unit {
 		orientation = transform.localRotation.eulerAngles.y;
 		ListPool<HexCell>.Add(pathToTravel);
 		pathToTravel = null;
+		anim.SetInteger ("AnimationPar", 0);
 	}
 
 	IEnumerator LookAt (Vector3 point) {

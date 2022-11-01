@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 434bba114c5e84a0f8fb19ef55b2766a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  anim: {fileID: 6880684135053770406}
 --- !u!1 &1926056678881898
 GameObject:
   m_ObjectHideFlags: 0
@@ -866,7 +867,6 @@ GameObject:
   - component: {fileID: 6782566603214955180}
   - component: {fileID: 6880684135053770406}
   - component: {fileID: 6904834544658076150}
-  - component: {fileID: 6897643015993387282}
   m_Layer: 0
   m_Name: Stylized Astronaut_White
   m_TagString: Untagged
@@ -929,21 +929,6 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.125, z: -0.01}
---- !u!114 &6897643015993387282
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6785726137761395026}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b14865c388c48e488f651484b1bd92d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 600
-  turnSpeed: 400
-  gravity: 20
 --- !u!1 &6785731852598697566
 GameObject:
   m_ObjectHideFlags: 0
