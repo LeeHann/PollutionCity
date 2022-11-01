@@ -24,7 +24,7 @@ public class MapSetter : MonoBehaviour
     private void Start() 
     {
         terrainMaterial.DisableKeyword("GRID_ON");
-		Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
+		// Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
 
         string fileName = "Maps/" + maps[UnityEngine.Random.Range(0, maps.Length)]  + ".map";
 
@@ -141,7 +141,7 @@ public class MapSetter : MonoBehaviour
         city.PA = GameInfo.startPA;
         
         // place units (explorer, lab)
-        city.units.Add(
+        city.AddUnit(
             hexGrid.AddUnit(
                 Instantiate(hexGrid.unitPrefab[(int)city.sit]), cell, Random.Range(0f, 360f)
             )

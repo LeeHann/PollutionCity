@@ -45,4 +45,9 @@ public class City : MonoBehaviour
         cell.sit = sit;
         cell.Walled = true;
     }
+
+    public void AddUnit(Unit unit)
+    {
+        units.Add(unit);
+    }
 }
