@@ -6,6 +6,52 @@ public class HexFeatureManager : MonoBehaviour {
 	// 	urbanCollections, farmCollections, plantCollections;
 
 
+	//We are using system which uses coordinates:
+
+	//      Y \
+	//         \
+	//          ------ X
+	//         /
+	//      Z /
+	//this way all hexes coordinate is always build of 3 components: X, Y Z, and sum of the value on all of them is equal 0
+	//eg: (1, 1, -2)
+	//distance is calculated as:   Math.max( x2-x1, y2-y1, z2-z1); 
+	//which gives easy way to get result even in huge map
+
+	//      
+	//      -=| X |=-    To East
+	//
+	//     \    0    /
+	//      \_______/
+	//  -1  /       \    1 
+	// ____/    0    \______
+	//     \         /      
+	//  -1  \_______/    1
+	//      /       \
+	//     /    0    \
+
+	//      -=| Y |=-      To North-West
+	//     \    1    /
+	//      \_______/
+	//   1  /       \    0
+	// ____/    0    \______ 
+	//     \         /      
+	//   0  \_______/   -1
+	//      /       \
+	//     /   -1    \
+
+	//      -=| Z |=-      To South-West
+	//     \   -1    /
+	//      \_______/
+	//   0  /       \   -1
+	// ____/    0    \______
+	//     \         /
+	//   1  \_______/    0
+	//      /       \
+	//     /    1    \
+
+
+
 	public HexMesh walls;
 	public Transform[] special;
 
@@ -28,21 +74,19 @@ public class HexFeatureManager : MonoBehaviour {
 
 
 
-
-
-	//public static Action Build;
-	//private void Awake()
- //   {
-	//	Build = () => { AddSpecialFeature(cell, position); }; 
- //   }
+    //public static Action Build;
+    //private void Awake()
+    //{
+    //    Build = () => { AddSpecialFeature(cell, position); };
+    //}
 
 
 
 
-	public void AddSpecialFeature(HexCell cell, Vector3 position)
+    public void AddSpecialFeature(HexCell cell, Vector3 position)
 	{
 		HexHash hash = HexMetrics.SampleHashGrid(position);
-		Transform instance = Instantiate(special[cell.SpecialIndex - 1]);
+		Transform instance = Instantiate(special[cell.SpecialIndex-1]);
 		instance.localPosition = HexMetrics.Perturb(position);
 		instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
 		instance.SetParent(container, false);
@@ -50,6 +94,31 @@ public class HexFeatureManager : MonoBehaviour {
 
 
 
+	public void AddLivingBuilding(HexCell cell, Vector3 position)
+	{
+		HexHash hash = HexMetrics.SampleHashGrid(position);
+		Transform instance = Instantiate(special[0]);
+		instance.localPosition = HexMetrics.Perturb(position);
+		instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
+		instance.SetParent(container, false);
+	}
+
+	public void AddResearchBuilding(HexCell cell, Vector3 position)
+	{
+		HexHash hash = HexMetrics.SampleHashGrid(position);
+		Transform instance = Instantiate(special[1]);
+		instance.localPosition = HexMetrics.Perturb(position);
+		instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
+		instance.SetParent(container, false);
+	}
+	public void AddIndustrialBuilding(HexCell cell, Vector3 position)
+	{
+		HexHash hash = HexMetrics.SampleHashGrid(position);
+		Transform instance = Instantiate(special[2]);
+		instance.localPosition = HexMetrics.Perturb(position);
+		instance.localRotation = Quaternion.Euler(0f, 360f * hash.e, 0f);
+		instance.SetParent(container, false);
+	}
 
 
 	// Transform PickPrefab (
