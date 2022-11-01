@@ -14,9 +14,6 @@ public class HexGrid : MonoBehaviour {
 	public Text cellLabelPrefab;
 	public HexGridChunk chunkPrefab;
 	public HexUnit unitPrefab;
-	public HexUnit LiveBuildPrefab;
-	public HexUnit ResearchPrefab;
-	public HexUnit IndustrialPrefab;
 
 	public Texture2D noiseSource;
 
@@ -59,11 +56,13 @@ public class HexGrid : MonoBehaviour {
 		CreateMap(cellCountX, cellCountZ, wrapping);
 	}
 
-	public void AddUnit (HexUnit unit, HexCell location, float orientation) {
+	public HexUnit AddUnit (HexUnit unit, HexCell location, float orientation) {
 		units.Add(unit);
 		unit.Grid = this;
 		unit.Location = location;
 		unit.Orientation = orientation;
+
+		return unit;
 	}
 
 	public void AddLivingBuilding(HexUnit unit, HexCell location, float orientation)

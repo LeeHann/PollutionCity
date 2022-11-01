@@ -3775,6 +3775,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  units: []
   maps:
   - middle1
   - middle2
@@ -3799,6 +3800,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnPlayer: 0
   boolOver: 0
+  cam: {fileID: 2102140320}
 --- !u!1 &429045662
 GameObject:
   m_ObjectHideFlags: 0
@@ -4805,6 +4807,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Panel: {fileID: 0}
+  hexGrid: {fileID: 0}
 --- !u!4 &559938759
 Transform:
   m_ObjectHideFlags: 0
@@ -9059,8 +9062,6 @@ GameObject:
   - component: {fileID: 1066353874}
   - component: {fileID: 1066353873}
   - component: {fileID: 1066353876}
-  - component: {fileID: 1066353877}
-  - component: {fileID: 1066353878}
   m_Layer: 5
   m_Name: IndustrialBuilding Button
   m_TagString: Untagged
@@ -9196,38 +9197,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 100000, guid: e29e5916b5df6014ebc74a7df781bc25, type: 3}
-  ScrollView: {fileID: 0}
---- !u!114 &1066353877
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1066353871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e363bf5181e448a78cb05f5d6a64930, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hexGrid: {fileID: 1571186511}
-  terrainMaterial: {fileID: 2100000, guid: 6a3f5c7892e4b478e9e745026e6fe9f7, type: 2}
---- !u!114 &1066353878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1066353871}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7980a4cbe74644514bcd19be773f45c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walls: {fileID: 0}
-  special:
-  - {fileID: 400000, guid: f990cc832b99eab4ea0073e7221a922b, type: 3}
-  - {fileID: 400000, guid: 7d7f76a409f6abb49af9ea12e9f32b39, type: 3}
-  - {fileID: 400000, guid: e29e5916b5df6014ebc74a7df781bc25, type: 3}
 --- !u!1 &1066693254
 GameObject:
   m_ObjectHideFlags: 0
@@ -12930,8 +12899,6 @@ GameObject:
   - component: {fileID: 1530205291}
   - component: {fileID: 1530205290}
   - component: {fileID: 1530205293}
-  - component: {fileID: 1530205294}
-  - component: {fileID: 1530205295}
   m_Layer: 5
   m_Name: ResearchBuilding Button
   m_TagString: Untagged
@@ -13067,38 +13034,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   prefab: {fileID: 100000, guid: 7d7f76a409f6abb49af9ea12e9f32b39, type: 3}
-  ResearchTree: {fileID: 0}
---- !u!114 &1530205294
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1530205288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e363bf5181e448a78cb05f5d6a64930, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hexGrid: {fileID: 1571186511}
-  terrainMaterial: {fileID: 2100000, guid: 6a3f5c7892e4b478e9e745026e6fe9f7, type: 2}
---- !u!114 &1530205295
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1530205288}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7980a4cbe74644514bcd19be773f45c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walls: {fileID: 0}
-  special:
-  - {fileID: 400000, guid: f990cc832b99eab4ea0073e7221a922b, type: 3}
-  - {fileID: 400000, guid: 7d7f76a409f6abb49af9ea12e9f32b39, type: 3}
-  - {fileID: 400000, guid: e29e5916b5df6014ebc74a7df781bc25, type: 3}
 --- !u!1 &1548971768
 GameObject:
   m_ObjectHideFlags: 0
@@ -13293,10 +13228,11 @@ MonoBehaviour:
   cellPrefab: {fileID: 11422220, guid: 94c2312396697489abc866a188f80152, type: 3}
   cellLabelPrefab: {fileID: 11470134, guid: f68794ca03b6f4510b9a5bd6ee9ba2f4, type: 3}
   chunkPrefab: {fileID: 114000010052569294, guid: 7622d007cafd044a1b1189c0b93d2912, type: 3}
-  unitPrefab: {fileID: 114701888605048992, guid: 5661a1efcb9464721b4db3f694ded559, type: 3}
-  LiveBuildPrefab: {fileID: 4834124203660043953, guid: 05d94ab4d1db3584ea7543e7f5315ead, type: 3}
-  ResearchPrefab: {fileID: 1678487160485291381, guid: 351ec4d23eb41a1459c7a90ec379f4a8, type: 3}
-  IndustrialPrefab: {fileID: 3164981773699405226, guid: dead43e65e94cfa4ea216cbed4191510, type: 3}
+  unitPrefab:
+  - {fileID: 114701888605048992, guid: 5661a1efcb9464721b4db3f694ded559, type: 3}
+  - {fileID: 114701888605048992, guid: 5f1918b98af95e14c826c18f8486c1a1, type: 3}
+  - {fileID: 114701888605048992, guid: 78822ad373859be4c9af4d27465715c8, type: 3}
+  - {fileID: 114701888605048992, guid: 70bd2a17dbe34684c977045473ff0d01, type: 3}
   noiseSource: {fileID: 2800000, guid: 38701cdeb1fb9427cbb585f917aa59cb, type: 3}
   seed: 1234
 --- !u!4 &1571186512
@@ -13406,7 +13342,6 @@ GameObject:
   - component: {fileID: 1580355896}
   - component: {fileID: 1580355895}
   - component: {fileID: 1580355898}
-  - component: {fileID: 1580355899}
   m_Layer: 5
   m_Name: Construct Button
   m_TagString: Untagged
@@ -13543,20 +13478,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Panel: {fileID: 1576570166}
---- !u!114 &1580355899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1580355893}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e363bf5181e448a78cb05f5d6a64930, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
   hexGrid: {fileID: 1571186511}
-  terrainMaterial: {fileID: 2100000, guid: 6a3f5c7892e4b478e9e745026e6fe9f7, type: 2}
 --- !u!1 &1587434539
 GameObject:
   m_ObjectHideFlags: 0
@@ -16530,8 +16452,6 @@ GameObject:
   - component: {fileID: 1885594307}
   - component: {fileID: 1885594306}
   - component: {fileID: 1885594309}
-  - component: {fileID: 1885594310}
-  - component: {fileID: 1885594311}
   m_Layer: 5
   m_Name: LiveBuilding Button
   m_TagString: Untagged
@@ -16606,7 +16526,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1885594309}
         m_TargetAssemblyTypeName: Living_Build, Assembly-CSharp
-        m_MethodName: LivingBuild
+        m_MethodName: Live
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -16666,42 +16586,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fec334b0a2bba44bbdeb2dee7500b10, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hexMapEditor: {fileID: 0}
-  hexgrid: {fileID: 1571186511}
-  hexCell: {fileID: 11422220, guid: 94c2312396697489abc866a188f80152, type: 3}
-  hexUnit: {fileID: 4834124203660043953, guid: 05d94ab4d1db3584ea7543e7f5315ead, type: 3}
   prefab: {fileID: 100000, guid: f990cc832b99eab4ea0073e7221a922b, type: 3}
---- !u!114 &1885594310
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1885594304}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1e363bf5181e448a78cb05f5d6a64930, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hexGrid: {fileID: 1571186511}
-  terrainMaterial: {fileID: 2100000, guid: 6a3f5c7892e4b478e9e745026e6fe9f7, type: 2}
---- !u!114 &1885594311
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1885594304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7980a4cbe74644514bcd19be773f45c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walls: {fileID: 0}
-  special:
-  - {fileID: 400000, guid: f990cc832b99eab4ea0073e7221a922b, type: 3}
-  - {fileID: 400000, guid: 7d7f76a409f6abb49af9ea12e9f32b39, type: 3}
-  - {fileID: 400000, guid: e29e5916b5df6014ebc74a7df781bc25, type: 3}
 --- !u!1 &1916619403
 GameObject:
   m_ObjectHideFlags: 0

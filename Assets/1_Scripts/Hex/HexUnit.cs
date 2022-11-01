@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 
-public class HexUnit : MonoBehaviour {
+public class HexUnit : Unit {
 
 	const float rotationSpeed = 180f;
 	const float travelSpeed = 4f;
