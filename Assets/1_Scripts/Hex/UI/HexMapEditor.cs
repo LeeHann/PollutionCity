@@ -125,8 +125,8 @@ public class HexMapEditor : MonoBehaviour {
     }
 
     void Awake () {
-		terrainMaterial.EnableKeyword("GRID_ON");
-		//terrainMaterial.DisableKeyword("GRID_ON");
+		//terrainMaterial.EnableKeyword("GRID_ON");
+		terrainMaterial.DisableKeyword("GRID_ON");
 		Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
         SetEditMode(true);
     }
@@ -146,6 +146,18 @@ public class HexMapEditor : MonoBehaviour {
 				}
 				return;
 			}
+			if (Input.GetKeyDown(KeyCode.I))
+            {
+				CreateLivingBuilding();
+            }
+			if (Input.GetKeyDown(KeyCode.O))
+            {
+				CreateResearchBulding();
+            }
+			if (Input.GetKeyDown(KeyCode.P))
+            {
+				CreateIndustrialBulding();
+            }
 		}
 		previousCell = null;
 	}
@@ -164,6 +176,48 @@ public class HexMapEditor : MonoBehaviour {
 			);
 		}
 	}
+
+	public void CreateLivingBuilding()
+    {
+		HexCell cell = GetCellUnderCursor();
+		if(cell && !cell.Unit)
+        {
+			hexGrid.AddLivingBuilding(
+				Instantiate(HexUnit.LivingPrefab),
+				cell,
+				Random.Range(0f, 360f)
+				);
+        }
+    }
+
+	public void CreateResearchBulding()
+    {
+		HexCell cell = GetCellUnderCursor();
+		if (cell && !cell.Unit)
+		{
+			hexGrid.AddResearchBuilding(
+				Instantiate(HexUnit.ResearchPrefab),
+				cell,
+				Random.Range(0f, 360f)
+				);
+		}
+
+	}
+	public void CreateIndustrialBulding()
+	{
+		HexCell cell = GetCellUnderCursor();
+		if (cell && !cell.Unit)
+		{
+			hexGrid.AddIndustrialBuilding(
+				Instantiate(HexUnit.IndustrialPrefab),
+				cell,
+				Random.Range(0f, 360f)
+				);
+		}
+
+	}
+
+
 
 	void DestroyUnit () {
 		HexCell cell = GetCellUnderCursor();

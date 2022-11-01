@@ -12,6 +12,7 @@ public class Industrial_Build : MonoBehaviour
 
     HexGrid grid;
     public GameObject prefab;
+    public GameObject ScrollView; // 제조 스크롤뷰 UI 연동
     Transform container;
 
     HexMapEditor hexMapEditor;
@@ -21,6 +22,7 @@ public class Industrial_Build : MonoBehaviour
     Vector3 position;
     //HexMetrics hexMetrics;
 
+    
 
 
     public void Clear()
@@ -62,32 +64,38 @@ public class Industrial_Build : MonoBehaviour
 
     public void IndustrialBuild()
     {
-        hexMapEditor.GetCellUnderCursor();
+        //hexMapEditor.SetEditMode(true);
+        //hexMapEditor.SetApplySpecialIndex(true);
+        //hexMapEditor.SetSpecialIndex(2);
+        //hexMapEditor.GetCellUnderCursor();
+        //if (Input.GetMouseButton(0))
+        //{
+        //    hexFeatureManager.AddIndustrialBuilding(cell, position);
+        //    hexMapEditor.SetApplySpecialIndex(false);
+        //    hexMapEditor.SetEditMode(false);
+        //}
+
         if (Input.GetMouseButton(0))
         {
-            hexFeatureManager.AddIndustrialBuilding(cell, position);
-            hexMapEditor.SetApplySpecialIndex(false);
+            hexMapEditor.CreateIndustrialBulding();
+            if( HexUnit.IndustrialPrefab && ScrollView != null)
+            {
+                bool isActivate = ScrollView.activeSelf;
+
+                ScrollView.SetActive(!isActivate);
+            }
         }
     }
 
 
     void Start()
     {
-        hexMapEditor.SetEditMode(true);
-        hexMapEditor.SetApplySpecialIndex(true);
-        hexMapEditor.SetSpecialIndex(2);
 
-        //prefab = GameObject.Instantiate(prefab);
-        //container = prefab.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetMouseButton(0))
-        //{
-        //    hexFeatureManager.AddIndustrialBuilding(cell, position);
-        //    hexMapEditor.SetApplySpecialIndex(false);
-        //}
+
     }
 }

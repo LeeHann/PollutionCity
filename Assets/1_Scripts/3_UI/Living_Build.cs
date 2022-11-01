@@ -6,18 +6,20 @@ using TMPro;
 
 public class Living_Build : MonoBehaviour
 {
-    
 
 
-    
-    HexGrid grid;
+
+    public HexMapEditor hexMapEditor;
+    public HexGrid hexgrid;
+    public HexCell hexCell;
+    public HexUnit hexUnit;
     public GameObject prefab;
     Transform container;
 
-    HexMapEditor hexMapEditor;
+  // HexMapEditor hexMapEditor;
     HexFeatureManager hexFeatureManager;
     HexGridChunk hexGridChunk;
-    HexCell cell;
+
     Vector3 position;
     //HexMetrics hexMetrics;
 
@@ -32,6 +34,21 @@ public class Living_Build : MonoBehaviour
         container = new GameObject("Features Container").transform;
         container.SetParent(transform, false);
     }
+
+    public HexCell Location
+    {
+        get       
+        {
+            return location;
+        }
+        set
+        {
+            location = value;
+            transform.localPosition = value.Position;
+        }
+    }
+
+    HexCell location;
 
     //public void AddSpecialFeature(HexCell cell, Vector3 position)
     //{
@@ -63,23 +80,36 @@ public class Living_Build : MonoBehaviour
 
     public void LivingBuild()
     {
-        
-        hexMapEditor.GetCellUnderCursor();
+
+        //hexMapEditor.GetCellUnderCursor();
+        ////Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
+        //hexMapEditor.SetEditMode(true);
+        //hexMapEditor.SetApplySpecialIndex(true);
+        //hexMapEditor.SetSpecialIndex(0);
+
+        //if (Input.GetMouseButton(0))
+        //{
+        //    hexFeatureManager.AddLivingBuilding(cell, position);
+        //}
+
+        //hexMapEditor.SetApplySpecialIndex(false);
+        //hexMapEditor.SetEditMode(false);
+        //if (Input.GetMouseButton(0))
+        //{
+        //    hexMapEditor.CreateLivingBuilding();
+        //}
         if (Input.GetMouseButton(0))
         {
-            hexFeatureManager.AddLivingBuilding(cell, position);
-            hexMapEditor.SetApplySpecialIndex(false);
+            hexMapEditor.CreateLivingBuilding();
         }
+
+
     }
     
 
 
     void Start()
     {
-        Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
-        hexMapEditor.SetEditMode(true);
-        hexMapEditor.SetApplySpecialIndex(true);
-        hexMapEditor.SetSpecialIndex(0);
 
         //prefab = GameObject.Instantiate(prefab);
         //container = prefab.transform;
@@ -93,5 +123,6 @@ public class Living_Build : MonoBehaviour
         //    hexFeatureManager.AddLivingBuilding(cell, position);
         //    hexMapEditor.SetApplySpecialIndex(false);
         //}
+
     }
 }

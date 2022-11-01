@@ -9,7 +9,9 @@ public class HexUnit : MonoBehaviour {
 	const float travelSpeed = 4f;
 
 	public static HexUnit unitPrefab;
-
+	public static HexUnit LivingPrefab;
+	public static HexUnit ResearchPrefab;
+	public static HexUnit IndustrialPrefab;
 	public HexGrid Grid { get; set; }
 
 	public HexCell Location {
@@ -214,10 +216,19 @@ public class HexUnit : MonoBehaviour {
 		float orientation = reader.ReadSingle();
 		grid.AddUnit(
 			Instantiate(unitPrefab), grid.GetCell(coordinates), orientation
+        );
+        grid.AddLivingBuilding(
+            Instantiate(LivingPrefab), grid.GetCell(coordinates), orientation
+        );
+		grid.AddResearchBuilding(
+			Instantiate(ResearchPrefab), grid.GetCell(coordinates), orientation
 		);
-	}
+		grid.AddIndustrialBuilding(
+			Instantiate(IndustrialPrefab), grid.GetCell(coordinates), orientation
+		);
+    }
 
-	void OnEnable () {
+    void OnEnable () {
 		if (location) {
 			transform.localPosition = location.Position;
 			if (currentTravelLocation) {
@@ -228,27 +239,32 @@ public class HexUnit : MonoBehaviour {
 		}
 	}
 
-//	void OnDrawGizmos () {
-//		if (pathToTravel == null || pathToTravel.Count == 0) {
-//			return;
-//		}
-//
-//		Vector3 a, b, c = pathToTravel[0].Position;
-//
-//		for (int i = 1; i < pathToTravel.Count; i++) {
-//			a = c;
-//			b = pathToTravel[i - 1].Position;
-//			c = (b + pathToTravel[i].Position) * 0.5f;
-//			for (float t = 0f; t < 1f; t += 0.1f) {
-//				Gizmos.DrawSphere(Bezier.GetPoint(a, b, c, t), 2f);
-//			}
-//		}
-//
-//		a = c;
-//		b = pathToTravel[pathToTravel.Count - 1].Position;
-//		c = b;
-//		for (float t = 0f; t < 1f; t += 0.1f) {
-//			Gizmos.DrawSphere(Bezier.GetPoint(a, b, c, t), 2f);
-//		}
-//	}
+    void OnDrawGizmos()
+    {
+        if (pathToTravel == null || pathToTravel.Count == 0)
+        {
+            return;
+        }
+
+        Vector3 a, b, c = pathToTravel[0].Position;
+
+        for (int i = 1; i < pathToTravel.Count; i++)
+        {
+            a = c;
+            b = pathToTravel[i - 1].Position;
+            c = (b + pathToTravel[i].Position) * 0.5f;
+            for (float t = 0f; t < 1f; t += 0.1f)
+            {
+                Gizmos.DrawSphere(Bezier.GetPoint(a, b, c, t), 2f);
+            }
+        }
+
+        a = c;
+        b = pathToTravel[pathToTravel.Count - 1].Position;
+        c = b;
+        for (float t = 0f; t < 1f; t += 0.1f)
+        {
+            Gizmos.DrawSphere(Bezier.GetPoint(a, b, c, t), 2f);
+        }
+    }
 }

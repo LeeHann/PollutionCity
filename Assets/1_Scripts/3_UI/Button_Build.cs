@@ -14,7 +14,7 @@ public class Button_Build : MonoBehaviour
 
     public GameObject Panel;
     //public Button Living, Research, Industrial;
-    public HexGrid hexGrid;
+    HexGrid hexGrid;
     HexFeatureManager features;
     HexGridChunk gridChunk;
     HexCell cell;

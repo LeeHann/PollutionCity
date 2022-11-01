@@ -14,6 +14,9 @@ public class HexGrid : MonoBehaviour {
 	public Text cellLabelPrefab;
 	public HexGridChunk chunkPrefab;
 	public HexUnit unitPrefab;
+	public HexUnit LiveBuildPrefab;
+	public HexUnit ResearchPrefab;
+	public HexUnit IndustrialPrefab;
 
 	public Texture2D noiseSource;
 
@@ -48,6 +51,9 @@ public class HexGrid : MonoBehaviour {
 		HexMetrics.noiseSource = noiseSource;
 		HexMetrics.InitializeHashGrid(seed);
 		HexUnit.unitPrefab = unitPrefab;
+		HexUnit.LivingPrefab = LiveBuildPrefab;
+		HexUnit.ResearchPrefab = ResearchPrefab;
+		HexUnit.IndustrialPrefab = IndustrialPrefab;
 		cellShaderData = gameObject.AddComponent<HexCellShaderData>();
 		cellShaderData.Grid = this;
 		CreateMap(cellCountX, cellCountZ, wrapping);
@@ -60,6 +66,28 @@ public class HexGrid : MonoBehaviour {
 		unit.Orientation = orientation;
 	}
 
+	public void AddLivingBuilding(HexUnit unit, HexCell location, float orientation)
+	{
+		units.Add(unit);
+		unit.Grid = this;
+		unit.Location = location;
+		unit.Orientation = orientation;
+	}
+	public void AddResearchBuilding(HexUnit unit, HexCell location, float orientation)
+	{
+		units.Add(unit);
+		unit.Grid = this;
+		unit.Location = location;
+		unit.Orientation = orientation;
+	}
+
+	public void AddIndustrialBuilding(HexUnit unit, HexCell location, float orientation)
+	{
+		units.Add(unit);
+		unit.Grid = this;
+		unit.Location = location;
+		unit.Orientation = orientation;
+	}
 	public void RemoveUnit (HexUnit unit) {
 		units.Remove(unit);
 		unit.Die();
@@ -137,6 +165,9 @@ public class HexGrid : MonoBehaviour {
 			HexMetrics.noiseSource = noiseSource;
 			HexMetrics.InitializeHashGrid(seed);
 			HexUnit.unitPrefab = unitPrefab;
+			HexUnit.LivingPrefab = LiveBuildPrefab;
+			HexUnit.ResearchPrefab = ResearchPrefab;
+			HexUnit.IndustrialPrefab = IndustrialPrefab;
 			HexMetrics.wrapSize = wrapping ? cellCountX : 0;
 			ResetVisibility();
 		}

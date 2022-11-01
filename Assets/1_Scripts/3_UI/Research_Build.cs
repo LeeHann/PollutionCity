@@ -12,6 +12,7 @@ public class Research_Build : MonoBehaviour
 
     HexGrid grid;
     public GameObject prefab;
+    public GameObject ResearchTree;     //연구트리 UI  연동
     Transform container;
 
     HexMapEditor hexMapEditor;
@@ -63,21 +64,35 @@ public class Research_Build : MonoBehaviour
 
     public void ResearchBuild()
     {
-        hexMapEditor.GetCellUnderCursor();
+
+        //hexMapEditor.GetCellUnderCursor();
+        //hexMapEditor.SetEditMode(true);
+        //hexMapEditor.SetApplySpecialIndex(true);
+        //hexMapEditor.SetSpecialIndex(1);
+        //if (Input.GetMouseButton(0))
+        //{
+        //    hexFeatureManager.AddResearchBuilding(cell, position);
+        //    hexMapEditor.SetApplySpecialIndex(false);
+        //}
+
         if (Input.GetMouseButton(0))
         {
-            hexFeatureManager.AddResearchBuilding(cell, position);
-            hexMapEditor.SetApplySpecialIndex(false);
+            hexMapEditor.CreateResearchBulding();
+            if (HexUnit.ResearchPrefab && ResearchTree != null)
+            {
+                bool isActivate = ResearchTree.activeSelf;
+
+                ResearchTree.SetActive(!isActivate);
+            }
         }
+
     }
 
 
 
     void Start()
     {
-        hexMapEditor.SetEditMode(true);
-        hexMapEditor.SetApplySpecialIndex(true);
-        hexMapEditor.SetSpecialIndex(1);
+
 
         //prefab = GameObject.Instantiate(prefab);
         //container = prefab.transform;
