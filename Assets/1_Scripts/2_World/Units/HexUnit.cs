@@ -5,6 +5,7 @@ using System.IO;
 
 public class HexUnit : Unit {
 	[SerializeField] Animator anim;
+
 	const float rotationSpeed = 180f;
 	const float travelSpeed = 1.5f;
 
@@ -181,20 +182,12 @@ public class HexUnit : Unit {
 			return -1;
 		}
 		HexEdgeType edgeType = fromCell.GetEdgeType(toCell);
-		// if (edgeType == HexEdgeType.Cliff) {
-		// 	return -1;
-		// }
 		int moveCost;
 		if (fromCell.HasRoadThroughEdge(direction)) {
 			moveCost = 1;
 		}
-		// else if (fromCell.Walled != toCell.Walled) {
-		// 	return -1;
-		// }
 		else {
 			moveCost = edgeType == HexEdgeType.Flat ? 5 : 10;
-			// moveCost +=
-			// 	toCell.UrbanLevel + toCell.FarmLevel + toCell.PlantLevel;
 		}
 		return moveCost;
 	}
@@ -230,28 +223,4 @@ public class HexUnit : Unit {
 			}
 		}
 	}
-
-//	void OnDrawGizmos () {
-//		if (pathToTravel == null || pathToTravel.Count == 0) {
-//			return;
-//		}
-//
-//		Vector3 a, b, c = pathToTravel[0].Position;
-//
-//		for (int i = 1; i < pathToTravel.Count; i++) {
-//			a = c;
-//			b = pathToTravel[i - 1].Position;
-//			c = (b + pathToTravel[i].Position) * 0.5f;
-//			for (float t = 0f; t < 1f; t += 0.1f) {
-//				Gizmos.DrawSphere(Bezier.GetPoint(a, b, c, t), 2f);
-//			}
-//		}
-//
-//		a = c;
-//		b = pathToTravel[pathToTravel.Count - 1].Position;
-//		c = b;
-//		for (float t = 0f; t < 1f; t += 0.1f) {
-//			Gizmos.DrawSphere(Bezier.GetPoint(a, b, c, t), 2f);
-//		}
-//	}
 }

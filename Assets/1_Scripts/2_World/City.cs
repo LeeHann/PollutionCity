@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class City : MonoBehaviour
 {
+    [HideInInspector] public HexMapCamera cam;
+
     public bool myTurn;
 
     public PlayerSit sit;
@@ -12,12 +14,8 @@ public class City : MonoBehaviour
     public List<HexCell> cells = new List<HexCell>();
     public HexCell rootCell;
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            myTurn = false;
-        }
-    }
+    public List<Unit> actions = new List<Unit>();
+    protected Coroutine _coroutine = null;
 
     public int Money {
         get {
@@ -39,6 +37,51 @@ public class City : MonoBehaviour
     }
     private int pa;
 
+    public void MyTurn()
+    {
+        myTurn = true;
+        actions.AddRange(units);
+        CameraPositioning(actions[actions.Count-1].gameObject);
+        StartCoroutine(Scheduler());
+    }
+
+    protected virtual IEnumerator Scheduler()
+    {
+        while (actions.Count > 0)
+		{
+            Unit action = actions[actions.Count-1];
+            CameraPositioning(action.gameObject);
+
+            switch (action.unitType)
+            {
+                case UnitType.Explorer: // 탐사 유닛 행동을 결정하기
+                    _coroutine = StartCoroutine(ActionExplorer(action));
+                    yield return new WaitUntil(() => _coroutine == null);
+                    break;
+
+	            case UnitType.Researcher: // 연구 유닛 행동을 결정하기
+                    _coroutine = StartCoroutine(ActionResearcher(action));
+                    yield return new WaitUntil(() => _coroutine == null);
+                    break;
+	            case UnitType.Manufacturer: // 제조 유닛 행동을 결정하기
+                    _coroutine = StartCoroutine(ActionManufacturer(action));
+                    yield return new WaitUntil(() => _coroutine == null);
+                    break;
+            }
+            actions.RemoveAt(actions.Count-1);
+		}
+		myTurn = false;	
+    }
+
+    protected virtual IEnumerator ActionExplorer(Unit action)
+    { yield return null; }
+
+    protected virtual IEnumerator ActionResearcher(Unit action)
+    { yield return null; }
+
+    protected virtual IEnumerator ActionManufacturer(Unit action)
+    { yield return null; }
+
     public void AddCell(HexCell cell)
     {
         cells.Add(cell);
@@ -49,5 +92,10 @@ public class City : MonoBehaviour
     public void AddUnit(Unit unit)
     {
         units.Add(unit);
+    }
+
+    protected void CameraPositioning(GameObject obj)
+    {
+        cam.transform.localPosition = obj.transform.localPosition;
     }
 }
