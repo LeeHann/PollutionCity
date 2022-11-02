@@ -6,6 +6,8 @@ public class HexCell : MonoBehaviour {
 
 	public HexCoordinates coordinates;
 	public RectTransform uiRect;
+	[HideInInspector] public Image highlight;
+	[HideInInspector] public Button highlightBtn;
 
 #region City Boundary
 
@@ -617,14 +619,27 @@ public class HexCell : MonoBehaviour {
 	}
 
 	public void DisableHighlight () {
-		Image highlight = uiRect.GetChild(0).GetComponent<Image>();
+		if (highlight == null)
+			highlight = uiRect.GetChild(0).GetComponent<Image>();
 		highlight.enabled = false;
 	}
 
 	public void EnableHighlight (Color color) {
-		Image highlight = uiRect.GetChild(0).GetComponent<Image>();
+		if (highlight == null)
+			highlight = uiRect.GetChild(0).GetComponent<Image>();
+		if (highlightBtn == null)
+			highlightBtn = highlight.GetComponent<Button>();
 		highlight.color = color;
 		highlight.enabled = true;
+	}
+
+	public bool IsEnabledHighlight ()
+	{
+		if (highlight == null)
+			highlight = uiRect.GetChild(0).GetComponent<Image>();
+		if (highlightBtn == null)
+			highlightBtn = highlight.GetComponent<Button>();
+		return highlight.enabled;
 	}
 
 	public void SetMapData (float data) {

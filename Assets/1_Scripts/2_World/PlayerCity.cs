@@ -6,12 +6,7 @@ public class PlayerCity : City
 {	
 	protected override IEnumerator ActionExplorer(Unit action) // 탐사 행동 결정 함수
     {
-		while (true)
-		{
-			if (Input.GetKeyDown(KeyCode.Alpha1))
-				break;
-			yield return null;
-		}
+		yield return new WaitUntil(() => action.TurnUnit == false);
 		_coroutine = null;
 	}
 

@@ -33,7 +33,7 @@ public class HexGrid : MonoBehaviour {
 
 	HexCellPriorityQueue searchFrontier;
 
-	int searchFrontierPhase;
+	public int searchFrontierPhase;
 
 	HexCell currentPathFrom, currentPathTo;
 	bool currentPathExists;
@@ -341,14 +341,12 @@ public class HexGrid : MonoBehaviour {
 		if (currentPathExists) {
 			HexCell current = currentPathTo;
 			while (current != currentPathFrom) {
-				int turn = (current.Distance - 1) / speed;
-				current.SetLabel(turn.ToString());
-				current.EnableHighlight(Color.white);
+				current.EnableHighlight(Color.yellow);
 				current = current.PathFrom;
 			}
 		}
-		currentPathFrom.EnableHighlight(Color.blue);
-		currentPathTo.EnableHighlight(Color.red);
+		currentPathFrom.EnableHighlight(Color.yellow);
+		currentPathTo.EnableHighlight(Color.yellow);
 	}
 
 	public void FindPath (HexCell fromCell, HexCell toCell, HexUnit unit) {
@@ -359,7 +357,7 @@ public class HexGrid : MonoBehaviour {
 		ShowPath(unit.Speed);
 	}
 
-	bool Search (HexCell fromCell, HexCell toCell, HexUnit unit) {
+	public bool Search (HexCell fromCell, HexCell toCell, HexUnit unit) {
 		int speed = unit.Speed;
 		searchFrontierPhase += 2;
 		if (searchFrontier == null) {
@@ -400,6 +398,9 @@ public class HexGrid : MonoBehaviour {
 
 				int distance = current.Distance + moveCost;
 				int turn = (distance - 1) / speed;
+				if (turn > 1) 
+					continue;
+
 				if (turn > currentTurn) {
 					distance = turn * speed + moveCost;
 				}

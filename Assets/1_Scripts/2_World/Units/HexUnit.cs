@@ -2,8 +2,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine.EventSystems;
 
-public class HexUnit : Unit {
+public class HexUnit : Unit, IPointerClickHandler
+{
 	[SerializeField] Animator anim;
 
 	const float rotationSpeed = 180f;
@@ -57,6 +59,45 @@ public class HexUnit : Unit {
 	float orientation;
 
 	List<HexCell> pathToTravel;
+	List<HexCell> highlights = new List<HexCell>();
+
+	public void OnPointerClick(PointerEventData e) 
+	{
+		if (!TurnUnit) return;
+		Queue queue = new Queue();
+		queue.Enqueue(Location);
+
+		while (queue.Count > 0) {
+			HexCell cell = (HexCell)queue.Dequeue();
+			cell.EnableHighlight(Color.yellow);
+			highlights.Add(cell);
+
+			cell.highlightBtn.onClick.RemoveAllListeners();
+			cell.highlightBtn.onClick.AddListener(() => OnClickHighlight(cell));
+
+			for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
+				HexCell neighbor = cell.GetNeighbor(d);
+				
+				if (neighbor.IsEnabledHighlight() || !Grid.Search(Location, neighbor, this))
+					continue;
+
+				queue.Enqueue(neighbor);
+				
+			}
+		}
+		Location.DisableHighlight();
+	}
+	
+	public void OnClickHighlight(HexCell cell)
+	{
+		for (int i=highlights.Count-1; i>0; i--)
+		{
+			highlights[i].DisableHighlight();
+			highlights.RemoveAt(i);
+		}
+		Grid.FindPath(Location, cell, this);
+		Travel(Grid.GetPath());
+	}
 
 	public void ValidateLocation () {
 		transform.localPosition = location.Position;
@@ -139,6 +180,9 @@ public class HexUnit : Unit {
 		ListPool<HexCell>.Add(pathToTravel);
 		pathToTravel = null;
 		anim.SetInteger ("AnimationPar", 0);
+
+		Grid.ClearPath();
+		TurnUnit = false;
 	}
 
 	IEnumerator LookAt (Vector3 point) {

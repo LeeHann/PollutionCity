@@ -51,6 +51,7 @@ public class City : MonoBehaviour
         while (actions.Count > 0)
 		{
             Unit action = actions[actions.Count-1];
+            action.TurnUnit = true;
             CameraPositioning(action.gameObject);
 
             switch (action.unitType)
@@ -70,6 +71,7 @@ public class City : MonoBehaviour
                     yield return new WaitUntil(() => _coroutine == null);
                     break;
             }
+            action.TurnUnit = false;
             actions.RemoveAt(actions.Count-1);
             yield return dot5;
 		}
@@ -99,6 +101,7 @@ public class City : MonoBehaviour
 
     protected void CameraPositioning(GameObject obj)
     {
-        cam.transform.localPosition = obj.transform.localPosition;
+        cam.transform.localPosition =  
+                cam.WrapPosition(obj.transform.localPosition);
     }
 }
