@@ -16,6 +16,7 @@ public class City : MonoBehaviour
 
     public List<Unit> actions = new List<Unit>();
     protected Coroutine _coroutine = null;
+    WaitForSeconds dot5 = new WaitForSeconds(0.5f);
 
     public int Money {
         get {
@@ -63,12 +64,14 @@ public class City : MonoBehaviour
                     _coroutine = StartCoroutine(ActionResearcher(action));
                     yield return new WaitUntil(() => _coroutine == null);
                     break;
+
 	            case UnitType.Manufacturer: // 제조 유닛 행동을 결정하기
                     _coroutine = StartCoroutine(ActionManufacturer(action));
                     yield return new WaitUntil(() => _coroutine == null);
                     break;
             }
             actions.RemoveAt(actions.Count-1);
+            yield return dot5;
 		}
 		myTurn = false;	
     }
