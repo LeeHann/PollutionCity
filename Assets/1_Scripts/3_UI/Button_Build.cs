@@ -13,19 +13,18 @@ public class Button_Build : MonoBehaviour
     //public HexGrid hexgrid;
 
     public GameObject Panel;
-    //public Button Living, Research, Industrial;
-    public HexGrid hexGrid;
+    public GameObject Liv_Btn;
+    public GameObject Res_Btn;
+    public GameObject Ind_Btn;
+    public GameObject Res_Next;
+    public GameObject Ind_Next;
+    bool Activate;
+    HexGrid hexGrid;
     HexFeatureManager features;
     HexGridChunk gridChunk;
     HexCell cell;
     Vector3 position;
 
-    //Button button;
-    //HexCell GetCellUnderCursor()
-    //{
-    //    return
-    //        hexGrid.GetCell(Camera.main.ScreenPointToRay(Input.mousePosition));
-    //}
 
 
     void isSpecial()
@@ -40,19 +39,32 @@ public class Button_Build : MonoBehaviour
 
     public void OpenPanel()
     {
+        Debug.Log("Button Clicked");
         if(Panel != null)
         {
             bool isActivate = Panel.activeSelf;
-
+            
             Panel.SetActive(!isActivate);
         }
+
+        Liv_Btn.SetActive(true);
+        Res_Btn.SetActive(false);
+        Ind_Btn.SetActive(false);
+        Res_Next.SetActive(true);
+        Ind_Next.SetActive(true);
+
+        
     }
 
+    public void ClosePanel()
+    {
+        Panel.SetActive(false);
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
 
     }
 

@@ -9,18 +9,6 @@ public class HexGameUI : MonoBehaviour {
 
 	HexUnit selectedUnit;
 
-	public void SetEditMode (bool toggle) {
-		enabled = !toggle;
-		grid.ShowUI(!toggle);
-		grid.ClearPath();
-		if (toggle) {
-			Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
-		}
-		else {
-			Shader.DisableKeyword("HEX_MAP_EDIT_MODE");
-		}
-	}
-
 	void Update () {
 		if (!EventSystem.current.IsPointerOverGameObject()) {
 			if (Input.GetMouseButtonDown(0)) {
@@ -71,5 +59,14 @@ public class HexGameUI : MonoBehaviour {
 			return true;
 		}
 		return false;
+	}
+
+	public void OnclickSetting()	// dev 
+	{
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
 	}
 }

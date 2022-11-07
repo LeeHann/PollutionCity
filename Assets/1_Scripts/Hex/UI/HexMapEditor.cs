@@ -5,7 +5,7 @@ using System.IO;
 public class HexMapEditor : MonoBehaviour {
 
 	public HexGrid hexGrid;
-
+	Living_Build living_Build;
 	public Material terrainMaterial;
 
 	int activeElevation;
@@ -133,7 +133,7 @@ public class HexMapEditor : MonoBehaviour {
 
 	void Update () {
 		if (!EventSystem.current.IsPointerOverGameObject()) {
-			if (Input.GetMouseButton(0)) {
+			if (Input.GetMouseButtonDown(0)) {
 				HandleInput();
 				return;
 			}
@@ -146,6 +146,11 @@ public class HexMapEditor : MonoBehaviour {
 				}
 				return;
 			}
+
+		}
+		else if (Input.GetKeyDown(KeyCode.W))
+        {
+			terrainMaterial.DisableKeyword("GRID_ON");
 		}
 		previousCell = null;
 	}
@@ -156,6 +161,7 @@ public class HexMapEditor : MonoBehaviour {
 	}
 
 
+
 	void CreateUnit () {
 		HexCell cell = GetCellUnderCursor();
 		if (cell && !cell.Unit) {
@@ -164,6 +170,48 @@ public class HexMapEditor : MonoBehaviour {
 			);
 		}
 	}
+
+	public void CreateLivingBuilding()
+    {
+		HexCell cell = GetCellUnderCursor();
+		if(cell && !cell.Unit)
+        {
+			hexGrid.AddLivingBuilding(
+				Instantiate(HexUnit.LivingPrefab),
+				cell,
+				Random.Range(0f, 360f)
+				);
+        }
+    }
+
+	public void CreateResearchBulding()
+    {
+		HexCell cell = GetCellUnderCursor();
+		if (cell && !cell.Unit)
+		{
+			hexGrid.AddResearchBuilding(
+				Instantiate(HexUnit.ResearchPrefab),
+				cell,
+				Random.Range(0f, 360f)
+				);
+		}
+
+	}
+	public void CreateIndustrialBulding()
+	{
+		HexCell cell = GetCellUnderCursor();
+		if (cell && !cell.Unit)
+		{
+			hexGrid.AddIndustrialBuilding(
+				Instantiate(HexUnit.IndustrialPrefab),
+				cell,
+				Random.Range(0f, 360f)
+				);
+		}
+
+	}
+
+
 
 	void DestroyUnit () {
 		HexCell cell = GetCellUnderCursor();

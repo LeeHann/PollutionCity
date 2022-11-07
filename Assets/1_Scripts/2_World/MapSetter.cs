@@ -146,7 +146,8 @@ public class MapSetter : MonoBehaviour
                 Instantiate(hexGrid.unitPrefab[(int)city.sit]), cell, Random.Range(0f, 360f)
             )
         );
-
+        
+        city.cam = cam;
         return city;
     } 
 

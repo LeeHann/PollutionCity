@@ -14,6 +14,10 @@ public class HexGrid : MonoBehaviour {
 	public Text cellLabelPrefab;
 	public HexGridChunk chunkPrefab;
 	public HexUnit[] unitPrefab;
+	public HexUnit LiveBuildPrefab;
+	public HexUnit ResearchPrefab;
+	public HexUnit IndustrialPrefab;
+
 
 	public Texture2D noiseSource;
 
@@ -33,7 +37,7 @@ public class HexGrid : MonoBehaviour {
 
 	HexCellPriorityQueue searchFrontier;
 
-	int searchFrontierPhase;
+	public int searchFrontierPhase;
 
 	HexCell currentPathFrom, currentPathTo;
 	bool currentPathExists;
@@ -48,6 +52,9 @@ public class HexGrid : MonoBehaviour {
 		HexMetrics.noiseSource = noiseSource;
 		HexMetrics.InitializeHashGrid(seed);
 		HexUnit.unitPrefab = unitPrefab[0];
+		HexUnit.LivingPrefab = LiveBuildPrefab;
+		HexUnit.ResearchPrefab = ResearchPrefab;
+		HexUnit.IndustrialPrefab = IndustrialPrefab;
 		cellShaderData = gameObject.AddComponent<HexCellShaderData>();
 		cellShaderData.Grid = this;
 		CreateMap(cellCountX, cellCountZ, wrapping);
@@ -62,6 +69,28 @@ public class HexGrid : MonoBehaviour {
 		return unit;
 	}
 
+	public void AddLivingBuilding(HexUnit unit, HexCell location, float orientation)
+	{
+		units.Add(unit);
+		unit.Grid = this;
+		unit.Location = location;
+		unit.Orientation = orientation;
+	}
+	public void AddResearchBuilding(HexUnit unit, HexCell location, float orientation)
+	{
+		units.Add(unit);
+		unit.Grid = this;
+		unit.Location = location;
+		unit.Orientation = orientation;
+	}
+
+	public void AddIndustrialBuilding(HexUnit unit, HexCell location, float orientation)
+	{
+		units.Add(unit);
+		unit.Grid = this;
+		unit.Location = location;
+		unit.Orientation = orientation;
+	}
 	public void RemoveUnit (HexUnit unit) {
 		units.Remove(unit);
 		unit.Die();
@@ -139,6 +168,9 @@ public class HexGrid : MonoBehaviour {
 			HexMetrics.noiseSource = noiseSource;
 			HexMetrics.InitializeHashGrid(seed);
 			HexUnit.unitPrefab = unitPrefab[0];
+			HexUnit.LivingPrefab = LiveBuildPrefab;
+			HexUnit.ResearchPrefab = ResearchPrefab;
+			HexUnit.IndustrialPrefab = IndustrialPrefab;
 			HexMetrics.wrapSize = wrapping ? cellCountX : 0;
 			ResetVisibility();
 		}
@@ -341,14 +373,12 @@ public class HexGrid : MonoBehaviour {
 		if (currentPathExists) {
 			HexCell current = currentPathTo;
 			while (current != currentPathFrom) {
-				int turn = (current.Distance - 1) / speed;
-				current.SetLabel(turn.ToString());
-				current.EnableHighlight(Color.white);
+				current.EnableHighlight(Color.yellow);
 				current = current.PathFrom;
 			}
 		}
-		currentPathFrom.EnableHighlight(Color.blue);
-		currentPathTo.EnableHighlight(Color.red);
+		currentPathFrom.EnableHighlight(Color.yellow);
+		currentPathTo.EnableHighlight(Color.yellow);
 	}
 
 	public void FindPath (HexCell fromCell, HexCell toCell, HexUnit unit) {
@@ -359,7 +389,7 @@ public class HexGrid : MonoBehaviour {
 		ShowPath(unit.Speed);
 	}
 
-	bool Search (HexCell fromCell, HexCell toCell, HexUnit unit) {
+	public bool Search (HexCell fromCell, HexCell toCell, HexUnit unit) {
 		int speed = unit.Speed;
 		searchFrontierPhase += 2;
 		if (searchFrontier == null) {
@@ -400,6 +430,9 @@ public class HexGrid : MonoBehaviour {
 
 				int distance = current.Distance + moveCost;
 				int turn = (distance - 1) / speed;
+				if (turn > 1) 
+					continue;
+
 				if (turn > currentTurn) {
 					distance = turn * speed + moveCost;
 				}
@@ -532,4 +565,8 @@ public class HexGrid : MonoBehaviour {
 			columns[i].localPosition = position;
 		}
 	}
+
+
+	
+
 }

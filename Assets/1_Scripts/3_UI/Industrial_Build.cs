@@ -10,8 +10,9 @@ public class Industrial_Build : MonoBehaviour
 
 
 
-    HexGrid grid;
+    public HexGrid hexgrid;
     public GameObject prefab;
+    public GameObject ScrollView; // 제조 스크롤뷰 UI 연동
     Transform container;
 
     HexMapEditor hexMapEditor;
@@ -21,6 +22,7 @@ public class Industrial_Build : MonoBehaviour
     Vector3 position;
     //HexMetrics hexMetrics;
 
+    
 
 
     public void Clear()
@@ -59,35 +61,62 @@ public class Industrial_Build : MonoBehaviour
     // Start is called before the first frame update
 
 
-
+    public HexCell GetCellUnderCursor()
+    {
+        return
+            hexgrid.GetCell(Camera.main.ScreenPointToRay(Input.mousePosition));
+    }
     public void IndustrialBuild()
     {
-        hexMapEditor.GetCellUnderCursor();
-        if (Input.GetMouseButton(0))
-        {
-            hexFeatureManager.AddIndustrialBuilding(cell, position);
-            hexMapEditor.SetApplySpecialIndex(false);
-        }
-    }
+        //hexMapEditor.SetEditMode(true);
+        //hexMapEditor.SetApplySpecialIndex(true);
+        //hexMapEditor.SetSpecialIndex(2);
+        //hexMapEditor.GetCellUnderCursor();
+        //if (Input.GetMouseButton(0))
+        //{
+        //    hexFeatureManager.AddIndustrialBuilding(cell, position);
+        //    hexMapEditor.SetApplySpecialIndex(false);
+        //    hexMapEditor.SetEditMode(false);
+        //}
+        HexCell cell = GetCellUnderCursor();
+        //if (Input.GetMouseButtonDown(0))
 
+        if (cell && !cell.Unit)
+        {
+            hexgrid.AddIndustrialBuilding(
+                Instantiate(HexUnit.IndustrialPrefab),
+                cell,
+                Random.Range(0f, 360f)
+                );
+        }
+
+        Debug.Log("Industrial build Button");
+            //hexMapEditor.CreateIndustrialBulding();
+        if( HexUnit.IndustrialPrefab && ScrollView != null)
+        {
+            bool isActivate = ScrollView.activeSelf;
+
+            ScrollView.SetActive(!isActivate);
+        }
+        
+    }
+    void Awake()
+    {
+
+    }
 
     void Start()
     {
-        hexMapEditor.SetEditMode(true);
-        hexMapEditor.SetApplySpecialIndex(true);
-        hexMapEditor.SetSpecialIndex(2);
-
-        //prefab = GameObject.Instantiate(prefab);
-        //container = prefab.transform;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //if (Input.GetMouseButton(0))
+        //if (Input.GetMouseButtonDown(0))
+        //    IndustrialBuild();
+        //if (Input.GetMouseButtonDown(0))
         //{
-        //    hexFeatureManager.AddIndustrialBuilding(cell, position);
-        //    hexMapEditor.SetApplySpecialIndex(false);
+        //    IndustrialBuild();
         //}
     }
 }

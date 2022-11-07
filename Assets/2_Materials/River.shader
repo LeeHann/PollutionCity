@@ -15,8 +15,8 @@
 
 		#pragma multi_compile _ HEX_MAP_EDIT_MODE
 
-		#include "Water.cginc"
-		#include "HexCellData.cginc"
+		#include "/Water.cginc"
+		#include "/HexCellData.cginc"
 
 		sampler2D _MainTex;
 

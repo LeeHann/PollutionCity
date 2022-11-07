@@ -10,8 +10,9 @@ public class Research_Build : MonoBehaviour
 
 
 
-    HexGrid grid;
+    public HexGrid hexgrid;
     public GameObject prefab;
+    public GameObject ResearchTree;     //연구트리 UI  연동
     Transform container;
 
     HexMapEditor hexMapEditor;
@@ -60,24 +61,50 @@ public class Research_Build : MonoBehaviour
 
 
 
-
+    public HexCell GetCellUnderCursor()
+    {
+        return
+            hexgrid.GetCell(Camera.main.ScreenPointToRay(Input.mousePosition));
+    }
     public void ResearchBuild()
     {
-        hexMapEditor.GetCellUnderCursor();
-        if (Input.GetMouseButton(0))
+
+        //hexMapEditor.GetCellUnderCursor();
+        //hexMapEditor.SetEditMode(true);
+        //hexMapEditor.SetApplySpecialIndex(true);
+        //hexMapEditor.SetSpecialIndex(1);
+        //if (Input.GetMouseButton(0))
+        //{
+        //    hexFeatureManager.AddResearchBuilding(cell, position);
+        //    hexMapEditor.SetApplySpecialIndex(false);
+        //}
+        Debug.Log("Research Button");
+    
+        HexCell cell = GetCellUnderCursor();
+        
+        if (cell && !cell.Unit)
         {
-            hexFeatureManager.AddResearchBuilding(cell, position);
-            hexMapEditor.SetApplySpecialIndex(false);
+            hexgrid.AddResearchBuilding(
+                Instantiate(HexUnit.ResearchPrefab),
+                cell,
+                Random.Range(0f, 360f)
+                );
         }
+        if (HexUnit.ResearchPrefab && ResearchTree != null)
+            {
+                bool isActivate = ResearchTree.activeSelf;
+
+                ResearchTree.SetActive(!isActivate);
+            }
+        
+
     }
 
 
 
     void Start()
     {
-        hexMapEditor.SetEditMode(true);
-        hexMapEditor.SetApplySpecialIndex(true);
-        hexMapEditor.SetSpecialIndex(1);
+
 
         //prefab = GameObject.Instantiate(prefab);
         //container = prefab.transform;
@@ -90,6 +117,10 @@ public class Research_Build : MonoBehaviour
         //{
         //    hexFeatureManager.AddResearchBuilding(cell, position);
         //    hexMapEditor.SetApplySpecialIndex(false);
+        //}
+        //if(Input.GetMouseButtonDown(0))
+        //{
+        //    ResearchBuild();
         //}
     }
 }

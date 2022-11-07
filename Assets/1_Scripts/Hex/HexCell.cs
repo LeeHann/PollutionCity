@@ -6,6 +6,8 @@ public class HexCell : MonoBehaviour {
 
 	public HexCoordinates coordinates;
 	public RectTransform uiRect;
+	[HideInInspector] public Image highlight;
+	[HideInInspector] public Button highlightBtn;
 
 #region City Boundary
 
@@ -262,6 +264,25 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
+	//public bool Buytile
+ //   {
+	//	get
+ //       {
+	//		return buytile;
+ //       }
+ //       set
+ //       {
+	//		if(buytile != value)
+ //           {
+	//			buytile = value;
+	//			if(buytile)
+ //               {
+	//				for(neighbors.Walled)
+ //               }
+ //           }
+ //       }
+ //   }
+
 	public int TerrainTypeIndex {
 		get {
 			return terrainTypeIndex;
@@ -336,7 +357,7 @@ public class HexCell : MonoBehaviour {
 	ResourceType resource;
 
 	bool walled;
-
+	bool buytile;
 	bool hasIncomingRiver, hasOutgoingRiver;
 	HexDirection incomingRiver, outgoingRiver;
 
@@ -389,6 +410,16 @@ public class HexCell : MonoBehaviour {
 		);
 	}
 
+	public void BuyTile(HexDirection direction, HexCell cell)
+    {
+		GetNeighbor(direction);
+		neighbors[(int)direction] = cell;
+		cell.neighbors[(int)direction.Opposite()] = this;
+        if (!walled)
+        {
+			EnableHighlight(Color.red);
+		}
+	}
 	public bool HasRiverThroughEdge (HexDirection direction) {
 		return
 			hasIncomingRiver && incomingRiver == direction ||
@@ -617,14 +648,27 @@ public class HexCell : MonoBehaviour {
 	}
 
 	public void DisableHighlight () {
-		Image highlight = uiRect.GetChild(0).GetComponent<Image>();
+		if (highlight == null)
+			highlight = uiRect.GetChild(0).GetComponent<Image>();
 		highlight.enabled = false;
 	}
 
 	public void EnableHighlight (Color color) {
-		Image highlight = uiRect.GetChild(0).GetComponent<Image>();
+		if (highlight == null)
+			highlight = uiRect.GetChild(0).GetComponent<Image>();
+		if (highlightBtn == null)
+			highlightBtn = highlight.GetComponent<Button>();
 		highlight.color = color;
 		highlight.enabled = true;
+	}
+
+	public bool IsEnabledHighlight ()
+	{
+		if (highlight == null)
+			highlight = uiRect.GetChild(0).GetComponent<Image>();
+		if (highlightBtn == null)
+			highlightBtn = highlight.GetComponent<Button>();
+		return highlight.enabled;
 	}
 
 	public void SetMapData (float data) {
