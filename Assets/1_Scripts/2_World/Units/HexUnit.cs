@@ -2,11 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using UnityEngine.EventSystems;
 
-public class HexUnit : Unit {
+public class HexUnit : Unit, IPointerClickHandler
+{
+	[SerializeField] Animator anim;
 
 	const float rotationSpeed = 180f;
-	const float travelSpeed = 4f;
+	const float travelSpeed = 1.5f;
 
 	public static HexUnit unitPrefab;
 	public static HexUnit LivingPrefab;
@@ -58,6 +61,45 @@ public class HexUnit : Unit {
 	float orientation;
 
 	List<HexCell> pathToTravel;
+	List<HexCell> highlights = new List<HexCell>();
+
+	public void OnPointerClick(PointerEventData e) 
+	{
+		if (!TurnUnit) return;
+		Queue queue = new Queue();
+		queue.Enqueue(Location);
+
+		while (queue.Count > 0) {
+			HexCell cell = (HexCell)queue.Dequeue();
+			cell.EnableHighlight(Color.yellow);
+			highlights.Add(cell);
+
+			cell.highlightBtn.onClick.RemoveAllListeners();
+			cell.highlightBtn.onClick.AddListener(() => OnClickHighlight(cell));
+
+			for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++) {
+				HexCell neighbor = cell.GetNeighbor(d);
+				
+				if (neighbor.IsEnabledHighlight() || !Grid.Search(Location, neighbor, this))
+					continue;
+
+				queue.Enqueue(neighbor);
+				
+			}
+		}
+		Location.DisableHighlight();
+	}
+	
+	public void OnClickHighlight(HexCell cell)
+	{
+		for (int i=highlights.Count-1; i>0; i--)
+		{
+			highlights[i].DisableHighlight();
+			highlights.RemoveAt(i);
+		}
+		Grid.FindPath(Location, cell, this);
+		Travel(Grid.GetPath());
+	}
 
 	public void ValidateLocation () {
 		transform.localPosition = location.Position;
@@ -74,6 +116,8 @@ public class HexUnit : Unit {
 		pathToTravel = path;
 		StopAllCoroutines();
 		StartCoroutine(TravelPath());
+
+		anim.SetInteger ("AnimationPar", 1);
 	}
 
 	IEnumerator TravelPath () {
@@ -137,6 +181,10 @@ public class HexUnit : Unit {
 		orientation = transform.localRotation.eulerAngles.y;
 		ListPool<HexCell>.Add(pathToTravel);
 		pathToTravel = null;
+		anim.SetInteger ("AnimationPar", 0);
+
+		Grid.ClearPath();
+		TurnUnit = false;
 	}
 
 	IEnumerator LookAt (Vector3 point) {
@@ -180,20 +228,12 @@ public class HexUnit : Unit {
 			return -1;
 		}
 		HexEdgeType edgeType = fromCell.GetEdgeType(toCell);
-		// if (edgeType == HexEdgeType.Cliff) {
-		// 	return -1;
-		// }
 		int moveCost;
 		if (fromCell.HasRoadThroughEdge(direction)) {
 			moveCost = 1;
 		}
-		// else if (fromCell.Walled != toCell.Walled) {
-		// 	return -1;
-		// }
 		else {
 			moveCost = edgeType == HexEdgeType.Flat ? 5 : 10;
-			// moveCost +=
-			// 	toCell.UrbanLevel + toCell.FarmLevel + toCell.PlantLevel;
 		}
 		return moveCost;
 	}
@@ -238,33 +278,4 @@ public class HexUnit : Unit {
 			}
 		}
 	}
-
-    void OnDrawGizmos()
-    {
-        if (pathToTravel == null || pathToTravel.Count == 0)
-        {
-            return;
-        }
-
-        Vector3 a, b, c = pathToTravel[0].Position;
-
-        for (int i = 1; i < pathToTravel.Count; i++)
-        {
-            a = c;
-            b = pathToTravel[i - 1].Position;
-            c = (b + pathToTravel[i].Position) * 0.5f;
-            for (float t = 0f; t < 1f; t += 0.1f)
-            {
-                Gizmos.DrawSphere(Bezier.GetPoint(a, b, c, t), 2f);
-            }
-        }
-
-        a = c;
-        b = pathToTravel[pathToTravel.Count - 1].Position;
-        c = b;
-        for (float t = 0f; t < 1f; t += 0.1f)
-        {
-            Gizmos.DrawSphere(Bezier.GetPoint(a, b, c, t), 2f);
-        }
-    }
 }

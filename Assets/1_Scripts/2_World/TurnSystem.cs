@@ -20,8 +20,7 @@ public class TurnSystem : MonoBehaviour
     {
         Debug.Log(string.Format("turnPlayer is {0} whose sit is {1}", turnPlayer, cities[(int)turnPlayer].sit));
 
-        cities[(int)turnPlayer].myTurn = true;
-        //CameraPositioning(cities[(int)turnPlayer].units[0].gameObject);
+        cities[(int)turnPlayer].MyTurn();
         yield return new WaitWhile(()=> cities[(int)turnPlayer].myTurn != false);
 
         bool isOver = boolOver;
