@@ -103,17 +103,13 @@ public class MapSetter : MonoBehaviour
             int randomZ = UnityEngine.Random.Range(0, hexGrid.cellCountZ);
             cell = hexGrid.GetCell(randomX, randomZ);
 
-            invalid = false;
-            invalid |= cell.IsUnderwater | cell.Walled;
+            invalid = cell.IsUnderwater | cell.Walled;
             for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
             {
                 if (invalid) break;
                 HexCell neighbor = cell.GetNeighbor(d);
                 if (neighbor == null) 
-                {
                     invalid = true;
-                    break;
-                }
                 invalid |= neighbor.IsUnderwater | neighbor.Walled;
             }
         } while (invalid);
@@ -149,7 +145,26 @@ public class MapSetter : MonoBehaviour
         
         city.cam = cam;
         return city;
-    } 
+    }
+
+    void ScatterResources()
+    {
+        // 자원 뿌리기
+        int count = 0;
+        while (count < GameInfo.srcPerTurn)
+        {
+            HexCell cell;
+            bool invalid;
+            do {
+                int randomX = UnityEngine.Random.Range(0, hexGrid.cellCountX);
+                int randomZ = UnityEngine.Random.Range(0, hexGrid.cellCountZ);
+                cell = hexGrid.GetCell(randomX, randomZ);
+                invalid = cell.IsUnderwater | cell.Walled;
+            } while (invalid);
+            count++;
+        }
+    }
+
 
     void CameraPositioning(HexCell cell, bool isPlayer)
     {

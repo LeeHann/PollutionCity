@@ -18,7 +18,12 @@ public class TurnSystem : MonoBehaviour
 
     IEnumerator SpinATurn()
     {
-        Debug.Log(string.Format("turnPlayer is {0} whose sit is {1}", turnPlayer, cities[(int)turnPlayer].sit));
+        Debug.Log(string.Format(
+            "turnPlayer is {0} whose sit is {1}", 
+            turnPlayer, 
+            cities[(int)turnPlayer].sit
+            )
+        );
 
         cities[(int)turnPlayer].MyTurn();
         yield return new WaitWhile(()=> cities[(int)turnPlayer].myTurn != false);
