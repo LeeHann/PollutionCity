@@ -1620,9 +1620,9 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: -17, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &112392112
 MonoBehaviour:
@@ -1922,7 +1922,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -11302,7 +11302,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1250461964}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 333297601}
+        m_TargetAssemblyTypeName: HexGameUI, Assembly-CSharp
+        m_MethodName: OnclickSetting
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1250461964
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13705,7 +13717,11 @@ MonoBehaviour:
   cellPrefab: {fileID: 11422220, guid: 94c2312396697489abc866a188f80152, type: 3}
   cellLabelPrefab: {fileID: 11470134, guid: f68794ca03b6f4510b9a5bd6ee9ba2f4, type: 3}
   chunkPrefab: {fileID: 114000010052569294, guid: 7622d007cafd044a1b1189c0b93d2912, type: 3}
-  unitPrefab: {fileID: 114701888605048992, guid: 5661a1efcb9464721b4db3f694ded559, type: 3}
+  unitPrefab:
+  - {fileID: 114701888605048992, guid: 5661a1efcb9464721b4db3f694ded559, type: 3}
+  - {fileID: 114701888605048992, guid: 5f1918b98af95e14c826c18f8486c1a1, type: 3}
+  - {fileID: 114701888605048992, guid: 78822ad373859be4c9af4d27465715c8, type: 3}
+  - {fileID: 114701888605048992, guid: 70bd2a17dbe34684c977045473ff0d01, type: 3}
   LiveBuildPrefab: {fileID: -1046054760023364638, guid: c15e699fc2f8d0944b96214af91294c9, type: 3}
   ResearchPrefab: {fileID: -8719665911245630334, guid: 513747c983aca51439fc990a292b04e8, type: 3}
   IndustrialPrefab: {fileID: 5212651991026230794, guid: df2f2ad74a1116449aadf331e37265ac, type: 3}
@@ -14357,7 +14373,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1642458563
 RectTransform:
   m_ObjectHideFlags: 0

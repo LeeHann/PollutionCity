@@ -13,7 +13,7 @@ public class HexGrid : MonoBehaviour {
 	public HexCell cellPrefab;
 	public Text cellLabelPrefab;
 	public HexGridChunk chunkPrefab;
-	public HexUnit unitPrefab;
+	public HexUnit[] unitPrefab;
 	public HexUnit LiveBuildPrefab;
 	public HexUnit ResearchPrefab;
 	public HexUnit IndustrialPrefab;
@@ -51,7 +51,7 @@ public class HexGrid : MonoBehaviour {
 	void Awake () {
 		HexMetrics.noiseSource = noiseSource;
 		HexMetrics.InitializeHashGrid(seed);
-		HexUnit.unitPrefab = unitPrefab;
+		HexUnit.unitPrefab = unitPrefab[0];
 		HexUnit.LivingPrefab = LiveBuildPrefab;
 		HexUnit.ResearchPrefab = ResearchPrefab;
 		HexUnit.IndustrialPrefab = IndustrialPrefab;
@@ -167,7 +167,7 @@ public class HexGrid : MonoBehaviour {
 		if (!HexMetrics.noiseSource) {
 			HexMetrics.noiseSource = noiseSource;
 			HexMetrics.InitializeHashGrid(seed);
-			HexUnit.unitPrefab = unitPrefab;
+			HexUnit.unitPrefab = unitPrefab[0];
 			HexUnit.LivingPrefab = LiveBuildPrefab;
 			HexUnit.ResearchPrefab = ResearchPrefab;
 			HexUnit.IndustrialPrefab = IndustrialPrefab;

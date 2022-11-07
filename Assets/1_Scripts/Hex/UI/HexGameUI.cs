@@ -60,4 +60,13 @@ public class HexGameUI : MonoBehaviour {
 		}
 		return false;
 	}
+
+	public void OnclickSetting()	// dev 
+	{
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+	}
 }
