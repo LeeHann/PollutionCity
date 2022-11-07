@@ -262,6 +262,25 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
+	//public bool Buytile
+ //   {
+	//	get
+ //       {
+	//		return buytile;
+ //       }
+ //       set
+ //       {
+	//		if(buytile != value)
+ //           {
+	//			buytile = value;
+	//			if(buytile)
+ //               {
+	//				for(neighbors.Walled)
+ //               }
+ //           }
+ //       }
+ //   }
+
 	public int TerrainTypeIndex {
 		get {
 			return terrainTypeIndex;
@@ -336,7 +355,7 @@ public class HexCell : MonoBehaviour {
 	ResourceType resource;
 
 	bool walled;
-
+	bool buytile;
 	bool hasIncomingRiver, hasOutgoingRiver;
 	HexDirection incomingRiver, outgoingRiver;
 
@@ -389,6 +408,16 @@ public class HexCell : MonoBehaviour {
 		);
 	}
 
+	public void BuyTile(HexDirection direction, HexCell cell)
+    {
+		GetNeighbor(direction);
+		neighbors[(int)direction] = cell;
+		cell.neighbors[(int)direction.Opposite()] = this;
+        if (!walled)
+        {
+			EnableHighlight(Color.red);
+		}
+	}
 	public bool HasRiverThroughEdge (HexDirection direction) {
 		return
 			hasIncomingRiver && incomingRiver == direction ||

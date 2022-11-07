@@ -10,7 +10,7 @@ public class Research_Build : MonoBehaviour
 
 
 
-    HexGrid grid;
+    public HexGrid hexgrid;
     public GameObject prefab;
     public GameObject ResearchTree;     //연구트리 UI  연동
     Transform container;
@@ -61,7 +61,11 @@ public class Research_Build : MonoBehaviour
 
 
 
-
+    public HexCell GetCellUnderCursor()
+    {
+        return
+            hexgrid.GetCell(Camera.main.ScreenPointToRay(Input.mousePosition));
+    }
     public void ResearchBuild()
     {
 
@@ -74,17 +78,25 @@ public class Research_Build : MonoBehaviour
         //    hexFeatureManager.AddResearchBuilding(cell, position);
         //    hexMapEditor.SetApplySpecialIndex(false);
         //}
-
-        if (Input.GetMouseButton(0))
+        Debug.Log("Research Button");
+    
+        HexCell cell = GetCellUnderCursor();
+        
+        if (cell && !cell.Unit)
         {
-            hexMapEditor.CreateResearchBulding();
-            if (HexUnit.ResearchPrefab && ResearchTree != null)
+            hexgrid.AddResearchBuilding(
+                Instantiate(HexUnit.ResearchPrefab),
+                cell,
+                Random.Range(0f, 360f)
+                );
+        }
+        if (HexUnit.ResearchPrefab && ResearchTree != null)
             {
                 bool isActivate = ResearchTree.activeSelf;
 
                 ResearchTree.SetActive(!isActivate);
             }
-        }
+        
 
     }
 
@@ -105,6 +117,10 @@ public class Research_Build : MonoBehaviour
         //{
         //    hexFeatureManager.AddResearchBuilding(cell, position);
         //    hexMapEditor.SetApplySpecialIndex(false);
+        //}
+        //if(Input.GetMouseButtonDown(0))
+        //{
+        //    ResearchBuild();
         //}
     }
 }

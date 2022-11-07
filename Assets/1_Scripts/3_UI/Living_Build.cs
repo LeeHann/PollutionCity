@@ -9,17 +9,16 @@ public class Living_Build : MonoBehaviour
 
 
 
-    public HexMapEditor hexMapEditor;
+    HexMapEditor hexMapEditor;
     public HexGrid hexgrid;
     public HexCell hexCell;
-    public HexUnit hexUnit;
+    HexUnit hexUnit;
     public GameObject prefab;
     Transform container;
 
   // HexMapEditor hexMapEditor;
     HexFeatureManager hexFeatureManager;
     HexGridChunk hexGridChunk;
-
     Vector3 position;
     //HexMetrics hexMetrics;
 
@@ -76,7 +75,11 @@ public class Living_Build : MonoBehaviour
     // Start is called before the first frame update
 
 
-
+    public HexCell GetCellUnderCursor()
+    {
+        return
+            hexgrid.GetCell(Camera.main.ScreenPointToRay(Input.mousePosition));
+    }
 
     public void LivingBuild()
     {
@@ -98,10 +101,20 @@ public class Living_Build : MonoBehaviour
         //{
         //    hexMapEditor.CreateLivingBuilding();
         //}
-        if (Input.GetMouseButton(0))
+
+        Debug.Log("Clicked Livingbuild Button");
+        HexCell cell = GetCellUnderCursor();
+        if (cell && !cell.Unit)
         {
-            hexMapEditor.CreateLivingBuilding();
+                hexgrid.AddLivingBuilding(
+                Instantiate(HexUnit.LivingPrefab),
+                cell,
+                Random.Range(0f, 360f)
+                );
         }
+        
+        //hexMapEditor.CreateLivingBuilding();
+
 
 
     }
@@ -113,6 +126,7 @@ public class Living_Build : MonoBehaviour
 
         //prefab = GameObject.Instantiate(prefab);
         //container = prefab.transform;
+        
     }
 
     // Update is called once per frame
@@ -122,6 +136,11 @@ public class Living_Build : MonoBehaviour
         //{
         //    hexFeatureManager.AddLivingBuilding(cell, position);
         //    hexMapEditor.SetApplySpecialIndex(false);
+        //}
+
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    LivingBuild();
         //}
 
     }

@@ -14,6 +14,10 @@ public class HexGrid : MonoBehaviour {
 	public Text cellLabelPrefab;
 	public HexGridChunk chunkPrefab;
 	public HexUnit unitPrefab;
+	public HexUnit LiveBuildPrefab;
+	public HexUnit ResearchPrefab;
+	public HexUnit IndustrialPrefab;
+
 
 	public Texture2D noiseSource;
 
@@ -560,4 +564,8 @@ public class HexGrid : MonoBehaviour {
 			columns[i].localPosition = position;
 		}
 	}
+
+
+	
+
 }

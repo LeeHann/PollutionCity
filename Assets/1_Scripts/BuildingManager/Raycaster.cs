@@ -9,6 +9,7 @@ public class Raycaster : MonoBehaviour
 
     //memalloc to save GC collections
     private RaycastHit hit = new RaycastHit();
+    HexCell hexcell;
 
 
     public int GetHitLayer => hit.collider != null ? hit.collider.gameObject.layer : -1;
@@ -21,11 +22,39 @@ public class Raycaster : MonoBehaviour
 
     void Update()
     {
-        if (Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition),
-            out hit,
-            1000f))
+        //if (Physics.Raycast(mainCam.ScreenPointToRay(Input.mousePosition),
+        //    out hit,
+        //    1000f))
+        //{
+        //    print ("Hit an object with name : " + hit.collider.gameObject.name);
+        //}
+
+        //Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        //RaycastHit hitInfo;
+
+        //if(Physics.Raycast(ray, out hitInfo))
+        //{
+        //    GameObject ourhitObject = hitInfo.collider.transform.gameObject;
+        //    Debug.Log("Hit an object with name : " + ourhitObject.name);
+
+        //    if (Input.GetMouseButtonDown(0))
+        //    {
+        //        MeshRenderer mr = ourhitObject.GetComponentInChildren<MeshRenderer>();
+
+        //        if(mr.material.color == Color.red)
+        //        {
+        //            mr.material.color = Color.white;
+        //        }
+        //        else
+        //        {
+        //            mr.material.color = Color.red;
+        //        }
+        //    }
+        //}
+
+        void OnMouserButtonDown()
         {
-            print ("Hit an object with name : " + hit.collider.gameObject.name);
+
         }
     }
 }

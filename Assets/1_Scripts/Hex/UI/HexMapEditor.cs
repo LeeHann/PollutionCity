@@ -5,7 +5,7 @@ using System.IO;
 public class HexMapEditor : MonoBehaviour {
 
 	public HexGrid hexGrid;
-
+	Living_Build living_Build;
 	public Material terrainMaterial;
 
 	int activeElevation;
@@ -125,15 +125,15 @@ public class HexMapEditor : MonoBehaviour {
     }
 
     void Awake () {
-		//terrainMaterial.EnableKeyword("GRID_ON");
-		terrainMaterial.DisableKeyword("GRID_ON");
+		terrainMaterial.EnableKeyword("GRID_ON");
+		//terrainMaterial.DisableKeyword("GRID_ON");
 		Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
         SetEditMode(true);
     }
 
 	void Update () {
 		if (!EventSystem.current.IsPointerOverGameObject()) {
-			if (Input.GetMouseButton(0)) {
+			if (Input.GetMouseButtonDown(0)) {
 				HandleInput();
 				return;
 			}
@@ -146,18 +146,11 @@ public class HexMapEditor : MonoBehaviour {
 				}
 				return;
 			}
-			if (Input.GetKeyDown(KeyCode.I))
-            {
-				CreateLivingBuilding();
-            }
-			if (Input.GetKeyDown(KeyCode.O))
-            {
-				CreateResearchBulding();
-            }
-			if (Input.GetKeyDown(KeyCode.P))
-            {
-				CreateIndustrialBulding();
-            }
+
+		}
+		else if (Input.GetKeyDown(KeyCode.W))
+        {
+			terrainMaterial.DisableKeyword("GRID_ON");
 		}
 		previousCell = null;
 	}
@@ -166,6 +159,7 @@ public class HexMapEditor : MonoBehaviour {
 		return
 			hexGrid.GetCell(Camera.main.ScreenPointToRay(Input.mousePosition));
 	}
+
 
 
 	void CreateUnit () {

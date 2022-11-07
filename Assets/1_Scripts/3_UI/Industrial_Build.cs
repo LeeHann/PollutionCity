@@ -10,7 +10,7 @@ public class Industrial_Build : MonoBehaviour
 
 
 
-    HexGrid grid;
+    public HexGrid hexgrid;
     public GameObject prefab;
     public GameObject ScrollView; // 제조 스크롤뷰 UI 연동
     Transform container;
@@ -61,7 +61,11 @@ public class Industrial_Build : MonoBehaviour
     // Start is called before the first frame update
 
 
-
+    public HexCell GetCellUnderCursor()
+    {
+        return
+            hexgrid.GetCell(Camera.main.ScreenPointToRay(Input.mousePosition));
+    }
     public void IndustrialBuild()
     {
         //hexMapEditor.SetEditMode(true);
@@ -74,28 +78,45 @@ public class Industrial_Build : MonoBehaviour
         //    hexMapEditor.SetApplySpecialIndex(false);
         //    hexMapEditor.SetEditMode(false);
         //}
+        HexCell cell = GetCellUnderCursor();
+        //if (Input.GetMouseButtonDown(0))
 
-        if (Input.GetMouseButton(0))
+        if (cell && !cell.Unit)
         {
-            hexMapEditor.CreateIndustrialBulding();
-            if( HexUnit.IndustrialPrefab && ScrollView != null)
-            {
-                bool isActivate = ScrollView.activeSelf;
-
-                ScrollView.SetActive(!isActivate);
-            }
+            hexgrid.AddIndustrialBuilding(
+                Instantiate(HexUnit.IndustrialPrefab),
+                cell,
+                Random.Range(0f, 360f)
+                );
         }
-    }
 
+        Debug.Log("Industrial build Button");
+            //hexMapEditor.CreateIndustrialBulding();
+        if( HexUnit.IndustrialPrefab && ScrollView != null)
+        {
+            bool isActivate = ScrollView.activeSelf;
+
+            ScrollView.SetActive(!isActivate);
+        }
+        
+    }
+    void Awake()
+    {
+
+    }
 
     void Start()
     {
-
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        //if (Input.GetMouseButtonDown(0))
+        //    IndustrialBuild();
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    IndustrialBuild();
+        //}
     }
 }
