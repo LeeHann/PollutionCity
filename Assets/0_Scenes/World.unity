@@ -3697,7 +3697,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turnPlayer: 0
   boolOver: 0
+  hexGrid: {fileID: 1571186511}
   cam: {fileID: 2102140320}
+  mapSetter: {fileID: 413770914}
 --- !u!1 &429045662
 GameObject:
   m_ObjectHideFlags: 0

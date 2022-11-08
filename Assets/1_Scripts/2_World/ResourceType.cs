@@ -4,6 +4,5 @@ public enum ResourceType {
     Paper,
     Can,
     Glass,
-    Plastic,
-    PlasticWrapper
+    Plastic
 }
