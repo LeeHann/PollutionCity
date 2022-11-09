@@ -18,6 +18,8 @@ public class HexCell : MonoBehaviour {
 
 #endregion
 
+	[SerializeField] GameObject[] resources;
+
 	public int Index { get; set; }
 	public int ColumnIndex { get; set; }
 
@@ -228,6 +230,10 @@ public class HexCell : MonoBehaviour {
 			return resource;
 		}
 		set {
+			if (resource != ResourceType.None)
+				resources[(int)resource].SetActive(false);
+			if (value != ResourceType.None)
+				resources[(int)value].SetActive(true);
 			resource = value;
 		}	
 	}

@@ -43,7 +43,8 @@ public class MapSetter : MonoBehaviour
             cities[i] = GenerateCity();
         }
         TurnSystem.cities = this.cities;
-        this.enabled = false;
+        
+        ScatterResources(10);
     }
 
     void Load (string path) {
@@ -147,11 +148,12 @@ public class MapSetter : MonoBehaviour
         return city;
     }
 
-    void ScatterResources()
+    public void ScatterResources(int rscVal)
     {
         // 자원 뿌리기
         int count = 0;
-        while (count < GameInfo.srcPerTurn)
+        int resourceCnt = rscVal;
+        while (count < resourceCnt)
         {
             HexCell cell;
             bool invalid;
@@ -159,8 +161,12 @@ public class MapSetter : MonoBehaviour
                 int randomX = UnityEngine.Random.Range(0, hexGrid.cellCountX);
                 int randomZ = UnityEngine.Random.Range(0, hexGrid.cellCountZ);
                 cell = hexGrid.GetCell(randomX, randomZ);
-                invalid = cell.IsUnderwater | cell.Walled;
+                invalid = cell.IsUnderwater | cell.Walled | cell.Resource != ResourceType.None;
             } while (invalid);
+            ResourceType resourceType = (ResourceType)UnityEngine.Random.Range(
+                (int)ResourceType.Money, (int)ResourceType.Plastic
+            );
+            cell.Resource = resourceType;
             count++;
         }
     }

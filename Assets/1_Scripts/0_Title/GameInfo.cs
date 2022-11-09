@@ -27,7 +27,6 @@ public static class GameInfo
     public static float winPL;
     public const float losePL = 100.0f;
     public const int startMoney = 1000;
-    public const int srcPerTurn = 20;
     
     public static void SetBalance(int x, int z, int turn, int pa, int startpa, float plRisePercent, int numCity, float winningpl)
     {
