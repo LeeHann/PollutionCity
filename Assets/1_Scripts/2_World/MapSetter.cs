@@ -9,7 +9,7 @@ public class MapSetter : MonoBehaviour
     [SerializeField] Material terrainMaterial;
     [SerializeField] HexGrid hexGrid;
     [SerializeField] HexMapCamera cam;
-    [SerializeField] GameObject noticeUI;
+    [SerializeField] UINoticer noticeUI;
     
     private List<PlayerSit> sits = new List<PlayerSit>() {
         PlayerSit.Blue, PlayerSit.Red, PlayerSit.White, PlayerSit.Yellow
@@ -137,7 +137,8 @@ public class MapSetter : MonoBehaviour
 
         city.Money = GameInfo.startMoney;
         city.PA = GameInfo.startPA;
-        city.noticeUI = noticeUI;
+        if (isPlayer)
+            city.GetComponent<PlayerCity>().notice += noticeUI.Notice;
         
         // place units (explorer, lab)
         city.AddUnit(

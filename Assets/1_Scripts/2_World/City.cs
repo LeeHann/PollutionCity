@@ -5,17 +5,17 @@ using UnityEngine;
 public class City : MonoBehaviour
 {
     [HideInInspector] public HexMapCamera cam;
-    public GameObject noticeUI;
 
     public bool myTurn;
     public PlayerSit sit;
     public int[] trash = new int[6];
 
     public List<Unit> units = new List<Unit>();
+    public List<Unit> actions = new List<Unit>();
+
     public List<HexCell> cells = new List<HexCell>();
     public HexCell rootCell;
-
-    public List<Unit> actions = new List<Unit>();
+    
     protected Coroutine _coroutine = null;
     protected WaitForSeconds dot5 = new WaitForSeconds(0.5f);
 

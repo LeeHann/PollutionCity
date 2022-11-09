@@ -2,28 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class PlayerCity : City
 {	
-	WaitForSeconds dot1 = new WaitForSeconds(0.1f);
+	public event Action<string> notice;
+
 	protected override IEnumerator ActionExplorer(HexUnit action) // 탐사 행동 결정 함수
     {
 		yield return new WaitUntil(() => action.TurnUnit == false);
 		if (action.Location.Resource != ResourceType.None)	// Obtain Resources
 		{
 			// TODO: if : Was it researched?
-
 			//////////////////////////////
 			trash[(int)action.Location.Resource]++;
-			// ui
-			Image notice = Instantiate(noticeUI).GetComponent<Image>();
-			Color color = Color.white;
-			while (notice.color.a > 0)
-			{
-				color.a -= Time.deltaTime;
-				notice.color = color;
-				yield return dot1;
-			}
+			notice(action.Location.Resource + " 획득");
 			action.Location.Resource = ResourceType.None;
 		}
 		_coroutine = null;
