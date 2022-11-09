@@ -8,7 +8,10 @@ public class TurnSystem : MonoBehaviour
     public PlayerNum turnPlayer;
     public bool boolOver;
 
+    [SerializeField] HexGrid hexGrid;
     [SerializeField] HexMapCamera cam;
+    [SerializeField] MapSetter mapSetter;
+    int scatterTurn = 5;
 
     private void Start() 
     {
@@ -17,7 +20,12 @@ public class TurnSystem : MonoBehaviour
     }
 
     IEnumerator SpinATurn()
-    {
+    {   
+        if (scatterTurn <= 0)
+        {
+            mapSetter.ScatterResources(Random.Range(0, 5));
+            scatterTurn = 5;
+        }
         Debug.Log(string.Format(
             "turnPlayer is {0} whose sit is {1}", 
             turnPlayer, 
@@ -37,12 +45,8 @@ public class TurnSystem : MonoBehaviour
             do{
                 turnPlayer = (PlayerNum)((int)(turnPlayer + 1) % 4);
             } while (cities[(int)turnPlayer] == null);
+            scatterTurn--;
             StartCoroutine(SpinATurn());
         }
-    }
-
-    void CameraPositioning(GameObject obj)
-    {
-        cam.transform.localPosition = obj.transform.localPosition;
     }
 }
