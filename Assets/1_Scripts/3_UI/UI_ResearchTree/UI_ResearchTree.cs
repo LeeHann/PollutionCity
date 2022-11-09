@@ -46,7 +46,7 @@ public class UI_ResearchTree : MonoBehaviour
         for (var i = 0; i < SkillList.Count; i++) SkillList[i].id = i;
 
         SkillList[0].ConnectedSkills = new[] { 1, 2 };        //일쓰랑 연결된 => 소각 , 매립
-        SkillList[3].ConnectedSkills = new[] { 4, 5 ,6};      //재활용이랑 열결된 종이 유리 캔.
+        SkillList[3].ConnectedSkills = new[] { 4, 5 ,6};      //재활용이랑 열결된 종이 유리 캔..
      
 
 

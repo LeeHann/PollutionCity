@@ -22,7 +22,7 @@ public class Skill : MonoBehaviour
         DescriptionText.text = $"{skilltree.SkillDescription[id]}\nCost : {skilltree.Money}/1 Money";
 
         GetComponent<Image>().color = skilltree.SkillLevels[id] >= skilltree.SkillCaps[id] ? Color.yellow   //레벨max다다르면 노랑색
-            : skilltree.Money >= 1 ? Color.green : Color.white;                                             //재화있으면 초록 다썼으면 흰색으로 표시.
+            : skilltree.Money >= 1 ? Color.green : Color.white;                                             //재화있으면 초록 다썼으면 흰색으로 표시..
 
         foreach(var connectedSkill in ConnectedSkills)
         {
