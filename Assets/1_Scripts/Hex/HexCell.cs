@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.IO;
-
+using UnityEngine.EventSystems;
 public class HexCell : MonoBehaviour {
 
 	public HexCoordinates coordinates;
@@ -415,11 +415,12 @@ public class HexCell : MonoBehaviour {
 		GetNeighbor(direction);
 		neighbors[(int)direction] = cell;
 		cell.neighbors[(int)direction.Opposite()] = this;
-        if (!walled)
+        if (!walled && cell.neighbors[(int)direction.Opposite()] != null)
         {
-			EnableHighlight(Color.red);
-		}
-	}
+			Sprite highlight = Resources.Load<Sprite>("HEX_Green");
+           // EnableHighlight(Color.red);
+        }
+    }
 	public bool HasRiverThroughEdge (HexDirection direction) {
 		return
 			hasIncomingRiver && incomingRiver == direction ||
@@ -674,4 +675,5 @@ public class HexCell : MonoBehaviour {
 	public void SetMapData (float data) {
 		ShaderData.SetMapData(this, data);
 	}
+
 }
