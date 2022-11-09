@@ -3,7 +3,10 @@ guid: 961aa2295c8187246be60d9ccd2dce43
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - cam: {instanceID: 0}
+  - noticeUI: {fileID: 3384791291992301902, guid: 21d9b863fa2cae3448a9aedcff7a09a7, type: 3}
+  - rootCell: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
