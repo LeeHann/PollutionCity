@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,13 +16,13 @@ public class Skill : MonoBehaviour
 
     public void UpdateUI()
     {
-        TitleText.text = $"{skilltree.SkillLevels[id]}/{skilltree.SkillCaps[id]}" +        //½ºÅ³Æ®¸® ·¹º§ & ÃÖ´ëÄ¡
-            $"\n{skilltree.SkillNames[id]}";                                                //½ºÅ³ÀÌ¸§
+        TitleText.text = $"{skilltree.SkillLevels[id]}/{skilltree.SkillCaps[id]}" +        //ìŠ¤í‚¬íŠ¸ë¦¬ ë ˆë²¨ & ìµœëŒ€ì¹˜
+            $"\n{skilltree.SkillNames[id]}";                                                //ìŠ¤í‚¬ì´ë¦„
 
         DescriptionText.text = $"{skilltree.SkillDescription[id]}\nCost : {skilltree.Money}/1 Money";
 
-        GetComponent<Image>().color = skilltree.SkillLevels[id] >= skilltree.SkillCaps[id] ? Color.yellow   //·¹º§max´Ù´Ù¸£¸é ³ë¶û»ö
-            : skilltree.Money >= 1 ? Color.green : Color.white;                                             //ÀçÈ­ÀÖÀ¸¸é ÃÊ·Ï ´Ù½èÀ¸¸é Èò»öÀ¸·Î Ç¥½Ã
+        GetComponent<Image>().color = skilltree.SkillLevels[id] >= skilltree.SkillCaps[id] ? Color.yellow   //ë ˆë²¨maxë‹¤ë‹¤ë¥´ë©´ ë…¸ë‘ìƒ‰
+            : skilltree.Money >= 1 ? Color.green : Color.white;                                             //ì¬í™”ìˆìœ¼ë©´ ì´ˆë¡ ë‹¤ì¼ìœ¼ë©´ í°ìƒ‰ìœ¼ë¡œ í‘œì‹œ.
 
         foreach(var connectedSkill in ConnectedSkills)
         {

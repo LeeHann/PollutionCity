@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -9,7 +9,7 @@ public class UI_ResearchTree : MonoBehaviour
     private void Awake() => skilltree = this;
 
     public int[] SkillLevels;
-    public int[] SkillCaps; //½ºÅ³µéÀÇ ÃÖ´ñ°ª
+    public int[] SkillCaps; //ìŠ¤í‚¬ë“¤ì˜ ìµœëŒ“ê°’
     public string[] SkillNames;
     public string[] SkillDescription;
 
@@ -26,27 +26,27 @@ public class UI_ResearchTree : MonoBehaviour
         Money = 20;
 
         SkillLevels = new int[7];                       //
-        SkillCaps = new[] { 1, 5, 5, 2, 10, 10, 5 };   //°¢¾÷±×·¹ÀÌµå¸¶´Ù ÃÖ´ë ¾÷±×·¹ÀÌµå °ª
+        SkillCaps = new[] { 1, 5, 5, 2, 10, 10, 5 };   //ê°ì—…ê·¸ë ˆì´ë“œë§ˆë‹¤ ìµœëŒ€ ì—…ê·¸ë ˆì´ë“œ ê°’
 
-        SkillNames = new[] { "ÀÏ¹İ¾²·¹±â", "¼Ò°¢", "¸Å¸³", "ÀçÈ°¿ë", "Á¾ÀÌ·ù", "Äµ·ù", "À¯¸®·ù",};          //½ºÅ³ÀÌ¸§
-        SkillDescription = new[]                                                                            //½ºÅ³¼³¸í
+        SkillNames = new[] { "ì¼ë°˜ì“°ë ˆê¸°", "ì†Œê°", "ë§¤ë¦½", "ì¬í™œìš©", "ì¢…ì´ë¥˜", "ìº”ë¥˜", "ìœ ë¦¬ë¥˜",};          //ìŠ¤í‚¬ì´ë¦„
+        SkillDescription = new[]                                                                            //ìŠ¤í‚¬ì„¤ëª…
         {
-            "¼³¸í",
-            "ÅÏ´ç ¿À¿°µµ °¨¼Ò",
-            "ÀçÈ­",
-            "ÇØ±İ ¿ä¼Ò",
-            "Á¾ÀÌ·ù ÇØ±İ",
-            "Äµ·ù ÇØ±İ",
-            "À¯¸®·ù ÇØ±İ",
+            "ì„¤ëª…",
+            "í„´ë‹¹ ì˜¤ì—¼ë„ ê°ì†Œ",
+            "ì¬í™”",
+            "í•´ê¸ˆ ìš”ì†Œ",
+            "ì¢…ì´ë¥˜ í•´ê¸ˆ",
+            "ìº”ë¥˜ í•´ê¸ˆ",
+            "ìœ ë¦¬ë¥˜ í•´ê¸ˆ",
         };
 
-        foreach (var skill in SkillHolder.GetComponentsInChildren<Skill>()) SkillList.Add(skill);                                           //½ºÅ³µé
-        foreach (var connector in ConnectorHolder.GetComponentsInChildren<RectTransform>()) ConnectorList.Add(connector.gameObject);        //¤± - ¤± ¼±
+        foreach (var skill in SkillHolder.GetComponentsInChildren<Skill>()) SkillList.Add(skill);                                           //ìŠ¤í‚¬ë“¤
+        foreach (var connector in ConnectorHolder.GetComponentsInChildren<RectTransform>()) ConnectorList.Add(connector.gameObject);        //ã… - ã… ì„ 
 
         for (var i = 0; i < SkillList.Count; i++) SkillList[i].id = i;
 
-        SkillList[0].ConnectedSkills = new[] { 1, 2 };        //ÀÏ¾²¶û ¿¬°áµÈ => ¼Ò°¢ , ¸Å¸³
-        SkillList[3].ConnectedSkills = new[] { 4, 5 ,6};      //ÀçÈ°¿ëÀÌ¶û ¿­°áµÈ Á¾ÀÌ À¯¸® Äµ
+        SkillList[0].ConnectedSkills = new[] { 1, 2 };        //ì¼ì“°ë‘ ì—°ê²°ëœ => ì†Œê° , ë§¤ë¦½
+        SkillList[3].ConnectedSkills = new[] { 4, 5 ,6};      //ì¬í™œìš©ì´ë‘ ì—´ê²°ëœ ì¢…ì´ ìœ ë¦¬ ìº”.
      
 
 
