@@ -14,14 +14,21 @@ public class PlayerCity : City
 		if (action.Location.Resource != ResourceType.None)	// Obtain Resources
 		{
 			// TODO: if : Was it researched?
-			//////////////////////////////
+
 			trash[(int)action.Location.Resource]++;
-			notice(action.Location.Resource + " 획득");
+			Debug.Log(action.Location.Resource);
+			notice(action.Location.Resource.Rsc2Str() + " 획득");
 			action.Location.Resource = ResourceType.None;
 		}
 		_coroutine = null;
 	}
 
+	private void Update() {
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            notice("테스트"+ Time.time);
+        }
+	}
     protected override IEnumerator ActionResearcher(Unit action) // 연구 행동 결정 함수
     {
 		yield return null;

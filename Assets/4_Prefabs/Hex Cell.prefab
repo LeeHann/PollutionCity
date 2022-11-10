@@ -67,6 +67,7 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 1bd53b96728dd2449913c89605322c28, type: 2}
   - {fileID: 2100000, guid: 2f9250d1893ec4b4b9575edec650cc15, type: 2}
   resources:
+  - {fileID: 0}
   - {fileID: 6822071920311577808}
   - {fileID: 1481404994227749488}
   - {fileID: 5394514171147964200}
