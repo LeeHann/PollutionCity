@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class AICity : City
 {
-	protected override IEnumerator ActionExplorer(Unit action) // 탐사 행동 결정 함수
+	protected override IEnumerator ActionExplorer(HexUnit action) // 탐사 행동 결정 함수
     {
+		// choose position to move
 		yield return new WaitUntil(() => action.TurnUnit == false);
 		_coroutine = null;
 	}
