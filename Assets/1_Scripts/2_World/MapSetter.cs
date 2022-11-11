@@ -9,6 +9,7 @@ public class MapSetter : MonoBehaviour
     [SerializeField] Material terrainMaterial;
     [SerializeField] HexGrid hexGrid;
     [SerializeField] HexMapCamera cam;
+    [SerializeField] UINoticer noticeUI;
     
     private List<PlayerSit> sits = new List<PlayerSit>() {
         PlayerSit.Blue, PlayerSit.Red, PlayerSit.White, PlayerSit.Yellow
@@ -91,6 +92,7 @@ public class MapSetter : MonoBehaviour
         City city = SetCityProperty(cell, isPlayer);
         cell.SetLabel(isPlayer.ToString());
         CameraPositioning(cell, isPlayer);
+        LandBuy(cell, isPlayer);
         return city;
     }
 
@@ -114,9 +116,10 @@ public class MapSetter : MonoBehaviour
                 invalid |= neighbor.IsUnderwater | neighbor.Walled;
             }
         } while (invalid);
-
+        
         return cell;
     }
+
     
     City SetCityProperty(HexCell cell, bool isPlayer)
     {
@@ -131,11 +134,15 @@ public class MapSetter : MonoBehaviour
         city.AddCell(cell);
         for (HexDirection d=HexDirection.NE; d<=HexDirection.NW; d++)
         {
-            city.AddCell(cell.GetNeighbor(d));
+          city.AddCell(cell.GetNeighbor(d));  
         }
+        
+
 
         city.Money = GameInfo.startMoney;
         city.PA = GameInfo.startPA;
+        if (isPlayer)
+            city.GetComponent<PlayerCity>().notice += noticeUI.Notice;
         
         // place units (explorer, lab)
         city.AddUnit(
@@ -146,6 +153,29 @@ public class MapSetter : MonoBehaviour
         
         city.cam = cam;
         return city;
+    }
+
+    public void LandBuy(HexCell cell, bool isPlayer)
+    {
+        PlayerCity playerCity = GameObject.Find("PlayerCity").GetComponent<PlayerCity>();
+        if(playerCity)
+        {
+            cell.EnableHighlight(Color.blue);
+        }
+        //if (isPlayer )
+        //{
+        //   cell.EnableHighlight(Color.green);
+
+        //}
+        //for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+        //{
+        //    cell.EnableHighlight(Color.green);
+        //}
+
+        //if(SetCityProperty())
+        {
+
+        }
     }
 
     public void ScatterResources(int rscVal)
