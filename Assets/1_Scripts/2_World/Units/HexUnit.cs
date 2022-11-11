@@ -84,7 +84,6 @@ public class HexUnit : Unit, IPointerClickHandler
 					continue;
 
 				queue.Enqueue(neighbor);
-				
 			}
 		}
 		Location.DisableHighlight();
