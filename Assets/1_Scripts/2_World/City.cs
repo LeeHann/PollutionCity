@@ -7,16 +7,17 @@ public class City : MonoBehaviour
     [HideInInspector] public HexMapCamera cam;
 
     public bool myTurn;
-
     public PlayerSit sit;
-    public Trash trash = new Trash();
+    public int[] trash = new int[6];
+
     public List<Unit> units = new List<Unit>();
+    public List<Unit> actions = new List<Unit>();
+
     public List<HexCell> cells = new List<HexCell>();
     public HexCell rootCell;
-
-    public List<Unit> actions = new List<Unit>();
+    
     protected Coroutine _coroutine = null;
-    WaitForSeconds dot5 = new WaitForSeconds(0.5f);
+    protected WaitForSeconds dot5 = new WaitForSeconds(0.5f);
 
     public int Money {
         get {
@@ -57,7 +58,7 @@ public class City : MonoBehaviour
             switch (action.unitType)
             {
                 case UnitType.Explorer: // 탐사 유닛 행동을 결정하기
-                    _coroutine = StartCoroutine(ActionExplorer(action));
+                    _coroutine = StartCoroutine(ActionExplorer((HexUnit)action));
                     yield return new WaitUntil(() => _coroutine == null);
                     break;
 
@@ -78,7 +79,7 @@ public class City : MonoBehaviour
 		myTurn = false;	
     }
 
-    protected virtual IEnumerator ActionExplorer(Unit action)
+    protected virtual IEnumerator ActionExplorer(HexUnit action)
     { yield return null; }
 
     protected virtual IEnumerator ActionResearcher(Unit action)
@@ -97,6 +98,11 @@ public class City : MonoBehaviour
     public void AddUnit(Unit unit)
     {
         units.Add(unit);
+    }
+
+    public void AddLandMark(HexCell cell)
+    {
+
     }
 
     protected void CameraPositioning(GameObject obj)
