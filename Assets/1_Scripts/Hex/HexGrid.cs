@@ -32,6 +32,7 @@ public class HexGrid : MonoBehaviour {
 	Transform[] columns;
 	HexGridChunk[] chunks;
 	HexCell[] cells;
+	public List<HexCell> emptyCells = new List<HexCell>();
 
 	int chunkCountX, chunkCountZ;
 
@@ -275,6 +276,7 @@ public class HexGrid : MonoBehaviour {
 
 		cell.Elevation = 0;
 
+		cell.hexGrid = this;
 		AddCellToChunk(x, z, cell);
 	}
 
