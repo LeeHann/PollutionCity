@@ -6,35 +6,21 @@ using UnityEngine.EventSystems;
 public class LandBuy : MonoBehaviour
 {
     public Resources highlight;
-   
+    MapSetter mapSetter;
     HexCell hexcell;
     HexGridChunk hexGridChunk;
     HexGrid hexGrid;
+    City city;
     HexDirection hexDirection;
     Canvas gridCanvas;
     bool walled;
     public bool land;
    
 
-  
-
-
 
     public void BuyLand()
     {
-        
         Debug.Log("BuyTile Button");
-
-
-        //hexcell.BuyTile(hexDirection, hexcell);
-
-        //if (hexcell.SetNeighbor(hexDirection, hexcell) && !hexcell.Walled)
-        //{
-        //    hexcell.EnableHighlight(Color.red);
-        //}
-
-
-
     }
 
     void Start()
