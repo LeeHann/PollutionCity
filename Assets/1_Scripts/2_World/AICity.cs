@@ -9,6 +9,12 @@ public class AICity : City
 		// Initiate Pollutant Amount
 		PA = 5000 + (int)(5000 * Random.Range(-0.1f, 0.15f));
 	}
+	private void Update() {
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			_coroutine = null;
+		}
+	}
 
 	protected override IEnumerator ActionExplorer(HexUnit action) // 탐사 행동 결정 함수
     {

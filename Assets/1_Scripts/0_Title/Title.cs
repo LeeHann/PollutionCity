@@ -13,8 +13,7 @@ public class Title : MonoBehaviour
     private void Start() 
     {
         Screen.SetResolution(1920, 1080, false);
-
-        DisableSystemUI.DisableNavUI();
+        Application.targetFrameRate = 30;
     }
     void OnApplicationFocus(bool focus)
     {

@@ -27,11 +27,7 @@ public class TurnSystem : MonoBehaviour
             mapSetter.ScatterResources(Random.Range(0, 5));
             scatterTurn = 5;
         }
-        Debug.Log(string.Format(
-                "turnPlayer is {0} whose sit is {1}", 
-                whoseTurn, turnPlayer.sit
-            )
-        );
+        Debug.Log(string.Format("turnPlayer is {0} whose sit is {1}", whoseTurn, turnPlayer.sit));
         turnPlayer.PA += (int)(turnPlayer.PA * 0.033f);
 
         turnPlayer.MyTurn();
@@ -45,7 +41,7 @@ public class TurnSystem : MonoBehaviour
         {
             do{
                 whoseTurn = (PlayerNum)((int)(whoseTurn + 1) % 4);
-            } while (turnPlayer == null);
+            } while (cities[(int)whoseTurn] == null);
             scatterTurn--;
             StartCoroutine(SpinATurn());
         }
