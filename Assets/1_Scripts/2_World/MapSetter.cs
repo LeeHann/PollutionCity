@@ -20,8 +20,6 @@ public class MapSetter : MonoBehaviour
     [SerializeField] string[] maps;
     const int mapFileVersion = 5;
 
-    public TextMeshProUGUI errorText;
-
     private void Start() 
     {
         terrainMaterial.DisableKeyword("GRID_ON");
@@ -45,17 +43,15 @@ public class MapSetter : MonoBehaviour
         }
         TurnSystem.cities = this.cities;
         
-        ScatterResources(10);
+        ScatterResources(30);
     }
 
     void Load (string path) {
 		if (!File.Exists(path)) {
 			Debug.LogError("File does not exist " + path);
-            errorText.text = "File does not exist " + path;
 			return;
 		}
 		using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
-            errorText.text = "open file!";
 			int header = reader.ReadInt32();
 			if (header <= mapFileVersion) {
 				hexGrid.Load(reader, header);
@@ -102,9 +98,8 @@ public class MapSetter : MonoBehaviour
 
         bool invalid;
         do {
-            int randomX = UnityEngine.Random.Range(0, hexGrid.cellCountX);
-            int randomZ = UnityEngine.Random.Range(0, hexGrid.cellCountZ);
-            cell = hexGrid.GetCell(randomX, randomZ);
+            int random = UnityEngine.Random.Range(0, hexGrid.emptyCells.Count-1);
+            cell = hexGrid.emptyCells[random];
 
             invalid = cell.IsUnderwater | cell.Walled;
             for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
@@ -183,24 +178,23 @@ public class MapSetter : MonoBehaviour
         // 자원 뿌리기
         int count = 0;
         int resourceCnt = rscVal;
-        while (count < resourceCnt)
+        while (count < resourceCnt && count < hexGrid.emptyCells.Count)
         {
             HexCell cell;
             bool invalid;
             do {
-                int randomX = UnityEngine.Random.Range(0, hexGrid.cellCountX);
-                int randomZ = UnityEngine.Random.Range(0, hexGrid.cellCountZ);
-                cell = hexGrid.GetCell(randomX, randomZ);
+                int random = UnityEngine.Random.Range(0, hexGrid.emptyCells.Count-1);
+                cell = hexGrid.emptyCells[random];
                 invalid = cell.IsUnderwater | cell.Walled | cell.Resource != ResourceType.None;
             } while (invalid);
             ResourceType resourceType = (ResourceType)UnityEngine.Random.Range(
                 (int)ResourceType.Money, (int)ResourceType.Plastic
             );
             cell.Resource = resourceType;
+
             count++;
         }
     }
-
 
     void CameraPositioning(HexCell cell, bool isPlayer)
     {

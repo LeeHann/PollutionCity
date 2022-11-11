@@ -32,7 +32,7 @@ public class TurnSystem : MonoBehaviour
             cities[(int)turnPlayer].sit
             )
         );
-
+        // 오염도 적용
         cities[(int)turnPlayer].MyTurn();
         yield return new WaitWhile(()=> cities[(int)turnPlayer].myTurn != false);
 

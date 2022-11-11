@@ -10,7 +10,18 @@ public class HexCell : MonoBehaviour {
 	[HideInInspector] public Button highlightBtn;
 
 #region City Boundary
-
+	
+	public HexGrid hexGrid {
+		get {
+			return _hexGrid;
+		}
+		set {
+			_hexGrid = value;
+			if (!IsUnderwater)
+				hexGrid.emptyCells.Add(this);
+		}
+	}
+	private HexGrid _hexGrid;
 	public HexGridChunk chunk;
 	public GameObject[] walls;
 	public PlayerSit sit = (PlayerSit)(-1);
@@ -233,7 +244,12 @@ public class HexCell : MonoBehaviour {
 			if (resource != ResourceType.None)
 				resources[(int)resource].SetActive(false);
 			if (value != ResourceType.None)
+			{
 				resources[(int)value].SetActive(true);
+				hexGrid.emptyCells.Add(this);
+			} else {
+				hexGrid.emptyCells.Remove(this);
+			}
 			resource = value;
 		}	
 	}
@@ -249,11 +265,12 @@ public class HexCell : MonoBehaviour {
 				{
 					for (int child = 0; child < 6; child++)
 						walls[child].GetComponent<MeshRenderer>().material = materials[(int)sit < 0 ? 0 : (int)sit];
+					hexGrid.emptyCells.Add(this);
 				}
 				for (HexDirection d = 0; d <= HexDirection.NW; d++)
 				{
 					HexCell neighbor = GetNeighbor(d);
-					if (neighbor.Walled != walled) 
+					if (neighbor?.Walled != walled) 
 					{
 						walls[(int)d].SetActive(walled);
 						neighbor.walls[(int)(d+3)%6].SetActive(neighbor.Walled);
@@ -265,7 +282,6 @@ public class HexCell : MonoBehaviour {
 						neighbor.walls[(int)(d+3)%6].SetActive(sitStatus);
 					}
 				}
-				// Refresh();
 			}
 		}
 	}
@@ -579,9 +595,6 @@ public class HexCell : MonoBehaviour {
 		writer.Write((byte)terrainTypeIndex);
 		writer.Write((byte)(elevation + 127));
 		writer.Write((byte)waterLevel);
-		// writer.Write((byte)urbanLevel);
-		// writer.Write((byte)farmLevel);
-		// writer.Write((byte)plantLevel);
 		writer.Write(walled);
 
 		if (hasIncomingRiver) {
@@ -617,9 +630,6 @@ public class HexCell : MonoBehaviour {
 		}
 		RefreshPosition();
 		waterLevel = reader.ReadByte();
-		// urbanLevel = reader.ReadByte();
-		// farmLevel = reader.ReadByte();
-		// plantLevel = reader.ReadByte();
 		walled = reader.ReadBoolean();
 
 		byte riverData = reader.ReadByte();
