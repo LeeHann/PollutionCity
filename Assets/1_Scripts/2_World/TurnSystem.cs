@@ -5,7 +5,7 @@ using UnityEngine;
 public class TurnSystem : MonoBehaviour
 {
     static public List<City> cities; 
-    public PlayerNum turnPlayer;
+    private PlayerNum whoseTurn;
     public bool boolOver;
 
     [SerializeField] HexGrid hexGrid;
@@ -15,26 +15,23 @@ public class TurnSystem : MonoBehaviour
 
     private void Start() 
     {
-        turnPlayer = 0;
+        whoseTurn = 0;
         StartCoroutine(SpinATurn());
     }
 
     IEnumerator SpinATurn()
     {   
+        City turnPlayer = cities[(int)whoseTurn];
         if (scatterTurn <= 0)
         {
             mapSetter.ScatterResources(Random.Range(0, 5));
             scatterTurn = 5;
         }
-        Debug.Log(string.Format(
-            "turnPlayer is {0} whose sit is {1}", 
-            turnPlayer, 
-            cities[(int)turnPlayer].sit
-            )
-        );
-        // 오염도 적용
-        cities[(int)turnPlayer].MyTurn();
-        yield return new WaitWhile(()=> cities[(int)turnPlayer].myTurn != false);
+        Debug.Log(string.Format("turnPlayer is {0} whose sit is {1}", whoseTurn, turnPlayer.sit));
+        turnPlayer.PA += (int)(turnPlayer.PA * 0.033f);
+
+        turnPlayer.MyTurn();
+        yield return new WaitWhile(()=> turnPlayer.myTurn != false);
 
         bool isOver = boolOver;
         if (isOver)
@@ -43,8 +40,8 @@ public class TurnSystem : MonoBehaviour
         } else
         {
             do{
-                turnPlayer = (PlayerNum)((int)(turnPlayer + 1) % 4);
-            } while (cities[(int)turnPlayer] == null);
+                whoseTurn = (PlayerNum)((int)(whoseTurn + 1) % 4);
+            } while (cities[(int)whoseTurn] == null);
             scatterTurn--;
             StartCoroutine(SpinATurn());
         }

@@ -4,10 +4,29 @@ using UnityEngine;
 
 public class AICity : City
 {
+	private void Start() 
+	{
+		// Initiate Pollutant Amount
+		PA = 5000 + (int)(5000 * Random.Range(-0.1f, 0.15f));
+	}
+	private void Update() {
+		if (Input.GetKeyDown(KeyCode.Space))
+		{
+			_coroutine = null;
+		}
+	}
+
 	protected override IEnumerator ActionExplorer(HexUnit action) // 탐사 행동 결정 함수
     {
 		// choose position to move
 		yield return new WaitUntil(() => action.TurnUnit == false);
+		if (action.Location.Resource != ResourceType.None)	// Obtain Resources
+		{
+			// TODO: if : Was it researched?
+
+			trash[(int)action.Location.Resource]++;
+			action.Location.Resource = ResourceType.None;
+		}
 		_coroutine = null;
 	}
 

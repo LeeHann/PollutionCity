@@ -5,7 +5,13 @@ using UnityEngine.UI;
 using System;
 
 public class PlayerCity : City
-{	
+{
+	private void Start() 
+	{
+		// Initiate Pollutant Amount
+		PA = 5000;
+	}
+
 	public event Action<string> notice;
 
 	protected override IEnumerator ActionExplorer(HexUnit action) // 탐사 행동 결정 함수
@@ -22,12 +28,6 @@ public class PlayerCity : City
 		_coroutine = null;
 	}
 
-	private void Update() {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            notice("테스트"+ Time.time);
-        }
-	}
     protected override IEnumerator ActionResearcher(Unit action) // 연구 행동 결정 함수
     {
 		yield return null;

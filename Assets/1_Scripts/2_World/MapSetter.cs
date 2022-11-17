@@ -108,7 +108,8 @@ public class MapSetter : MonoBehaviour
                 HexCell neighbor = cell.GetNeighbor(d);
                 if (neighbor == null) 
                     invalid = true;
-                invalid |= neighbor.IsUnderwater | neighbor.Walled;
+                else
+                    invalid |= neighbor.IsUnderwater | neighbor.Walled;
             }
         } while (invalid);
         
