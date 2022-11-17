@@ -100,6 +100,11 @@ public class City : MonoBehaviour
         units.Add(unit);
     }
 
+    public void AddLandMark(HexCell cell)
+    {
+
+    }
+
     protected void CameraPositioning(GameObject obj)
     {
         cam.transform.localPosition =  

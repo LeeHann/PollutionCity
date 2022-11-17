@@ -33,7 +33,7 @@ public class UI_ResearchTree : MonoBehaviour
         {
             "설명",
             "턴당 오염도 감소",
-            "재화",
+            "금화",
             "해금 요소",
             "종이류 해금",
             "캔류 해금",
