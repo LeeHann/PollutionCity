@@ -91,9 +91,10 @@ public class HexUnit : Unit, IPointerClickHandler
 	
 	public void OnClickHighlight(HexCell cell)
 	{
-		for (int i=highlights.Count-1; i>0; i--)
+		for (int i=highlights.Count-1; i>=0; i--)
 		{
 			highlights[i].DisableHighlight();
+			highlights[i].highlightBtn.onClick.RemoveAllListeners();
 			highlights.RemoveAt(i);
 		}
 		Grid.FindPath(Location, cell, this);
