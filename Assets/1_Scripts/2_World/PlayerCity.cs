@@ -28,12 +28,6 @@ public class PlayerCity : City
 		_coroutine = null;
 	}
 
-	private void Update() {
-        if(Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            notice("테스트"+ Time.time);
-        }
-	}
     protected override IEnumerator ActionResearcher(Unit action) // 연구 행동 결정 함수
     {
 		yield return null;
