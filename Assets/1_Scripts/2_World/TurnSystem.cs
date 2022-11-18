@@ -5,7 +5,13 @@ using UnityEngine;
 public class TurnSystem : MonoBehaviour
 {
     static public List<City> cities; 
-    private PlayerNum whoseTurn;
+    private static PlayerNum whoseTurn;
+
+    public static City turnCity {
+        get {
+            return cities[(int)whoseTurn];
+        }
+    }
     public bool boolOver;
 
     [SerializeField] HexGrid hexGrid;

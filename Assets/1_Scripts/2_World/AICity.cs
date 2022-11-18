@@ -24,7 +24,7 @@ public class AICity : City
 		{
 			// TODO: if : Was it researched?
 
-			trash[(int)action.Location.Resource]++;
+			UpdateTrash(action.Location.Resource, 1);
 			action.Location.Resource = ResourceType.None;
 		}
 		_coroutine = null;

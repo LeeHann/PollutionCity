@@ -8,7 +8,7 @@ public class City : MonoBehaviour
 
     public bool myTurn;
     public PlayerSit sit;
-    public int[] trash = new int[6];
+    private int[] trash = new int[6];
 
     public List<Unit> units = new List<Unit>();
     public List<Unit> actions = new List<Unit>();
@@ -109,5 +109,17 @@ public class City : MonoBehaviour
     {
         cam.transform.localPosition =  
                 cam.WrapPosition(obj.transform.localPosition);
+    }
+
+    public int GetTrash(ResourceType type)
+    {
+        return trash[(int)type];
+    }
+    
+    public void UpdateTrash(ResourceType type, int num=0)
+    {
+        trash[(int)type] += num;
+        if (trash[(int)type] < 0) trash[(int)type] = 0;
+        if (trash[(int)type] > int.MaxValue) trash[(int)type] = int.MaxValue;
     }
 }

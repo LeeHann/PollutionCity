@@ -7,7 +7,6 @@ public class UINoticer : MonoBehaviour
 {
     public Image noticeUI;
     public Text text;
-    WaitForSeconds dot1 = new WaitForSeconds(0.1f);
     Coroutine coroutine = null;
 
     public void Notice(string contents)
@@ -20,23 +19,31 @@ public class UINoticer : MonoBehaviour
             StopCoroutine(coroutine);
             coroutine = StartCoroutine(Fade());
         }
-            
     }
 
     IEnumerator Fade()
     {
 		Color color = new Color(0.254717f, 0.254717f, 0.254717f, 0.5019608f);
         Color textColor = Color.white;
+        float time = 0;
+        
+        noticeUI.color = color;
+        text.color = textColor;
+        while (time < 0.5f)
+        {
+            time += Time.deltaTime;
+            yield return null;
+        }
 		while (noticeUI.color.a > 0)
 		{
-			color.a -= Time.deltaTime * 3;
-            textColor.a -= Time.deltaTime * 6;
+			color.a -= Time.deltaTime * 0.5f;
+            textColor.a -= Time.deltaTime * 1f;
 			noticeUI.color = color;
             text.color = textColor;
-			yield return dot1;
+			yield return null;
 		}
         noticeUI.gameObject.SetActive(false);
-        noticeUI.color = Color.white;
+        noticeUI.color = new Color(0.254717f, 0.254717f, 0.254717f, 0.5019608f);
         text.color = Color.white;
         coroutine = null;
     }

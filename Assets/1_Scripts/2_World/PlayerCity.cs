@@ -21,7 +21,7 @@ public class PlayerCity : City
 		{
 			// TODO: if : Was it researched?
 
-			trash[(int)action.Location.Resource]++;
+			UpdateTrash(action.Location.Resource, 1);
 			notice(action.Location.Resource.Rsc2Str() + " 획득");
 			action.Location.Resource = ResourceType.None;
 		}

@@ -20,19 +20,19 @@ public static class ReosourcTypeFormatter {
                 break;
             
             case ResourceType.Paper:
-                ret = "종이류";
+                ret = "종이";
                 break;
             
             case ResourceType.Can:
-                ret = "캔류";
+                ret = "캔";
                 break;
             
             case ResourceType.Glass:
-                ret = "유리류";
+                ret = "유리";
                 break;
             
             case ResourceType.Plastic:
-                ret = "플라스틱류";
+                ret = "플라스틱";
                 break;
         }
         return ret;
