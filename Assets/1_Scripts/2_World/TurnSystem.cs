@@ -34,7 +34,8 @@ public class TurnSystem : MonoBehaviour
             scatterTurn = 5;
         }
         Debug.Log(string.Format("turnPlayer is {0} whose sit is {1}", whoseTurn, turnPlayer.sit));
-        turnPlayer.PA += (int)(turnPlayer.PA * 0.033f);
+        // turnPlayer.PA += (int)(turnPlayer.PA * 0.033f);
+        turnPlayer.PA += (int)(turnPlayer.PA * 0.5f);
 
         turnPlayer.MyTurn();
         yield return new WaitWhile(()=> turnPlayer.myTurn != false);
@@ -42,6 +43,7 @@ public class TurnSystem : MonoBehaviour
         bool isOver = boolOver;
         if (isOver)
         {
+            
             Debug.Log("game is over. the winner is ~");
         } else
         {

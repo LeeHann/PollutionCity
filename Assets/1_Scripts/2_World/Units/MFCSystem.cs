@@ -28,7 +28,7 @@ public class MFCSystem : MonoBehaviour
                         instance = singletonObject.AddComponent<MFCSystem>();
                         singletonObject.name = "MFCSystem Singleton";
                     }
-                    DontDestroyOnLoad(instance.gameObject);
+                    // DontDestroyOnLoad(instance.gameObject);
                 }
                 return instance;
             }

@@ -270,7 +270,9 @@ public class HexCell : MonoBehaviour {
 				for (HexDirection d = 0; d <= HexDirection.NW; d++)
 				{
 					HexCell neighbor = GetNeighbor(d);
-					if (neighbor?.Walled != walled) 
+					if (neighbor == null)
+						continue;
+					if (neighbor.Walled != walled) 
 					{
 						walls[(int)d].SetActive(walled);
 						neighbor.walls[(int)(d+3)%6].SetActive(neighbor.Walled);

@@ -29,7 +29,7 @@ public class MFCUI : MonoBehaviour
                         instance = singletonObject.AddComponent<MFCUI>();
                         singletonObject.name = "MFCUI Singleton";
                     }
-                    DontDestroyOnLoad(instance.gameObject);
+                    // DontDestroyOnLoad(instance.gameObject);
                 }
                 return instance;
             }
