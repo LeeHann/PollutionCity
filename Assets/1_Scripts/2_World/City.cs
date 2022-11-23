@@ -93,6 +93,7 @@ public class City : MonoBehaviour
         cells.Add(cell);
         cell.sit = sit;
         cell.Walled = true;
+        //cell.EnableHighlight(Color.green);
     }
 
     public void AddUnit(Unit unit)
@@ -102,7 +103,8 @@ public class City : MonoBehaviour
 
     public void AddLandMark(HexCell cell)
     {
-
+        if(cell.walled != true)
+            cell.walled = true;
     }
 
     protected void CameraPositioning(GameObject obj)

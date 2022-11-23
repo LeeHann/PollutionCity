@@ -272,7 +272,7 @@ public class HexCell : MonoBehaviour {
 					HexCell neighbor = GetNeighbor(d);
 					if (neighbor == null)
 						continue;
-					if (neighbor.Walled != walled) 
+					if(neighbor.Walled != walled)
 					{
 						walls[(int)d].SetActive(walled);
 						neighbor.walls[(int)(d+3)%6].SetActive(neighbor.Walled);
@@ -380,7 +380,7 @@ public class HexCell : MonoBehaviour {
 	
 	ResourceType resource;
 
-	bool walled;
+	public bool walled;
 	bool buytile;
 	bool hasIncomingRiver, hasOutgoingRiver;
 	HexDirection incomingRiver, outgoingRiver;
@@ -436,15 +436,19 @@ public class HexCell : MonoBehaviour {
 
 	public void BuyTile(HexDirection direction, HexCell cell)
     {
-		GetNeighbor(direction);
-		neighbors[(int)direction] = cell;
-		cell.neighbors[(int)direction.Opposite()] = this;
-        if (!walled && cell.neighbors[(int)direction.Opposite()] != null)
-        {
-			Sprite highlight = Resources.Load<Sprite>("HEX_Green");
-           // EnableHighlight(Color.red);
-        }
-    }
+
+		for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+		{
+			GetNeighbor(d);
+			cell.neighbors[(int)d.Opposite()] = this;
+			if (walled && cell.neighbors[(int)d.Opposite()] != null)
+			{
+				//Sprite highlight = Resources.Load<Sprite>("HEX_Green");
+				EnableHighlight(Color.red);
+			}
+		}
+		
+	}
 	public bool HasRiverThroughEdge (HexDirection direction) {
 		return
 			hasIncomingRiver && incomingRiver == direction ||

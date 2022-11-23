@@ -63,7 +63,7 @@ public class HexFeatureManager : MonoBehaviour {
 		}
 		container = new GameObject("Features Container").transform;
 		container.SetParent(transform, false);
-		// walls.Clear();
+		//walls.Clear();
 	}
 
 	public void Apply () {
