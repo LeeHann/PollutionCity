@@ -10,7 +10,7 @@ public class MapSetter : MonoBehaviour
     [SerializeField] HexGrid hexGrid;
     [SerializeField] HexMapCamera cam;
     [SerializeField] UINoticer noticeUI;
-    
+
     private List<PlayerSit> sits = new List<PlayerSit>() {
         PlayerSit.Blue, PlayerSit.Red, PlayerSit.White, PlayerSit.Yellow
     };
@@ -194,24 +194,43 @@ public class MapSetter : MonoBehaviour
         }
     }
 
-    public void OnLandBuyButton()
-    {
-        Queue queue = new Queue();
-        HexCell cell = (HexCell)queue.Dequeue();
+
+    /*
         cell.EnableHighlight(Color.green);
         highlights.Add(cell);
 
         cell.highlightBtn.onClick.RemoveAllListeners();
         cell.highlightBtn.onClick.AddListener(() => OnClickLandbuyHighlight(cell));
-        for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+    */
+
+
+
+    public void OnLandBuyButton()
+    {
+        List<HexCell> cells = TurnSystem.turnCity.cells;
+
+        for(int cell = 0; cell <= cells.Count-1; cell++)
         {
-            HexCell neighbor = cell.GetNeighbor(d);
+            for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+            {
 
-            if (cell.walled == true && neighbor.IsEnabledHighlight())
-                continue;
+                HexCell neighbor = cells[cell].GetNeighbor(d);
+                if (neighbor == null)
+                    continue;
 
-            queue.Enqueue(neighbor);
+
+                if (neighbor.walled == false && !neighbor.IsEnabledHighlight())                //가장자리 cells
+                {
+                   neighbor.EnableHighlight(Color.green);
+                    highlights.Add(neighbor);
+                   neighbor.highlightBtn.onClick.RemoveAllListeners();
+                   neighbor.highlightBtn.onClick.AddListener(() => OnClickLandbuyHighlight(neighbor));
+                }
+            
+            }
         }
+
+       
 
     }
 
@@ -223,7 +242,7 @@ public class MapSetter : MonoBehaviour
             highlights[i].highlightBtn.onClick.RemoveAllListeners();
             highlights.RemoveAt(i);
         }
-        cell.walled = true;
+        TurnSystem.turnCity.AddCell(cell);
     }
 
     public void OnClickLandbuy(HexCell cell)
