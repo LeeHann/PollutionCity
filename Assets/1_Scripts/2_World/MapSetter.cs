@@ -16,7 +16,7 @@ public class MapSetter : MonoBehaviour
     };
     [SerializeField] List<City> cities = new List<City>();
     [SerializeField] GameObject[] units;
-    
+    List<HexCell> highlights = new List<HexCell>();
     [SerializeField] string[] maps;
     const int mapFileVersion = 5;
 
@@ -88,7 +88,7 @@ public class MapSetter : MonoBehaviour
         City city = SetCityProperty(cell, isPlayer);
         cell.SetLabel(isPlayer.ToString());
         CameraPositioning(cell, isPlayer);
-        LandBuy(cell, isPlayer);
+        //LandBuy(cell, isPlayer);
         return city;
     }
 
@@ -128,12 +128,16 @@ public class MapSetter : MonoBehaviour
 
         city.rootCell = cell;
         city.AddCell(cell);
-        for (HexDirection d=HexDirection.NE; d<=HexDirection.NW; d++)
+        for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
         {
-          city.AddCell(cell.GetNeighbor(d));  
+            city.AddCell(cell.GetNeighbor(d));
         }
-        
-
+        //LandBuy(cell, isPlayer);
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    if (cell.walled != true)
+        //        cell.walled = true;
+        //}
 
         city.Money = GameInfo.startMoney;
         city.PA = GameInfo.startPA;
@@ -153,11 +157,27 @@ public class MapSetter : MonoBehaviour
 
     public void LandBuy(HexCell cell, bool isPlayer)
     {
-        PlayerCity playerCity = GameObject.Find("PlayerCity").GetComponent<PlayerCity>();
-        if(playerCity)
+        City city = isPlayer ? GameObject.Find("PlayerCity").GetComponent<PlayerCity>()
+                                : GameObject.Find("AiCity").GetComponent<AICity>();
+
+        city.AddLandMark(cell);
+        for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
         {
-            cell.EnableHighlight(Color.blue);
+            cell.GetNeighbor(d);
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (cell.walled != true)
+                {
+                    cell.walled = true;
+                }
+            }
         }
+      
+        //if(playerCity)
+        //{
+        //    cell.EnableHighlight(Color.blue);
+        //}
+    
         //if (isPlayer )
         //{
         //   cell.EnableHighlight(Color.green);
@@ -171,6 +191,51 @@ public class MapSetter : MonoBehaviour
         //if(SetCityProperty())
         {
 
+        }
+    }
+
+    public void OnLandBuyButton()
+    {
+        Queue queue = new Queue();
+        HexCell cell = (HexCell)queue.Dequeue();
+        cell.EnableHighlight(Color.green);
+        highlights.Add(cell);
+
+        cell.highlightBtn.onClick.RemoveAllListeners();
+        cell.highlightBtn.onClick.AddListener(() => OnClickLandbuyHighlight(cell));
+        for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+        {
+            HexCell neighbor = cell.GetNeighbor(d);
+
+            if (cell.walled == true && neighbor.IsEnabledHighlight())
+                continue;
+
+            queue.Enqueue(neighbor);
+        }
+
+    }
+
+    public void OnClickLandbuyHighlight(HexCell cell)
+    {
+        for (int i = highlights.Count - 1; i >= 0; i--)
+        {
+            highlights[i].DisableHighlight();
+            highlights[i].highlightBtn.onClick.RemoveAllListeners();
+            highlights.RemoveAt(i);
+        }
+        cell.walled = true;
+    }
+
+    public void OnClickLandbuy(HexCell cell)
+    {
+        //도시 셀들 가져와야함
+        if (cell.walled)
+        {
+            for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+            {
+                cell.GetNeighbor(d);
+                cell.EnableHighlight(Color.green);
+            }
         }
     }
 

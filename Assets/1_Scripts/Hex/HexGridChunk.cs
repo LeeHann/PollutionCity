@@ -641,6 +641,7 @@ public class HexGridChunk : MonoBehaviour {
 			);
 		}
 
+
 		// features.AddWall(direction, e1, cell, e2, neighbor);
 
 		HexCell nextNeighbor = cell.GetNeighbor(direction.Next());
