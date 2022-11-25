@@ -132,7 +132,11 @@ public class MapSetter : MonoBehaviour
         }
 
         city.Money = GameInfo.startMoney;
-        city.PA = GameInfo.startPA;
+        if (isPlayer)
+            city.PA = GameInfo.startPA;
+        else
+            city.PA = GameInfo.startPA + (int)(GameInfo.startPA * Random.Range(-0.1f, 0.15f));
+        
         if (isPlayer)
             city.GetComponent<PlayerCity>().notice += noticeUI.Notice;
         

@@ -43,7 +43,7 @@ public class City : MonoBehaviour
 
     public float PL {
         get {
-            return PA / GameInfo.maxPA;
+            return PA / (float)GameInfo.maxPA;
         }
     }
 

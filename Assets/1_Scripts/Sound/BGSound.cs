@@ -16,6 +16,9 @@ public class BGSound : MonoBehaviour
 
     private void Start() 
     {
+        if (instance != null) {
+            Destroy(this.gameObject);
+        }
         instance = this;
         DontDestroyOnLoad(this);
         this.gameObject.name += " (Singleton)";

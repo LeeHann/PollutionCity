@@ -1,11 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 
 public class TurnSystem : MonoBehaviour
 {
-    [SerializeField] TMP_Text tmpText;
+    [SerializeField] GameObject ClearPanel;
+    [SerializeField] TMP_Text ClearTMP;
+    [SerializeField] Text ClearText;
+    [SerializeField] AudioClip[] clips;
+    [SerializeField] AudioSource audioSource;
 
     static public List<City> cities; 
     private static PlayerNum whoseTurn;
@@ -25,6 +30,7 @@ public class TurnSystem : MonoBehaviour
         AllLose,
         AIWin,
         PlayerWin,
+        PlayerLose,
         Pass
     }
 
@@ -32,6 +38,7 @@ public class TurnSystem : MonoBehaviour
     [SerializeField] HexMapCamera cam;
     [SerializeField] MapSetter mapSetter;
     int scatterTurn = 5;
+    bool overCheck;
     
 
     private void Start() 
@@ -45,20 +52,35 @@ public class TurnSystem : MonoBehaviour
     {   
         City turnPlayer = cities[(int)whoseTurn];
         Debug.Log(string.Format("turnPlayer is {0} whose sit is {1}", whoseTurn, turnPlayer.sit));
+
         ClearType type = CheckClear(turnPlayer);
-        if (type != 0) {
+        if (type != ClearType.Pass) {
             switch (type)
             {
                 case ClearType.AllLose:
-
+                    ClearTMP.text = "패배";
+                    ClearText.text = "모든 세상이 오염되었습니다.";
+                    audioSource.clip = clips[0];
                     break;
                 case ClearType.AIWin:
-
+                    ClearTMP.text = "패배";
+                    ClearText.text = "다른 도시가 먼저 정화되었습니다.";
+                    audioSource.clip = clips[0];
+                    break;
+                case ClearType.PlayerLose:
+                    ClearTMP.text = "패배";
+                    ClearText.text = "도시가 오염되었습니다.";
+                    audioSource.clip = clips[0];
                     break;
                 case ClearType.PlayerWin:
-
+                    ClearTMP.text = "승리";
+                    ClearText.text = "가장 먼저 도시를 정화했습니다.";
+                    audioSource.clip = clips[1];
                     break;
             }
+            ClearPanel.SetActive(true);
+            yield return new WaitUntil(()=> overCheck == true);
+            Loading.LoadSceneHandle("Title");
         } else {
             if (scatterTurn <= 0)
             {
@@ -95,8 +117,8 @@ public class TurnSystem : MonoBehaviour
             }
         }
         allPL += (hexGrid.cellCountX * hexGrid.cellCountZ - (hexGrid.emptyCells.Count + cells)) 
-                    / hexGrid.cellCountX * hexGrid.cellCountZ;
-        if ((allPL / (GameInfo.cityCount + 1)) >= 80.0f) 
+                    / (float)(hexGrid.cellCountX * hexGrid.cellCountZ);
+        if ((allPL / (float)(GameInfo.cityCount + 1)) >= 80.0f) 
         {
             return ClearType.AllLose;
         }
@@ -107,7 +129,11 @@ public class TurnSystem : MonoBehaviour
             if (cities[i] != null)
             {
                 if (cities[i].PL >= GameInfo.losePL)
+                {
                     cities[i].Lose();
+                    if (i == 0) return ClearType.PlayerLose;
+                }
+                    
             }
         }
 
@@ -141,5 +167,10 @@ public class TurnSystem : MonoBehaviour
         }
 
         return ClearType.Pass;
+    }
+
+    public void OnClickOver()
+    {
+        overCheck = true;
     }
 }
