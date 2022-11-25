@@ -10,13 +10,13 @@ public class MapSetter : MonoBehaviour
     [SerializeField] HexGrid hexGrid;
     [SerializeField] HexMapCamera cam;
     [SerializeField] UINoticer noticeUI;
-    
+
     private List<PlayerSit> sits = new List<PlayerSit>() {
         PlayerSit.Blue, PlayerSit.Red, PlayerSit.White, PlayerSit.Yellow
     };
     [SerializeField] List<City> cities = new List<City>();
     [SerializeField] GameObject[] units;
-    
+    List<HexCell> highlights = new List<HexCell>();
     [SerializeField] string[] maps;
     const int mapFileVersion = 5;
 
@@ -88,7 +88,7 @@ public class MapSetter : MonoBehaviour
         City city = SetCityProperty(cell, isPlayer);
         cell.SetLabel(isPlayer.ToString());
         CameraPositioning(cell, isPlayer);
-        LandBuy(cell, isPlayer);
+        //LandBuy(cell, isPlayer);
         return city;
     }
 
@@ -128,12 +128,16 @@ public class MapSetter : MonoBehaviour
 
         city.rootCell = cell;
         city.AddCell(cell);
-        for (HexDirection d=HexDirection.NE; d<=HexDirection.NW; d++)
+        for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
         {
-          city.AddCell(cell.GetNeighbor(d));  
+            city.AddCell(cell.GetNeighbor(d));
         }
-        
-
+        //LandBuy(cell, isPlayer);
+        //if (Input.GetMouseButtonDown(0))
+        //{
+        //    if (cell.walled != true)
+        //        cell.walled = true;
+        //}
 
         city.Money = GameInfo.startMoney;
         city.PA = GameInfo.startPA;
@@ -153,11 +157,27 @@ public class MapSetter : MonoBehaviour
 
     public void LandBuy(HexCell cell, bool isPlayer)
     {
-        PlayerCity playerCity = GameObject.Find("PlayerCity").GetComponent<PlayerCity>();
-        if(playerCity)
+        City city = isPlayer ? GameObject.Find("PlayerCity").GetComponent<PlayerCity>()
+                                : GameObject.Find("AiCity").GetComponent<AICity>();
+
+        city.AddLandMark(cell);
+        for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
         {
-            cell.EnableHighlight(Color.blue);
+            cell.GetNeighbor(d);
+            if (Input.GetMouseButtonDown(0))
+            {
+                if (cell.walled != true)
+                {
+                    cell.walled = true;
+                }
+            }
         }
+      
+        //if(playerCity)
+        //{
+        //    cell.EnableHighlight(Color.blue);
+        //}
+    
         //if (isPlayer )
         //{
         //   cell.EnableHighlight(Color.green);
@@ -171,6 +191,70 @@ public class MapSetter : MonoBehaviour
         //if(SetCityProperty())
         {
 
+        }
+    }
+
+
+    /*
+        cell.EnableHighlight(Color.green);
+        highlights.Add(cell);
+
+        cell.highlightBtn.onClick.RemoveAllListeners();
+        cell.highlightBtn.onClick.AddListener(() => OnClickLandbuyHighlight(cell));
+    */
+
+
+
+    public void OnLandBuyButton()
+    {
+        List<HexCell> cells = TurnSystem.turnCity.cells;
+
+        for(int cell = 0; cell <= cells.Count-1; cell++)
+        {
+            for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+            {
+
+                HexCell neighbor = cells[cell].GetNeighbor(d);
+                if (neighbor == null)
+                    continue;
+
+
+                if (neighbor.walled == false && !neighbor.IsEnabledHighlight())                //가장자리 cells
+                {
+                   neighbor.EnableHighlight(Color.green);
+                    highlights.Add(neighbor);
+                   neighbor.highlightBtn.onClick.RemoveAllListeners();
+                   neighbor.highlightBtn.onClick.AddListener(() => OnClickLandbuyHighlight(neighbor));
+                }
+            
+            }
+        }
+
+       
+
+    }
+
+    public void OnClickLandbuyHighlight(HexCell cell)
+    {
+        for (int i = highlights.Count - 1; i >= 0; i--)
+        {
+            highlights[i].DisableHighlight();
+            highlights[i].highlightBtn.onClick.RemoveAllListeners();
+            highlights.RemoveAt(i);
+        }
+        TurnSystem.turnCity.AddCell(cell);
+    }
+
+    public void OnClickLandbuy(HexCell cell)
+    {
+        //도시 셀들 가져와야함
+        if (cell.walled)
+        {
+            for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+            {
+                cell.GetNeighbor(d);
+                cell.EnableHighlight(Color.green);
+            }
         }
     }
 

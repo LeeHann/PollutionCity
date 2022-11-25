@@ -6,8 +6,9 @@ using UnityEngine.EventSystems;
 public class LandBuy : MonoBehaviour
 {
     public Resources highlight;
-    MapSetter mapSetter;
-    HexCell hexcell;
+    public MapSetter mapSetter;
+    HexUnit hexunit;
+    HexCell cell;
     HexGridChunk hexGridChunk;
     HexGrid hexGrid;
     City city;
@@ -15,17 +16,45 @@ public class LandBuy : MonoBehaviour
     Canvas gridCanvas;
     bool walled;
     public bool land;
-   
+    bool isPlayer;
 
 
+
+    public HexCell GetCellUnderCursor()
+    {
+        return
+            hexGrid.GetCell(Camera.main.ScreenPointToRay(Input.mousePosition));
+    }//=>Landbuy city..
     public void BuyLand()
     {
         Debug.Log("BuyTile Button");
+        //for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+        //{
+        //    hexcell.BuyTile(d, hexcell);
+        //}
+
+
+
+        /*
+          
+        정리.
+        MapSetter에서 SetCityProperty 로 isPlayer도시 설정된거 +  City의 AddCell로 활성화된 자기 도시의 cell들과 반대편인 이웃 셀들 하이라이트 활성화.
+        해당 cell 누르면 이웃된 벽 다 지우고 지운부분 제외 다 벽으로 설정 + 그 cell도 자기도시로 지정 ( 무한 반복 )
+        ==> walled는 
+        금화로 살수 있도록 해야함 금화는 그냥 Money로 지정함
+        
+
+
+        */
+        //mapSetter.LandBuy(hexcell,isPlayer);
+        //mapSetter.OnLandBuyButton();
+        mapSetter.OnLandBuyButton();
     }
 
     void Start()
     {
-
+        Button btn = GetComponent<Button>();
+        btn.onClick.AddListener(BuyLand);
     }
 
     // Update is called once per frame

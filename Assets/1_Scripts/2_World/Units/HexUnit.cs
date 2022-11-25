@@ -89,6 +89,38 @@ public class HexUnit : Unit, IPointerClickHandler
 		Location.DisableHighlight();
 	}
 	
+	//public void OnLandBuyButton()
+ //   {
+	//	Queue queue = new Queue();
+	//	HexCell cell = (HexCell)queue.Dequeue();
+	//	cell.EnableHighlight(Color.green);
+	//	highlights.Add(cell);
+
+	//	cell.highlightBtn.onClick.RemoveAllListeners();
+	//	cell.highlightBtn.onClick.AddListener(() => OnClickLandbuyHighlight(cell));
+	//	for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
+	//	{
+	//		HexCell neighbor = cell.GetNeighbor(d);
+
+	//		if (cell.walled = true && neighbor.IsEnabledHighlight())
+	//			continue;
+
+	//		queue.Enqueue(neighbor);
+	//	}
+
+ //   }
+
+	//public void OnClickLandbuyHighlight(HexCell cell)
+	//{
+	//	for (int i = highlights.Count - 1; i >= 0; i--)
+	//	{
+	//		highlights[i].DisableHighlight();
+	//		highlights[i].highlightBtn.onClick.RemoveAllListeners();
+	//		highlights.RemoveAt(i);
+	//	}
+	//	cell.walled = true;
+	//}
+
 	public void OnClickHighlight(HexCell cell)
 	{
 		for (int i=highlights.Count-1; i>=0; i--)
