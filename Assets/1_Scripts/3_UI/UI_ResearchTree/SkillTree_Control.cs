@@ -11,6 +11,7 @@ public class SkillTree_Control : MonoBehaviour
     public GameObject CloseBtn;
     // Start is called before the first frame update
 
+    //연구유닛누를때 이용
     public void OpenSkillTree()
     {
         Skilltree.SetActive(true);

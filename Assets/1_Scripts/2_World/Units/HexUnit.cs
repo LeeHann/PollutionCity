@@ -17,6 +17,9 @@ public class HexUnit : Unit, IPointerClickHandler
 	public static HexUnit IndustrialPrefab;
 	public HexGrid Grid { get; set; }
 
+
+	public bool Lock;
+
 	public HexCell Location {
 		get {
 			return location;
