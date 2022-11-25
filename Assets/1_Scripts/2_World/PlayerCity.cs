@@ -24,7 +24,15 @@ public class PlayerCity : City
 
     protected override IEnumerator ActionResearcher(Unit action) // 연구 행동 결정 함수
     {
-		yield return null;
+		/*
+		 플레이어턴일때 연구를 진행했으면 false로
+		 */
+		yield return new WaitUntil(() => action.TurnUnit == false);
+		/*
+			if(~~~~~~~~~~~~~~~~~~~~~)
+			{
+				
+		*/
 		_coroutine = null;
 	}
 

@@ -16,64 +16,6 @@ public class OpenButtons : MonoBehaviour
         button_Build.Ind_Next.SetActive(true);
 
 
-        //for (int i = 0; i <= 2;)
-        //{
-        //    if (i == 0)
-        //    {
-        //        Button1.SetActive(true);
-        //        Button2.SetActive(false);
-        //        Button3.SetActive(false);
-        //    }
-        //    else if (i == 1)
-        //    {
-        //        Button2.SetActive(true);
-        //        Button1.SetActive(false);
-        //        Button3.SetActive(false);
-        //    }
-        //    else if(i == 2)
-        //    {
-        //        Button3.SetActive(true);
-        //        Button1.SetActive(false);
-        //        Button2.SetActive(false);
-        //    }
-        //    i++;
-        //    if(i >=3 )
-        //    {
-        //        i = 0;
-        //    }
-        //}
-        //buildSet.LivingBuild.SetActive(true);
-        //for(int i = 0; i < BuildingLists.Length;)
-        //{
-        //    if (BuildingLists[i] == null)
-        //        Debug.Log("List is Empty");
-        //        if (BuildingLists[0])
-        //        {
-        //            BuildingLists[0].interactable = true;
-        //            BuildingLists[1].interactable = false;
-        //            BuildingLists[2].interactable = false;
-        //            //GetComponent<Button>().interactable = true;
-        //        }
-        //        else if (BuildingLists[1])
-        //        {
-        //            BuildingLists[1].interactable = true;
-        //            BuildingLists[0].interactable = false;
-        //            BuildingLists[2].interactable = false;
-        //            // GetComponent<Button>().interactable = true;
-        //        }
-        //        else if (BuildingLists[2])
-        //        {
-        //            BuildingLists[2].interactable = true;
-        //            BuildingLists[1].interactable = false;
-        //            BuildingLists[0].interactable = false;
-        //            //GetComponent<Button>().interactable = true;
-        //        }
-        //        else
-        //            i = 0;
-
-
-        //}
-
     }
 
     public void Ind_Next()
