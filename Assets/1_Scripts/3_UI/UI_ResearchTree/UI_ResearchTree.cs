@@ -40,21 +40,22 @@ public class UI_ResearchTree : MonoBehaviour
 
     private void Start()
     {
-        Money = 20;
+        Money = 100;
 
-        SkillLevels = new int[7];                       //
-        SkillCaps = new[] { 1, 5, 5, 2, 10, 10, 5 };   //각업그레이드마다 최대 업그레이드 값
+        SkillLevels = new int[8];                       //
+        SkillCaps = new[] { 1, 30, 30, 1, 1, 1, 1, 1 };   //각업그레이드마다 최대 업그레이드 값
 
-        SkillNames = new[] { "일반쓰레기", "소각", "매립", "재활용", "종이류", "캔류", "유리류",};          //스킬이름
+        SkillNames = new[] { "일반쓰레기", "소각", "매립", "재활용", "종이류", "캔류", "유리류", "플라스틱류",};          //스킬이름
         SkillDescription = new[]                                                                            //스킬설명
         {
-            "설명",
+            "",
             "턴당 오염도 감소",
-            "금화",
+            "턴당 오염도 감소",
             "해금 요소",
             "종이류 해금",
             "캔류 해금",
             "유리류 해금",
+            "플라스틱류 해금",
         };
 
         foreach (var skill in SkillHolder.GetComponentsInChildren<Skill>()) SkillList.Add(skill);                                           //스킬들
@@ -63,8 +64,7 @@ public class UI_ResearchTree : MonoBehaviour
         for (var i = 0; i < SkillList.Count; i++) SkillList[i].id = i;
 
         SkillList[0].ConnectedSkills = new[] { 1, 2 };        //일쓰랑 연결된 => 소각 , 매립
-        SkillList[3].ConnectedSkills = new[] { 4, 5 ,6};      //재활용이랑 열결된 종이 유리 캔..
-     
+        SkillList[3].ConnectedSkills = new[] { 4, 5 ,6, 7};      //재활용이랑 열결된 종이 유리 캔..
 
 
         UpdateAllSkillUI();
