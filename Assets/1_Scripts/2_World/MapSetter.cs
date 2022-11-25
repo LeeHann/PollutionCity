@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
-using TMPro;
 
 public class MapSetter : MonoBehaviour
 {
@@ -23,7 +22,6 @@ public class MapSetter : MonoBehaviour
     private void Start() 
     {
         terrainMaterial.DisableKeyword("GRID_ON");
-		// Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
 
         string fileName = "Maps/" + maps[UnityEngine.Random.Range(0, maps.Length)]  + ".map";
 
@@ -88,7 +86,6 @@ public class MapSetter : MonoBehaviour
         City city = SetCityProperty(cell, isPlayer);
         cell.SetLabel(isPlayer.ToString());
         CameraPositioning(cell, isPlayer);
-        //LandBuy(cell, isPlayer);
         return city;
     }
 
@@ -122,22 +119,17 @@ public class MapSetter : MonoBehaviour
         City city = isPlayer ? new GameObject(name:"PlayerCity").AddComponent<PlayerCity>() 
                                 : new GameObject(name:"AICity").AddComponent<AICity>();
         int random = Random.Range(0, sits.Count);
-        
+
         city.sit = sits[random];
         sits.RemoveAt(random);
-
+        
+        city.Grid = hexGrid;
         city.rootCell = cell;
         city.AddCell(cell);
         for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
         {
             city.AddCell(cell.GetNeighbor(d));
         }
-        //LandBuy(cell, isPlayer);
-        //if (Input.GetMouseButtonDown(0))
-        //{
-        //    if (cell.walled != true)
-        //        cell.walled = true;
-        //}
 
         city.Money = GameInfo.startMoney;
         city.PA = GameInfo.startPA;
@@ -155,56 +147,6 @@ public class MapSetter : MonoBehaviour
         return city;
     }
 
-    public void LandBuy(HexCell cell, bool isPlayer)
-    {
-        City city = isPlayer ? GameObject.Find("PlayerCity").GetComponent<PlayerCity>()
-                                : GameObject.Find("AiCity").GetComponent<AICity>();
-
-        city.AddLandMark(cell);
-        for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
-        {
-            cell.GetNeighbor(d);
-            if (Input.GetMouseButtonDown(0))
-            {
-                if (cell.walled != true)
-                {
-                    cell.walled = true;
-                }
-            }
-        }
-      
-        //if(playerCity)
-        //{
-        //    cell.EnableHighlight(Color.blue);
-        //}
-    
-        //if (isPlayer )
-        //{
-        //   cell.EnableHighlight(Color.green);
-
-        //}
-        //for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
-        //{
-        //    cell.EnableHighlight(Color.green);
-        //}
-
-        //if(SetCityProperty())
-        {
-
-        }
-    }
-
-
-    /*
-        cell.EnableHighlight(Color.green);
-        highlights.Add(cell);
-
-        cell.highlightBtn.onClick.RemoveAllListeners();
-        cell.highlightBtn.onClick.AddListener(() => OnClickLandbuyHighlight(cell));
-    */
-
-
-
     public void OnLandBuyButton()
     {
         List<HexCell> cells = TurnSystem.turnCity.cells;
@@ -213,25 +155,19 @@ public class MapSetter : MonoBehaviour
         {
             for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
             {
-
                 HexCell neighbor = cells[cell].GetNeighbor(d);
                 if (neighbor == null)
                     continue;
 
-
                 if (neighbor.walled == false && !neighbor.IsEnabledHighlight())                //가장자리 cells
                 {
-                   neighbor.EnableHighlight(Color.green);
+                    neighbor.EnableHighlight(Color.green);
                     highlights.Add(neighbor);
-                   neighbor.highlightBtn.onClick.RemoveAllListeners();
-                   neighbor.highlightBtn.onClick.AddListener(() => OnClickLandbuyHighlight(neighbor));
+                    neighbor.highlightBtn.onClick.RemoveAllListeners();
+                    neighbor.highlightBtn.onClick.AddListener(() => OnClickLandbuyHighlight(neighbor));
                 }
-            
             }
         }
-
-       
-
     }
 
     public void OnClickLandbuyHighlight(HexCell cell)
@@ -243,19 +179,6 @@ public class MapSetter : MonoBehaviour
             highlights.RemoveAt(i);
         }
         TurnSystem.turnCity.AddCell(cell);
-    }
-
-    public void OnClickLandbuy(HexCell cell)
-    {
-        //도시 셀들 가져와야함
-        if (cell.walled)
-        {
-            for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
-            {
-                cell.GetNeighbor(d);
-                cell.EnableHighlight(Color.green);
-            }
-        }
     }
 
     public void ScatterResources(int rscVal)

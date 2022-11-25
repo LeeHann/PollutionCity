@@ -56,14 +56,6 @@ public class LandBuy : MonoBehaviour
         Button btn = GetComponent<Button>();
         btn.onClick.AddListener(BuyLand);
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-
-
-    }
 }
 
 
