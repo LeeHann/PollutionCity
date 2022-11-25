@@ -16,6 +16,8 @@ public class MapSetter : MonoBehaviour
     [SerializeField] List<City> cities = new List<City>();
     [SerializeField] GameObject[] units;
     List<HexCell> highlights = new List<HexCell>();
+    public static List<HexCell> occupiedCellList = new List<HexCell>();
+
     [SerializeField] string[] maps;
     const int mapFileVersion = 5;
 
@@ -153,6 +155,15 @@ public class MapSetter : MonoBehaviour
 
     public void OnLandBuyButton()
     {
+        if (occupiedCellList.Count > 0)
+		{
+			occupiedCellList.ForEach((cell)=> {
+				cell.DisableHighlight();
+				cell.highlightBtn.onClick.RemoveAllListeners();
+			});
+            occupiedCellList.Clear();
+		}
+
         List<HexCell> cells = TurnSystem.turnCity.cells;
 
         for(int cell = 0; cell <= cells.Count-1; cell++)
@@ -167,6 +178,7 @@ public class MapSetter : MonoBehaviour
                 {
                     neighbor.EnableHighlight(Color.green);
                     highlights.Add(neighbor);
+                    occupiedCellList.Add(neighbor);
                     neighbor.highlightBtn.onClick.RemoveAllListeners();
                     neighbor.highlightBtn.onClick.AddListener(() => OnClickLandbuyHighlight(neighbor));
                 }
@@ -181,6 +193,7 @@ public class MapSetter : MonoBehaviour
             highlights[i].DisableHighlight();
             highlights[i].highlightBtn.onClick.RemoveAllListeners();
             highlights.RemoveAt(i);
+            occupiedCellList.Remove(cell);
         }
         TurnSystem.turnCity.AddCell(cell);
     }

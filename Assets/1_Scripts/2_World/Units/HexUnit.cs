@@ -69,6 +69,14 @@ public class HexUnit : Unit, IPointerClickHandler
 	public void OnPointerClick(PointerEventData e) 
 	{
 		if (!TurnUnit) return;
+		if (MapSetter.occupiedCellList.Count > 0)
+		{
+			MapSetter.occupiedCellList.ForEach((cell)=> {
+				cell.DisableHighlight();
+				cell.highlightBtn.onClick.RemoveAllListeners();
+			});
+			MapSetter.occupiedCellList.Clear();
+		}
 		Queue queue = new Queue();
 		queue.Enqueue(Location);
 
@@ -76,6 +84,7 @@ public class HexUnit : Unit, IPointerClickHandler
 			HexCell cell = (HexCell)queue.Dequeue();
 			cell.EnableHighlight(Color.yellow);
 			highlights.Add(cell);
+			MapSetter.occupiedCellList.Add(cell);
 
 			cell.highlightBtn.onClick.RemoveAllListeners();
 			cell.highlightBtn.onClick.AddListener(() => OnClickHighlight(cell));
@@ -91,38 +100,6 @@ public class HexUnit : Unit, IPointerClickHandler
 		}
 		Location.DisableHighlight();
 	}
-	
-	//public void OnLandBuyButton()
- //   {
-	//	Queue queue = new Queue();
-	//	HexCell cell = (HexCell)queue.Dequeue();
-	//	cell.EnableHighlight(Color.green);
-	//	highlights.Add(cell);
-
-	//	cell.highlightBtn.onClick.RemoveAllListeners();
-	//	cell.highlightBtn.onClick.AddListener(() => OnClickLandbuyHighlight(cell));
-	//	for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
-	//	{
-	//		HexCell neighbor = cell.GetNeighbor(d);
-
-	//		if (cell.walled = true && neighbor.IsEnabledHighlight())
-	//			continue;
-
-	//		queue.Enqueue(neighbor);
-	//	}
-
- //   }
-
-	//public void OnClickLandbuyHighlight(HexCell cell)
-	//{
-	//	for (int i = highlights.Count - 1; i >= 0; i--)
-	//	{
-	//		highlights[i].DisableHighlight();
-	//		highlights[i].highlightBtn.onClick.RemoveAllListeners();
-	//		highlights.RemoveAt(i);
-	//	}
-	//	cell.walled = true;
-	//}
 
 	public void OnClickHighlight(HexCell cell)
 	{
@@ -131,6 +108,7 @@ public class HexUnit : Unit, IPointerClickHandler
 			highlights[i].DisableHighlight();
 			highlights[i].highlightBtn.onClick.RemoveAllListeners();
 			highlights.RemoveAt(i);
+			MapSetter.occupiedCellList.Remove(cell);
 		}
 		Grid.FindPath(Location, cell, this);
 		Travel(Grid.GetPath());

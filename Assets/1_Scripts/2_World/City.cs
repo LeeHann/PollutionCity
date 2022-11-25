@@ -142,6 +142,7 @@ public class City : MonoBehaviour
     public void Lose()
     {
         // 유닛, 건물 제거
+        
         IsLose = true;
     }
 }
