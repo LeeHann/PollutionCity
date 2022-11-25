@@ -93,7 +93,6 @@ public class City : MonoBehaviour
         cells.Add(cell);
         cell.sit = sit;
         cell.Walled = true;
-        //cell.EnableHighlight(Color.green);
     }
 
     public void AddUnit(Unit unit)

@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Lab Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 7d7f76a409f6abb49af9ea12e9f32b39, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 7d7f76a409f6abb49af9ea12e9f32b39, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -101,3 +105,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: 1
   anim: {fileID: 0}
+  Lock: 0

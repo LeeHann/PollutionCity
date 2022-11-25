@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class BuildSet : MonoBehaviour
 {
 
-    HexMapEditor hexMapEditor;
     public HexGrid hexgrid;
     public HexCell hexCell;
     HexUnit hexUnit;
@@ -13,10 +12,7 @@ public class BuildSet : MonoBehaviour
 
     public GameObject ScrollView; // 제조 스크롤뷰 UI 연동
     public GameObject ResearchTree;     //연구트리 UI  연동
-    // HexMapEditor hexMapEditor;
-    HexFeatureManager hexFeatureManager;
-    HexGridChunk hexGridChunk;
-    Vector3 position;
+
 
     public void Clear()
     {
@@ -52,25 +48,6 @@ public class BuildSet : MonoBehaviour
 
     public void LivingBuild()
     {
-
-        //hexMapEditor.GetCellUnderCursor();
-        ////Shader.EnableKeyword("HEX_MAP_EDIT_MODE");
-        //hexMapEditor.SetEditMode(true);
-        //hexMapEditor.SetApplySpecialIndex(true);
-        //hexMapEditor.SetSpecialIndex(0);
-
-        //if (Input.GetMouseButton(0))
-        //{
-        //    hexFeatureManager.AddLivingBuilding(cell, position);
-        //}
-
-        //hexMapEditor.SetApplySpecialIndex(false);
-        //hexMapEditor.SetEditMode(false);
-        //if (Input.GetMouseButton(0))
-        //{
-        //    hexMapEditor.CreateLivingBuilding();
-        //}
-
             Debug.Log("Clicked Livingbuild Button");
 
 
@@ -84,26 +61,11 @@ public class BuildSet : MonoBehaviour
                 Random.Range(0f, 360f)
                 );
             }
-        
-        //hexMapEditor.CreateLivingBuilding();
-
-
 
     }
     public void IndustrialBuild()
     {
-        //hexMapEditor.SetEditMode(true);
-        //hexMapEditor.SetApplySpecialIndex(true);
-        //hexMapEditor.SetSpecialIndex(2);
-        //hexMapEditor.GetCellUnderCursor();
-        //if (Input.GetMouseButton(0))
-        //{
-        //    hexFeatureManager.AddIndustrialBuilding(cell, position);
-        //    hexMapEditor.SetApplySpecialIndex(false);
-        //    hexMapEditor.SetEditMode(false);
-        //}
         HexCell cell = GetCellUnderCursor();
-        //if (Input.GetMouseButtonDown(0))
 
         if (cell && !cell.Unit)
         {
@@ -115,7 +77,7 @@ public class BuildSet : MonoBehaviour
         }
 
         Debug.Log("Industrial build Button");
-        //hexMapEditor.CreateIndustrialBulding();
+
         if (HexUnit.IndustrialPrefab && ScrollView != null)
         {
             bool isActivate = ScrollView.activeSelf;
@@ -126,16 +88,6 @@ public class BuildSet : MonoBehaviour
     }
     public void ResearchBuild()
     {
-
-        //hexMapEditor.GetCellUnderCursor();
-        //hexMapEditor.SetEditMode(true);
-        //hexMapEditor.SetApplySpecialIndex(true);
-        //hexMapEditor.SetSpecialIndex(1);
-        //if (Input.GetMouseButton(0))
-        //{
-        //    hexFeatureManager.AddResearchBuilding(cell, position);
-        //    hexMapEditor.SetApplySpecialIndex(false);
-        //}
         Debug.Log("Research Button");
 
         HexCell cell = GetCellUnderCursor();
@@ -156,20 +108,4 @@ public class BuildSet : MonoBehaviour
         }
     }
 
-    public void NextButton()
-    {
-        
-    }
-    //HexMetrics hexMetrics;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
 }
