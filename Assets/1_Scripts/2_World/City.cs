@@ -5,6 +5,8 @@ using UnityEngine;
 public class City : MonoBehaviour
 {
     [HideInInspector] public HexMapCamera cam;
+    public HexGrid Grid { get; set; }
+    public bool IsLose { get; private set; }
 
     public bool myTurn;
     public PlayerSit sit;
@@ -38,6 +40,18 @@ public class City : MonoBehaviour
         }
     }
     private int pa;
+
+    public float PL {
+        get {
+            return PA / (float)GameInfo.maxPA;
+        }
+    }
+
+    public int VisionRange {
+		get {
+			return 3;
+		}
+	}
 
     public void MyTurn()
     {
@@ -93,6 +107,7 @@ public class City : MonoBehaviour
         cells.Add(cell);
         cell.sit = sit;
         cell.Walled = true;
+        Grid.IncreaseVisibility(cell, VisionRange);
     }
 
     public void AddUnit(Unit unit)
@@ -122,5 +137,12 @@ public class City : MonoBehaviour
         trash[(int)type] += num;
         if (trash[(int)type] < 0) trash[(int)type] = 0;
         if (trash[(int)type] > int.MaxValue) trash[(int)type] = int.MaxValue;
+    }
+
+    public void Lose()
+    {
+        // 유닛, 건물 제거
+        
+        IsLose = true;
     }
 }

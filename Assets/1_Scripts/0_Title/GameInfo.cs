@@ -19,13 +19,13 @@ public static class GameInfo
     private static Difficulty difficulty = Difficulty.Easy;
     public static int cellCountX;
     public static int cellCountZ;
-    public static int maxTurn;
-    public static int maxPA;
-    public static int startPA;
-    public static float PLPercent;
+    public static int maxTurn = 30;
+    public static int maxPA = 5000;
+    public static int startPA = 2500;
+    public static float PLPercent = 0.033f;
     public static int cityCount = 3;
-    public static float winPL;
-    public const float losePL = 100.0f;
+    public static float winPL = 0.3f;
+    public const float losePL = 1.0f;
     public const int startMoney = 1000;
     
     public static void SetBalance(int x, int z, int turn, int pa, int startpa, float plRisePercent, int numCity, float winningpl)

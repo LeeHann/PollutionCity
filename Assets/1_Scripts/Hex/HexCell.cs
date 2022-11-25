@@ -17,7 +17,7 @@ public class HexCell : MonoBehaviour {
 		}
 		set {
 			_hexGrid = value;
-			if (!IsUnderwater)
+			if (!IsUnderwater && !hexGrid.emptyCells.Contains(this))
 				hexGrid.emptyCells.Add(this);
 		}
 	}
@@ -80,7 +80,6 @@ public class HexCell : MonoBehaviour {
 
 	public int ViewElevation {
 		get {
-			// return elevation >= waterLevel ? elevation : waterLevel;
 			return 6;
 		}
 	}
@@ -150,7 +149,6 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
-
 	public float StreamBedY {
 		get {
 			return
@@ -175,43 +173,6 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
-	// public int UrbanLevel {
-	// 	get {
-	// 		return urbanLevel;
-	// 	}
-	// 	set {
-	// 		if (urbanLevel != value) {
-	// 			urbanLevel = value;
-	// 			RefreshSelfOnly();
-	// 		}
-	// 	}
-	// }
-
-	// public int FarmLevel {
-	// 	get {
-	// 		return farmLevel;
-	// 	}
-	// 	set {
-	// 		if (farmLevel != value) {
-	// 			farmLevel = value;
-	// 			RefreshSelfOnly();
-	// 		}
-	// 	}
-	// }
-
-	// public int PlantLevel {
-	// 	get {
-	// 		return plantLevel;
-	// 	}
-	// 	set {
-	// 		if (plantLevel != value) {
-	// 			plantLevel = value;
-	// 			RefreshSelfOnly();
-	// 		}
-	// 	}
-	// }
-
-
 	public int SpecialIndex
 	{
 		get
@@ -223,7 +184,6 @@ public class HexCell : MonoBehaviour {
 			if (specialIndex != value && !HasRiver)
 			{
 				specialIndex = value;
-				//RemoveRoads();
 				RefreshSelfOnly();
 			}
 		}
@@ -246,9 +206,11 @@ public class HexCell : MonoBehaviour {
 			if (value != ResourceType.None)
 			{
 				resources[(int)value].SetActive(true);
-				hexGrid.emptyCells.Add(this);
+				if (hexGrid.emptyCells.Contains(this))
+					hexGrid.emptyCells.Remove(this);
 			} else {
-				hexGrid.emptyCells.Remove(this);
+				if (!hexGrid.emptyCells.Contains(this))
+					hexGrid.emptyCells.Add(this);
 			}
 			resource = value;
 		}	
@@ -265,7 +227,8 @@ public class HexCell : MonoBehaviour {
 				{
 					for (int child = 0; child < 6; child++)
 						walls[child].GetComponent<MeshRenderer>().material = materials[(int)sit < 0 ? 0 : (int)sit];
-					hexGrid.emptyCells.Add(this);
+					if (hexGrid.emptyCells.Contains(this))
+						hexGrid.emptyCells.Remove(this);
 				}
 				for (HexDirection d = 0; d <= HexDirection.NW; d++)
 				{
@@ -287,25 +250,6 @@ public class HexCell : MonoBehaviour {
 			}
 		}
 	}
-
-	//public bool Buytile
- //   {
-	//	get
- //       {
-	//		return buytile;
- //       }
- //       set
- //       {
-	//		if(buytile != value)
- //           {
-	//			buytile = value;
-	//			if(buytile)
- //               {
-	//				for(neighbors.Walled)
- //               }
- //           }
- //       }
- //   }
 
 	public int TerrainTypeIndex {
 		get {
@@ -367,8 +311,6 @@ public class HexCell : MonoBehaviour {
 
 	int elevation = int.MinValue;
 	int waterLevel;
-
-	// int urbanLevel, farmLevel, plantLevel;
 
 	int specialIndex;
 
@@ -434,21 +376,6 @@ public class HexCell : MonoBehaviour {
 		);
 	}
 
-	public void BuyTile(HexDirection direction, HexCell cell)
-    {
-
-		for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
-		{
-			GetNeighbor(d);
-			cell.neighbors[(int)d.Opposite()] = this;
-			if (walled && cell.neighbors[(int)d.Opposite()] != null)
-			{
-				//Sprite highlight = Resources.Load<Sprite>("HEX_Green");
-				EnableHighlight(Color.red);
-			}
-		}
-		
-	}
 	public bool HasRiverThroughEdge (HexDirection direction) {
 		return
 			hasIncomingRiver && incomingRiver == direction ||
