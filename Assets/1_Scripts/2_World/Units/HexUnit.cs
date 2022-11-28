@@ -78,6 +78,14 @@ public class HexUnit : Unit, IPointerClickHandler
 	public void OnPointerClick(PointerEventData e)
 	{
 		if (!TurnUnit) return;
+		if (MapSetter.occupiedCellList.Count > 0)
+		{
+			MapSetter.occupiedCellList.ForEach((cell)=> {
+				cell.DisableHighlight();
+				cell.highlightBtn.onClick.RemoveAllListeners();
+			});
+			MapSetter.occupiedCellList.Clear();
+		}
 		Queue queue = new Queue();
 		queue.Enqueue(Location);
 
@@ -86,6 +94,7 @@ public class HexUnit : Unit, IPointerClickHandler
 			HexCell cell = (HexCell)queue.Dequeue();
 			cell.EnableHighlight(Color.yellow);
 			highlights.Add(cell);
+			MapSetter.occupiedCellList.Add(cell);
 
 			cell.highlightBtn.onClick.RemoveAllListeners();
 			cell.highlightBtn.onClick.AddListener(() => OnClickHighlight(cell));
@@ -110,6 +119,7 @@ public class HexUnit : Unit, IPointerClickHandler
 			highlights[i].DisableHighlight();
 			highlights[i].highlightBtn.onClick.RemoveAllListeners();
 			highlights.RemoveAt(i);
+			MapSetter.occupiedCellList.Remove(cell);
 		}
 		Grid.FindPath(Location, cell, this);
 		Travel(Grid.GetPath());

@@ -4,11 +4,6 @@ using UnityEngine;
 
 public class AICity : City
 {
-	private void Start() 
-	{
-		// Initiate Pollutant Amount
-		PA = 5000 + (int)(5000 * Random.Range(-0.1f, 0.15f));
-	}
 	private void Update() {
 		if (Input.GetKeyDown(KeyCode.Space))
 		{

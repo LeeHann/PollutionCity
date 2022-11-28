@@ -6,12 +6,6 @@ using System;
 
 public class PlayerCity : City
 {
-	private void Start() 
-	{
-		// Initiate Pollutant Amount
-		PA = 5000;
-	}
-
 	public event Action<string> notice;
 	Skill research;
 	protected override IEnumerator ActionExplorer(HexUnit action) // 탐사 행동 결정 함수
