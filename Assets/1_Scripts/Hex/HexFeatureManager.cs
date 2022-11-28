@@ -2,7 +2,6 @@
 using System;
 public class HexFeatureManager : MonoBehaviour {
 
-	// public HexMesh walls;
 	public Transform[] special;
 
 	Transform container;
