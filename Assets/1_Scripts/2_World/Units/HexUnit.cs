@@ -18,8 +18,6 @@ public class HexUnit : Unit, IPointerClickHandler
 	public HexGrid Grid { get; set; }
 
 
-	public bool Lock;
-	Button_Build button_Build;
 	public HexCell Location
 	{
 		get

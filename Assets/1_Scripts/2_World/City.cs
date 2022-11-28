@@ -18,6 +18,7 @@ public class City : MonoBehaviour
     
     protected Coroutine _coroutine = null;
     protected WaitForSeconds dot5 = new WaitForSeconds(0.5f);
+    Skill research;
 
     public int Money {
         get {
@@ -29,7 +30,7 @@ public class City : MonoBehaviour
     }
     private int money;
 
-    public int PA {
+    public float PA {
         get {
             return pa;
         }
@@ -37,7 +38,7 @@ public class City : MonoBehaviour
             pa = value;
         }
     }
-    private int pa;
+    private float pa;
 
     public void MyTurn()
     {
@@ -114,12 +115,32 @@ public class City : MonoBehaviour
 
     public int GetTrash(ResourceType type)
     {
-        return trash[(int)type];
+        if (trash[(int)type] == 2 && research.UpgradePaperBtn.interactable != false)
+        {
+            Debug.Log("종이못줍");
+        }
+        else if (trash[(int)type] == 3 && research.UpgradeCanBtn.interactable != false)
+        {
+            Debug.Log("캔못줍");
+        }
+        else if (trash[(int)type] == 4 && research.UpgradeGlassBtn.interactable != false)
+        {
+            Debug.Log("유리못줍");
+        }
+        else if (trash[(int)type] == 5 && research.UpgradePlasticBtn.interactable != false)
+        {
+            Debug.Log("플라스틱못줍");
+        }
+        return trash[(int)type]; 
     }
     
     public void UpdateTrash(ResourceType type, int num=0)
     {
         trash[(int)type] += num;
+        
+
+
+
         if (trash[(int)type] < 0) trash[(int)type] = 0;
         if (trash[(int)type] > int.MaxValue) trash[(int)type] = int.MaxValue;
     }

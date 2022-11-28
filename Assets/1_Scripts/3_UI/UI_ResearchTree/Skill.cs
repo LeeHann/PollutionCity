@@ -4,7 +4,6 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using static UI_ResearchTree;
-
 public class Skill : MonoBehaviour
 {
     ResourceType resourceType;
@@ -16,6 +15,13 @@ public class Skill : MonoBehaviour
     public TMP_Text DescriptionText;
 
     public int[] ConnectedSkills;
+    public Button UpgradePaperBtn;
+    public Button UpgradeCanBtn;
+    public Button UpgradeGlassBtn;
+    public Button UpgradePlasticBtn;
+
+    City city;
+    PlayerCity playerCity;
 
     public void UpdateUI()
     {
@@ -39,7 +45,7 @@ public class Skill : MonoBehaviour
 
 
     /*
-        UnLock을 제외한 모든 기능들은 마지막줄에 기능 비활성화 & 다시 턴이 돌아오면 활성화 넣어줘야함   
+        ActionResearcher(action) == 1 물어보기
     */
 
 
@@ -62,28 +68,14 @@ public class Skill : MonoBehaviour
 
         skilltree.Money -= 1;
         skilltree.SkillLevels[id]++;
-        /*
-            눌렀을 때 이제 잠겨있던 자원들을 해금 
-            lock == false >>>>>> 해당자원 이제 먹을 수 있음
-            
-            
-        */
-
-        /*
-            해금 시스템
-            1. 잠겨있으면 캐릭터가 여행중일때 올라가도 못먹게. ( bool ~~~로 만들어서 true면 못먹고 false때 먹게  )
-            2. 해금버튼 누르면 bool == true 를 false로 변경
-
-
-
-            
-            
-        */
-        resourceType = ResourceType.Paper;
-        if(Input.GetMouseButtonDown(0))
+        if(skilltree.SkillLevels[id] == skilltree.SkillCaps[id])
         {
-            //ActionResearcher(action)--
+            UpgradePaperBtn.interactable = false;
         }
+
+        resourceType = ResourceType.Paper;
+        
+
         
         
 
@@ -91,63 +83,49 @@ public class Skill : MonoBehaviour
     }
     public void UnLock_Environment_Can()        //자원 해금 클릭용도
     {
+        resourceType = ResourceType.Can;
         if (skilltree.Money < 1 || skilltree.SkillLevels[id] >= skilltree.SkillCaps[id])
             return;
 
         skilltree.Money -= 1;
         skilltree.SkillLevels[id]++;
-        /*
-            눌렀을 때 이제 잠겨있던 자원들을 해금 
-        */
-
-        /*
-            해금 시스템
-            1. 잠겨있으면 캐릭터가 여행중일때 올라가도 못먹게. ( bool ~~~로 만들어서 true면 못먹고 false때 먹게  )
-            2. 해금버튼 누르면 bool == true 를 false로 변경
-        */
-        resourceType = ResourceType.Can;
+        if (skilltree.SkillLevels[id] == skilltree.SkillCaps[id])
+        {
+            UpgradeCanBtn.interactable = false;
+        }
 
 
         skilltree.UpdateAllSkillUI();
     }
     public void UnLock_Environment_Glass()        //자원 해금 클릭용도
     {
+        resourceType = ResourceType.Glass;
         if (skilltree.Money < 1 || skilltree.SkillLevels[id] >= skilltree.SkillCaps[id])
             return;
 
         skilltree.Money -= 1;
         skilltree.SkillLevels[id]++;
-        /*
-            눌렀을 때 이제 잠겨있던 자원들을 해금 
-        */
+        if (skilltree.SkillLevels[id] == skilltree.SkillCaps[id])
+        {
+            UpgradeGlassBtn.interactable = false;
+        }
 
-        /*
-            해금 시스템
-            1. 잠겨있으면 캐릭터가 여행중일때 올라가도 못먹게. ( bool ~~~로 만들어서 true면 못먹고 false때 먹게  )
-            2. 해금버튼 누르면 bool == true 를 false로 변경
-        */
-        resourceType = ResourceType.Glass;
 
 
         skilltree.UpdateAllSkillUI();
     }
     public void UnLock_Environment_Plastic()        //자원 해금 클릭용도
     {
+        resourceType = ResourceType.Plastic;
         if (skilltree.Money < 1 || skilltree.SkillLevels[id] >= skilltree.SkillCaps[id])
             return;
 
         skilltree.Money -= 1;
         skilltree.SkillLevels[id]++;
-        /*
-            눌렀을 때 이제 잠겨있던 자원들을 해금 
-        */
-
-        /*
-            해금 시스템
-            1. 잠겨있으면 캐릭터가 여행중일때 올라가도 못먹게. ( bool ~~~로 만들어서 true면 못먹고 false때 먹게  )
-            2. 해금버튼 누르면 bool == true 를 false로 변경
-        */
-        resourceType = ResourceType.Plastic;
+        if (skilltree.SkillLevels[id] == skilltree.SkillCaps[id])
+        {
+            UpgradePlasticBtn.interactable = false;
+        }
 
 
         skilltree.UpdateAllSkillUI();
@@ -158,30 +136,76 @@ public class Skill : MonoBehaviour
         if (skilltree.Money < 1 || skilltree.SkillLevels[id] >= skilltree.SkillCaps[id])
             return;
 
+
         skilltree.Money -= 1;
         skilltree.SkillLevels[id]++;
-        /*  
-         *  SkillList[1] 
+
+        if (playerCity == null)
+        {
+            playerCity = FindObjectOfType<PlayerCity>();
+        }
+            if (skilltree.SkillLevels[id] == 1)
+            {
+                playerCity.PA -= playerCity.PA * 1.165f;
+            }
+            else if (skilltree.SkillLevels[id] == 2)
+            {
+                playerCity.PA *= 0.720f;
+            }
+            else if (skilltree.SkillLevels[id] == 3)
+            {
+                playerCity.PA *= Mathf.Round(0.445f);
+            }
+            else if (skilltree.SkillLevels[id] == 4)
+            {
+                playerCity.PA *= Mathf.Round(0.275f);
+            }
+            else if (skilltree.SkillLevels[id] == 5)
+            {
+                playerCity.PA *= Mathf.Round(0.170f);
+            }
+            else if (skilltree.SkillLevels[id] == 6)
+            {
+                playerCity.PA *= Mathf.Round(0.105f);
+            }
+            else if (skilltree.SkillLevels[id] == 7)
+            {
+                playerCity.PA *= Mathf.Round(0.065f);
+            }
+            else if (skilltree.SkillLevels[id] == 8)
+            {
+                playerCity.PA *= Mathf.Round(0.040f);
+            }
+            else if (skilltree.SkillLevels[id] == 9)
+            {
+                playerCity.PA *= Mathf.Round(0.025f);
+            }
+            else if (skilltree.SkillLevels[id] == 10)
+            {
+                playerCity.PA *= Mathf.Round(0.015f);
+            }
+            else if (skilltree.SkillLevels[id] == 11)
+            {
+                playerCity.PA *= Mathf.Round(0.010f);
+            }
+            else if (skilltree.SkillLevels[id] == 12)
+            {
+                playerCity.PA *= Mathf.Round(0.005f);
+            }
+            else if (skilltree.SkillLevels[id] == 13)
+            {
+                playerCity.PA *= Mathf.Round(0.005f);
+            }
+            else
+            {
+                playerCity.PA *= Mathf.Round(0.003f);
+            }
         
-            레벨시스템 & 레벨별 감소율 넣어줘야함
-            PA에 -= 
-                    skilltree.SkillLevels[id]에
-                    id++될수록 밑에 감소율 증가...
-
-            lv1 = 1.165
-            +=
-            lv2 = 0.720
-            +=
-            lv3 = 0.445
-            ....
-
-        */
-
-
-
+        Debug.Log(playerCity.PA);
         
 
         skilltree.UpdateAllSkillUI();
+        
     }
 
     
