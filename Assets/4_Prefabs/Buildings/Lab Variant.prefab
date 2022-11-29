@@ -105,4 +105,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: 1
   anim: {fileID: 0}
-  Lock: 0

@@ -32,7 +32,7 @@ public class City : MonoBehaviour
     }
     private int money;
 
-    public float PA {
+    public int PA {
         get {
             return pa;
         }
@@ -40,7 +40,7 @@ public class City : MonoBehaviour
             pa = value;
         }
     }
-    private float pa;
+    private int pa;
 
     public float PL {
         get {
@@ -53,6 +53,8 @@ public class City : MonoBehaviour
 			return 3;
 		}
 	}
+
+    public int[] Research = new int[6];
 
     public void MyTurn()
     {
@@ -130,35 +132,28 @@ public class City : MonoBehaviour
 
     public int GetTrash(ResourceType type)
     {
-        if (trash[(int)type] == 2 && research.UpgradePaperBtn.interactable != false)
-        {
-            Debug.Log("종이못줍");
-        }
-        else if (trash[(int)type] == 3 && research.UpgradeCanBtn.interactable != false)
-        {
-            Debug.Log("캔못줍");
-        }
-        else if (trash[(int)type] == 4 && research.UpgradeGlassBtn.interactable != false)
-        {
-            Debug.Log("유리못줍");
-        }
-        else if (trash[(int)type] == 5 && research.UpgradePlasticBtn.interactable != false)
-        {
-            Debug.Log("플라스틱못줍");
-        }
         return trash[(int)type]; 
     }
     
     public void UpdateTrash(ResourceType type, int num=0)
     {
         trash[(int)type] += num;
-        
-
-
-
         if (trash[(int)type] < 0) trash[(int)type] = 0;
         if (trash[(int)type] > int.MaxValue) trash[(int)type] = int.MaxValue;
+        
     }
+
+    public int GetResearch(int type)
+    {
+        return Research[type];
+    }
+
+    public void UpdateResearch(int type)
+    {
+        Research[type]++;
+    }
+
+
 
     public void Lose()
     {

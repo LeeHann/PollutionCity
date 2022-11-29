@@ -9,6 +9,8 @@ public class SkillTree_Control : MonoBehaviour
     public GameObject SkillHolder;
     public GameObject BackGround;
     public GameObject CloseBtn;
+    public GameObject Panel;
+    public GameObject ResearchBuilding;
     // Start is called before the first frame update
 
     //연구유닛누를때 이용
@@ -19,6 +21,7 @@ public class SkillTree_Control : MonoBehaviour
         SkillHolder.SetActive(true);
         BackGround.SetActive(true);
         CloseBtn.SetActive(true);
+        Panel.SetActive(true);
     }
 
     public void CloseSkillTree()
@@ -28,15 +31,15 @@ public class SkillTree_Control : MonoBehaviour
         SkillHolder.SetActive(false);
         BackGround.SetActive(false);
         CloseBtn.SetActive(false);
-    }
-    void Start()
-    {
-        
+        Panel.SetActive(false);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void OpenResearchBuilding()
     {
-        
+        Skilltree.SetActive(true);
+        ConnectorHolder.SetActive(true);
+        SkillHolder.SetActive(true);
+        BackGround.SetActive(true);
+        CloseBtn.SetActive(true);
     }
 }

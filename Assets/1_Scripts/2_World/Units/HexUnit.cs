@@ -332,5 +332,6 @@ public class HexUnit : Unit, IPointerClickHandler
 
 	public void OnClickResearchBuilding()
 	{
+
 	}
 }
