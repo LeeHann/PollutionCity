@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using TMPro;
 using static UI_ResearchTree;
-public class Skill : MonoBehaviour
+public class Skill : Unit
 {
     ResourceType resourceType;
     HexCell cell;
@@ -20,8 +21,20 @@ public class Skill : MonoBehaviour
     public Button UpgradeGlassBtn;
     public Button UpgradePlasticBtn;
 
-    City city;
-    PlayerCity playerCity;
+    [SerializeField]
+    SkillTree_Control skillTree_Control;
+
+
+    public City city
+    {
+        get
+        {
+            return TurnSystem.turnCity;
+        }
+    }
+
+    City _City;
+
 
     public void UpdateUI()
     {
@@ -42,13 +55,6 @@ public class Skill : MonoBehaviour
     }
 
 
-
-
-    /*
-        ActionResearcher(action) == 1 물어보기
-    */
-
-
     public void UnLock()        // 일쓰 & 재활용 버튼 클릭용도
     {
         if (skilltree.Money < 1 || skilltree.SkillLevels[id] >= skilltree.SkillCaps[id])
@@ -59,7 +65,7 @@ public class Skill : MonoBehaviour
         skilltree.UpdateAllSkillUI();
     }
 
-    public void UnLock_Environment_Paper()        //자원 해금 클릭용도
+    public void UnLock_Environment_Paper()       
     {
         //ActionResearcher(action) = 1
 
@@ -73,15 +79,16 @@ public class Skill : MonoBehaviour
             UpgradePaperBtn.interactable = false;
         }
 
-        resourceType = ResourceType.Paper;
-        
+        city.UpdateResearch(2);
 
-        
-        
+
+
 
         skilltree.UpdateAllSkillUI();
+        TurnUnit = false;
+        skillTree_Control.CloseSkillTree();
     }
-    public void UnLock_Environment_Can()        //자원 해금 클릭용도
+    public void UnLock_Environment_Can()
     {
         resourceType = ResourceType.Can;
         if (skilltree.Money < 1 || skilltree.SkillLevels[id] >= skilltree.SkillCaps[id])
@@ -94,10 +101,13 @@ public class Skill : MonoBehaviour
             UpgradeCanBtn.interactable = false;
         }
 
+        city.UpdateResearch(3);
 
         skilltree.UpdateAllSkillUI();
+        TurnUnit = false;
+        skillTree_Control.CloseSkillTree();
     }
-    public void UnLock_Environment_Glass()        //자원 해금 클릭용도
+    public void UnLock_Environment_Glass() 
     {
         resourceType = ResourceType.Glass;
         if (skilltree.Money < 1 || skilltree.SkillLevels[id] >= skilltree.SkillCaps[id])
@@ -110,11 +120,13 @@ public class Skill : MonoBehaviour
             UpgradeGlassBtn.interactable = false;
         }
 
-
+        city.UpdateResearch(4);
 
         skilltree.UpdateAllSkillUI();
+        TurnUnit = false;
+        skillTree_Control.CloseSkillTree();
     }
-    public void UnLock_Environment_Plastic()        //자원 해금 클릭용도
+    public void UnLock_Environment_Plastic() 
     {
         resourceType = ResourceType.Plastic;
         if (skilltree.Money < 1 || skilltree.SkillLevels[id] >= skilltree.SkillCaps[id])
@@ -127,11 +139,14 @@ public class Skill : MonoBehaviour
             UpgradePlasticBtn.interactable = false;
         }
 
+        city.UpdateResearch(5);
 
         skilltree.UpdateAllSkillUI();
+        TurnUnit = false;
+        skillTree_Control.CloseSkillTree();
     }
 
-    public void PollutionLevelUp()      //소각&매립 => 레벨시스템용도.
+    public void PollutionLevelUp()  
     {
         if (skilltree.Money < 1 || skilltree.SkillLevels[id] >= skilltree.SkillCaps[id])
             return;
@@ -140,73 +155,79 @@ public class Skill : MonoBehaviour
         skilltree.Money -= 1;
         skilltree.SkillLevels[id]++;
 
-        if (playerCity == null)
-        {
-            playerCity = FindObjectOfType<PlayerCity>();
-        }
+    
             if (skilltree.SkillLevels[id] == 1)
             {
-                playerCity.PA -= playerCity.PA * 1.165f;
+                city.PA -= (int)(city.PA * 0.835f);
             }
             else if (skilltree.SkillLevels[id] == 2)
             {
-                playerCity.PA *= 0.720f;
+                city.PA -= (int)(city.PA * 0.720f);
             }
-            else if (skilltree.SkillLevels[id] == 3)
+             else if (skilltree.SkillLevels[id] == 3)
             {
-                playerCity.PA *= Mathf.Round(0.445f);
+            city.PA   -= (int)(city.PA * 0.445f);
             }
             else if (skilltree.SkillLevels[id] == 4)
             {
-                playerCity.PA *= Mathf.Round(0.275f);
+                city.PA -= (int)(city.PA * 0.275f);
             }
             else if (skilltree.SkillLevels[id] == 5)
             {
-                playerCity.PA *= Mathf.Round(0.170f);
+                city.PA -= (int)(city.PA * 0.170f);
             }
             else if (skilltree.SkillLevels[id] == 6)
             {
-                playerCity.PA *= Mathf.Round(0.105f);
+                city.PA -= (int)(city.PA * 0.105f);
             }
             else if (skilltree.SkillLevels[id] == 7)
             {
-                playerCity.PA *= Mathf.Round(0.065f);
+                city.PA -= (int)(city.PA * 0.065f);
             }
             else if (skilltree.SkillLevels[id] == 8)
             {
-                playerCity.PA *= Mathf.Round(0.040f);
+                city.PA -= (int)(city.PA * 0.040f);
             }
             else if (skilltree.SkillLevels[id] == 9)
             {
-                playerCity.PA *= Mathf.Round(0.025f);
+                city.PA -= (int)(city.PA * 0.025f);
             }
             else if (skilltree.SkillLevels[id] == 10)
             {
-                playerCity.PA *= Mathf.Round(0.015f);
+                city.PA -= (int)(city.PA * 0.015f);
             }
             else if (skilltree.SkillLevels[id] == 11)
             {
-                playerCity.PA *= Mathf.Round(0.010f);
+                city.PA -= (int)(city.PA * 0.010f);
             }
             else if (skilltree.SkillLevels[id] == 12)
             {
-                playerCity.PA *= Mathf.Round(0.005f);
+                city.PA -= (int)(city.PA * 0.005f);
             }
             else if (skilltree.SkillLevels[id] == 13)
             {
-                playerCity.PA *= Mathf.Round(0.005f);
+                city.PA -= (int)(city.PA * 0.005f);
             }
             else
             {
-                playerCity.PA *= Mathf.Round(0.003f);
+                city.PA -= (int)(city.PA * 0.003f);
             }
-        
-        Debug.Log(playerCity.PA);
+
+        Debug.Log(city.PA);
         
 
         skilltree.UpdateAllSkillUI();
+        TurnUnit = false;
         
+
+        skillTree_Control.CloseSkillTree();
     }
 
-    
+    public void OpenResBuild()
+    {
+        skillTree_Control.OpenResearchBuilding();
+
+        skilltree.UpdateAllSkillUI();
+    }
+
 }
