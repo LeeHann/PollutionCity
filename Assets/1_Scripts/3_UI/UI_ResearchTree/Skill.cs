@@ -8,7 +8,6 @@ using static UI_ResearchTree;
 public class Skill : Unit
 {
     ResourceType resourceType;
-    HexCell cell;
 
     public int id;
 
@@ -24,6 +23,7 @@ public class Skill : Unit
     [SerializeField]
     SkillTree_Control skillTree_Control;
 
+    ResearchUnitClick researchUnitClick;
 
     public City city
     {
@@ -35,7 +35,7 @@ public class Skill : Unit
 
     City _City;
 
-
+    
     public void UpdateUI()
     {
         TitleText.text = $"{skilltree.SkillLevels[id]}/{skilltree.SkillCaps[id]}" +        //스킬트리 레벨 & 최대치
@@ -230,4 +230,5 @@ public class Skill : Unit
         skilltree.UpdateAllSkillUI();
     }
 
+    
 }

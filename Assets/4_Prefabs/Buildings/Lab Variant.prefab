@@ -105,3 +105,38 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unitType: 1
   anim: {fileID: 0}
+--- !u!114 &1135319509470097737
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7911857025727565369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 669b095e964386e4c8be5c770b75691c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: 1
+--- !u!114 &8958791049949332022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7911857025727565369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fa5a8b6dc33e07b41a03e9269cb97d9c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unitType: 1
+  id: 0
+  TitleText: {fileID: 0}
+  DescriptionText: {fileID: 0}
+  ConnectedSkills: 
+  UpgradePaperBtn: {fileID: 0}
+  UpgradeCanBtn: {fileID: 0}
+  UpgradeGlassBtn: {fileID: 0}
+  UpgradePlasticBtn: {fileID: 0}
+  skillTree_Control: {fileID: 0}

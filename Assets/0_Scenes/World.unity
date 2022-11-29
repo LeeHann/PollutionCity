@@ -281,7 +281,6 @@ MonoBehaviour:
   BackGround: {fileID: 731957667}
   CloseBtn: {fileID: 40468944}
   Panel: {fileID: 201827469}
-  ResearchBuilding: {fileID: 7911857025727565369, guid: 513747c983aca51439fc990a292b04e8, type: 3}
 --- !u!1 &17471733
 GameObject:
   m_ObjectHideFlags: 0

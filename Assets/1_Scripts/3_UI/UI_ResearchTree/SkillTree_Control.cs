@@ -10,7 +10,6 @@ public class SkillTree_Control : MonoBehaviour
     public GameObject BackGround;
     public GameObject CloseBtn;
     public GameObject Panel;
-    public GameObject ResearchBuilding;
     // Start is called before the first frame update
 
     //연구유닛누를때 이용
