@@ -13,8 +13,9 @@ public class MapSetter : MonoBehaviour
     private List<PlayerSit> sits = new List<PlayerSit>() {
         PlayerSit.Blue, PlayerSit.Red, PlayerSit.White, PlayerSit.Yellow
     };
+
+    [Range(0, 5)] public int playerAmt = 1;
     [SerializeField] List<City> cities = new List<City>();
-    [SerializeField] GameObject[] units;
     List<HexCell> highlights = new List<HexCell>();
     public static List<HexCell> occupiedCellList = new List<HexCell>();
 
@@ -35,12 +36,11 @@ public class MapSetter : MonoBehaviour
         StartCoroutine(LoadFileOnAndroid(fileName));
 
 #endif
-
-        cities[0] = GenerateCity(isPlayer:true);
-        for (int i = 1; i < GameInfo.cityCount; i++)
-        {
+        int i = 0;
+        for (; i<playerAmt; i++)
+            cities[i] = GenerateCity(isPlayer:true);
+        for (; i < GameInfo.cityCount; i++)
             cities[i] = GenerateCity();
-        }
         TurnSystem.cities = this.cities;
         
         ScatterResources(30);
