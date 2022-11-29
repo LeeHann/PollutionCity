@@ -38,6 +38,7 @@ public class UI_ResearchTree : MonoBehaviour
 
     public int Money;
 
+
     private void Start()
     {
         Money = 100;

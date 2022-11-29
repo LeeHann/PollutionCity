@@ -4251,6 +4251,14 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1918112243}
     - target: {fileID: 1573554531370852072, guid: 0f17daf0fef64f645ab68d4d1d4dfe93, type: 3}
+      propertyPath: UpgradeCanBtn
+      value: 
+      objectReference: {fileID: 1714234512}
+    - target: {fileID: 1573554531370852072, guid: 0f17daf0fef64f645ab68d4d1d4dfe93, type: 3}
+      propertyPath: upgradeButton
+      value: 
+      objectReference: {fileID: 1714234512}
+    - target: {fileID: 1573554531370852072, guid: 0f17daf0fef64f645ab68d4d1d4dfe93, type: 3}
       propertyPath: DescriptionText
       value: 
       objectReference: {fileID: 502403351}
@@ -5391,7 +5399,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 723043735}
+  m_TargetGraphic: {fileID: 477547712}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -5407,6 +5415,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &477547712 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2628358688844277494, guid: 0f17daf0fef64f645ab68d4d1d4dfe93, type: 3}
+  m_PrefabInstance: {fileID: 1290124543}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 477547706}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &480637024
 GameObject:
   m_ObjectHideFlags: 0
@@ -16692,9 +16711,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 646676390}
     - target: {fileID: 1573554531370852072, guid: 0f17daf0fef64f645ab68d4d1d4dfe93, type: 3}
+      propertyPath: upgradeButton
+      value: 
+      objectReference: {fileID: 477547711}
+    - target: {fileID: 1573554531370852072, guid: 0f17daf0fef64f645ab68d4d1d4dfe93, type: 3}
       propertyPath: DescriptionText
       value: 
       objectReference: {fileID: 868548858}
+    - target: {fileID: 1573554531370852072, guid: 0f17daf0fef64f645ab68d4d1d4dfe93, type: 3}
+      propertyPath: UpgradePlasticBtn
+      value: 
+      objectReference: {fileID: 477547711}
     - target: {fileID: 1573554531370852072, guid: 0f17daf0fef64f645ab68d4d1d4dfe93, type: 3}
       propertyPath: ConnectedSkills.Array.size
       value: 0
@@ -19337,9 +19364,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1654578805}
     - target: {fileID: 1573554531370852072, guid: 0f17daf0fef64f645ab68d4d1d4dfe93, type: 3}
+      propertyPath: upgradeButton
+      value: 
+      objectReference: {fileID: 723043733}
+    - target: {fileID: 1573554531370852072, guid: 0f17daf0fef64f645ab68d4d1d4dfe93, type: 3}
       propertyPath: DescriptionText
       value: 
       objectReference: {fileID: 555338258}
+    - target: {fileID: 1573554531370852072, guid: 0f17daf0fef64f645ab68d4d1d4dfe93, type: 3}
+      propertyPath: UpgradeGlassBtn
+      value: 
+      objectReference: {fileID: 723043733}
     - target: {fileID: 1869560777027964794, guid: 0f17daf0fef64f645ab68d4d1d4dfe93, type: 3}
       propertyPath: m_Name
       value: Skill (6)
@@ -27160,9 +27195,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 100897625}
     - target: {fileID: 1573554531370852072, guid: 0f17daf0fef64f645ab68d4d1d4dfe93, type: 3}
+      propertyPath: upgradeButton
+      value: 
+      objectReference: {fileID: 1418379777}
+    - target: {fileID: 1573554531370852072, guid: 0f17daf0fef64f645ab68d4d1d4dfe93, type: 3}
       propertyPath: DescriptionText
       value: 
       objectReference: {fileID: 200561031}
+    - target: {fileID: 1573554531370852072, guid: 0f17daf0fef64f645ab68d4d1d4dfe93, type: 3}
+      propertyPath: UpgradePaperBtn
+      value: 
+      objectReference: {fileID: 1418379777}
     - target: {fileID: 1869560777027964794, guid: 0f17daf0fef64f645ab68d4d1d4dfe93, type: 3}
       propertyPath: m_Name
       value: Skill (4)
@@ -27878,7 +27921,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -16.615}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 809, y: -731}
+  m_AnchoredPosition: {x: 767, y: -733}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2098567569
