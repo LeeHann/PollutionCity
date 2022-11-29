@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class AICity : City
 {
-	CityAgent agent;
+	// CityAgent agent;
 
 	private void Start() 
 	{
-		agent = gameObject.AddComponent<CityAgent>();
+		// agent = gameObject.AddComponent<CityAgent>();
 		// agent.SetModel("CityAgent");
 	}
 

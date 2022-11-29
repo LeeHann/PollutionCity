@@ -1,0 +1,38 @@
+{
+    "CityAgent": {
+        "checkpoints": [
+            {
+                "steps": 282013,
+                "file_path": "results\\CityAgent\\CityAgent\\CityAgent-282013.onnx",
+                "reward": 0.0,
+                "creation_time": 1669735689.0138376,
+                "auxillary_file_paths": [
+                    "results\\CityAgent\\CityAgent\\CityAgent-282013.pt"
+                ]
+            },
+            {
+                "steps": 331505,
+                "file_path": "results\\CityAgent\\CityAgent\\CityAgent-331505.onnx",
+                "reward": null,
+                "creation_time": 1669736240.319527,
+                "auxillary_file_paths": [
+                    "results\\CityAgent\\CityAgent\\CityAgent-331505.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 331505,
+            "file_path": "results\\CityAgent\\CityAgent.onnx",
+            "reward": null,
+            "creation_time": 1669736240.319527,
+            "auxillary_file_paths": [
+                "results\\CityAgent\\CityAgent\\CityAgent-331505.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.28.0",
+        "torch_version": "1.11.0+cu113"
+    }
+}

@@ -123,8 +123,14 @@ public class HexUnit : Unit, IPointerClickHandler
 			highlights.RemoveAt(i);
 			MapSetter.occupiedCellList.Remove(cell);
 		}
+		GoToTravel(cell);
+	}
+
+	public void GoToTravel(HexCell cell)
+	{	
 		Grid.FindPath(Location, cell, this);
-		Travel(Grid.GetPath());
+		if (Grid.GetPath() != null)
+			Travel(Grid.GetPath());
 	}
 
 	public void ValidateLocation()

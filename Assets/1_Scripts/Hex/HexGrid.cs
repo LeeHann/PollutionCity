@@ -31,7 +31,7 @@ public class HexGrid : MonoBehaviour {
 
 	Transform[] columns;
 	HexGridChunk[] chunks;
-	HexCell[] cells;
+	public HexCell[] cells;
 	public List<HexCell> emptyCells = new List<HexCell>();
 
 	int chunkCountX, chunkCountZ;
@@ -48,6 +48,11 @@ public class HexGrid : MonoBehaviour {
 	List<HexUnit> units = new List<HexUnit>();
 
 	HexCellShaderData cellShaderData;
+	public static HexGrid hexGrid {
+		get { return hexgrid; }
+		set { value = hexgrid; }
+	}
+	private static HexGrid hexgrid = null;
 
 	void Awake () {
 		HexMetrics.noiseSource = noiseSource;
@@ -56,6 +61,8 @@ public class HexGrid : MonoBehaviour {
 		HexUnit.LivingPrefab = LiveBuildPrefab;
 		HexUnit.ResearchPrefab = ResearchPrefab;
 		HexUnit.IndustrialPrefab = IndustrialPrefab;
+		hexgrid = this;
+
 		cellShaderData = gameObject.AddComponent<HexCellShaderData>();
 		cellShaderData.Grid = this;
 		CreateMap(cellCountX, cellCountZ, wrapping);
