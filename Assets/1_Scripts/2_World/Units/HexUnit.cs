@@ -11,7 +11,7 @@ public class HexUnit : Unit, IPointerClickHandler
 	const float rotationSpeed = 180f;
 	const float travelSpeed = 1.5f;
 
-	public static HexUnit unitPrefab;
+	// public static HexUnit unitPrefab;
 	public static HexUnit LivingPrefab;
 	public static HexUnit ResearchPrefab;
 	public static HexUnit IndustrialPrefab;
@@ -74,6 +74,7 @@ public class HexUnit : Unit, IPointerClickHandler
 
 	List<HexCell> pathToTravel;
 	List<HexCell> highlights = new List<HexCell>();
+	Queue queue = new Queue();
 
 	public void OnPointerClick(PointerEventData e)
 	{
@@ -86,7 +87,6 @@ public class HexUnit : Unit, IPointerClickHandler
 			});
 			MapSetter.occupiedCellList.Clear();
 		}
-		Queue queue = new Queue();
 		queue.Enqueue(Location);
 
 		while (queue.Count > 0)
@@ -102,7 +102,8 @@ public class HexUnit : Unit, IPointerClickHandler
 			for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
 			{
 				HexCell neighbor = cell.GetNeighbor(d);
-
+				if (neighbor == null) 
+					continue;
 				if (neighbor.IsEnabledHighlight() || !Grid.Search(Location, neighbor, this))
 					continue;
 
@@ -110,6 +111,7 @@ public class HexUnit : Unit, IPointerClickHandler
 			}
 		}
 		Location.DisableHighlight();
+		queue.Clear();
 	}
 
 	public void OnClickHighlight(HexCell cell)
@@ -123,6 +125,13 @@ public class HexUnit : Unit, IPointerClickHandler
 		}
 		Grid.FindPath(Location, cell, this);
 		Travel(Grid.GetPath());
+	}
+
+	public void GoToTravel(HexCell cell)
+	{
+		Grid.FindPath(Location, cell, this);
+		if (Grid.GetPath() != null)
+			Travel(Grid.GetPath());
 	}
 
 	public void ValidateLocation()
@@ -302,9 +311,9 @@ public class HexUnit : Unit, IPointerClickHandler
 	{
 		HexCoordinates coordinates = HexCoordinates.Load(reader);
 		float orientation = reader.ReadSingle();
-		grid.AddUnit(
-			Instantiate(unitPrefab), grid.GetCell(coordinates), orientation
-		);
+		// grid.AddUnit(
+		// 	Instantiate(unitPrefab), grid.GetCell(coordinates), orientation
+		// );
 		grid.AddLivingBuilding(
 			Instantiate(LivingPrefab), grid.GetCell(coordinates), orientation
 		);

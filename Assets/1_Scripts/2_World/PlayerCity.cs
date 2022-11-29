@@ -38,6 +38,7 @@ public class PlayerCity : City
 		yield return null;
 		_coroutine = null;
 	}
+    
     bool IsResearched(ResourceType type)
     {
         if (GetResearch((int)type) <= 0)

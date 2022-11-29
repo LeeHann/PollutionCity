@@ -21,7 +21,7 @@ public class TurnSystem : MonoBehaviour
         }
     }
 
-    public static int Turn {
+    public int Turn {
         get;
         private set; 
     }
@@ -35,7 +35,6 @@ public class TurnSystem : MonoBehaviour
     }
 
     [SerializeField] HexGrid hexGrid;
-    [SerializeField] HexMapCamera cam;
     [SerializeField] MapSetter mapSetter;
     int scatterTurn = 5;
     bool overCheck;
@@ -91,16 +90,21 @@ public class TurnSystem : MonoBehaviour
             turnPlayer.MyTurn();
             yield return new WaitWhile(()=> turnPlayer.myTurn != false);
             
-            // turnPlayer.PA += (int)(turnPlayer.PA * GameInfo.PLPercent);
-            turnPlayer.PA += (int)(turnPlayer.PA * 0.5);
-
-            do{
-                whoseTurn = (PlayerNum)((int)(whoseTurn + 1) % 4);
-                if (whoseTurn == 0) Turn++;
-            } while (cities[(int)whoseTurn] == null);
-            scatterTurn--;
-            StartCoroutine(SpinATurn());
+            turnPlayer.PA += (int)(turnPlayer.PA * GameInfo.PLPercent);
+            // turnPlayer.PA += (int)(turnPlayer.PA * 0.5);
+            CheckSpin();
         }
+    }
+
+    void CheckSpin()
+    {
+        do{
+            whoseTurn = (PlayerNum)((int)(whoseTurn + 1) % 4);
+            if (whoseTurn == 0) Turn++;
+        } while (cities[(int)whoseTurn] == null);
+        scatterTurn--;
+        StopAllCoroutines();
+        StartCoroutine(SpinATurn());
     }
 
     ClearType CheckClear(City turnPlayer)

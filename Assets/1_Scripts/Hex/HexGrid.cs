@@ -18,7 +18,6 @@ public class HexGrid : MonoBehaviour {
 	public HexUnit ResearchPrefab;
 	public HexUnit IndustrialPrefab;
 
-
 	public Texture2D noiseSource;
 
 	public int seed;
@@ -52,7 +51,7 @@ public class HexGrid : MonoBehaviour {
 	void Awake () {
 		HexMetrics.noiseSource = noiseSource;
 		HexMetrics.InitializeHashGrid(seed);
-		HexUnit.unitPrefab = unitPrefab[0];
+		// HexUnit.unitPrefab = unitPrefab[0];
 		HexUnit.LivingPrefab = LiveBuildPrefab;
 		HexUnit.ResearchPrefab = ResearchPrefab;
 		HexUnit.IndustrialPrefab = IndustrialPrefab;
@@ -168,7 +167,7 @@ public class HexGrid : MonoBehaviour {
 		if (!HexMetrics.noiseSource) {
 			HexMetrics.noiseSource = noiseSource;
 			HexMetrics.InitializeHashGrid(seed);
-			HexUnit.unitPrefab = unitPrefab[0];
+			// HexUnit.unitPrefab = unitPrefab[0];
 			HexUnit.LivingPrefab = LiveBuildPrefab;
 			HexUnit.ResearchPrefab = ResearchPrefab;
 			HexUnit.IndustrialPrefab = IndustrialPrefab;
@@ -232,12 +231,10 @@ public class HexGrid : MonoBehaviour {
 
 		if (wrapping) {
 			cell.Explorable = z > 0 && z < cellCountZ - 1;
-			// cell.Explorable = true;
 		}
 		else {
 			cell.Explorable =
 				x > 0 && z > 0 && x < cellCountX - 1 && z < cellCountZ - 1;
-			// cell.Explorable = true;
 		}
 
 		if (x > 0) {
@@ -567,8 +564,4 @@ public class HexGrid : MonoBehaviour {
 			columns[i].localPosition = position;
 		}
 	}
-
-
-	
-
 }

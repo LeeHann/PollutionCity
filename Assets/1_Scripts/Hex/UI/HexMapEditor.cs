@@ -141,9 +141,9 @@ public class HexMapEditor : MonoBehaviour {
 				if (Input.GetKey(KeyCode.LeftShift)) {
 					DestroyUnit();
 				}
-				else {
-					CreateUnit();
-				}
+				// else {
+				// 	CreateUnit();
+				// }
 				return;
 			}
 
@@ -162,14 +162,14 @@ public class HexMapEditor : MonoBehaviour {
 
 
 
-	void CreateUnit () {
-		HexCell cell = GetCellUnderCursor();
-		if (cell && !cell.Unit) {
-			hexGrid.AddUnit(
-				Instantiate(HexUnit.unitPrefab), cell, Random.Range(0f, 360f)
-			);
-		}
-	}
+	// void CreateUnit () {
+	// 	HexCell cell = GetCellUnderCursor();
+	// 	if (cell && !cell.Unit) {
+	// 		hexGrid.AddUnit(
+	// 			Instantiate(HexUnit.unitPrefab), cell, Random.Range(0f, 360f)
+	// 		);
+	// 	}
+	// }
 
 	public void CreateLivingBuilding()
     {
