@@ -89,7 +89,6 @@ public class City : MonoBehaviour
                     yield return new WaitUntil(() => _coroutine == null);
                     break;
             }
-            action.TurnUnit = false;
             actions.RemoveAt(actions.Count-1);
             yield return dot5;
 		}
@@ -140,7 +139,6 @@ public class City : MonoBehaviour
         trash[(int)type] += num;
         if (trash[(int)type] < 0) trash[(int)type] = 0;
         if (trash[(int)type] > int.MaxValue) trash[(int)type] = int.MaxValue;
-        
     }
 
     public int GetResearch(int type)
@@ -152,8 +150,6 @@ public class City : MonoBehaviour
     {
         Research[type]++;
     }
-
-
 
     public void Lose()
     {

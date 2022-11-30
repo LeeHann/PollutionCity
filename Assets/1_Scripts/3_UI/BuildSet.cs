@@ -2,10 +2,12 @@ using UnityEngine;
 
 public class BuildSet : MonoBehaviour
 {
-    public HexGrid hexgrid;
-    public GameObject LivingPrefab;
-	public GameObject ResearchPrefab;
-	public GameObject IndustrialPrefab;
+    [SerializeField] HexGrid hexgrid;
+    [SerializeField] GameObject LivingPrefab;
+	[SerializeField] GameObject ResearchPrefab;
+	[SerializeField] GameObject IndustrialPrefab;
+
+    [SerializeField] SkillTree_Control skillTree;
 
     public HexCell GetCellUnderCursor()
     {
@@ -48,7 +50,8 @@ public class BuildSet : MonoBehaviour
         HexCell cell = GetCellUnderCursor();
         if (cell && !cell.Unit && TurnSystem.turnCity.cells.Contains(cell))
         {
-            var unit = Instantiate(ResearchPrefab).GetComponent<Skill>();
+            var unit = Instantiate(ResearchPrefab).GetComponent<RSUnit>();
+            unit.skillTree = skillTree;
             unit.Grid = hexgrid;
             unit.Location = cell;
             unit.Orientation = Random.Range(0, 360f);

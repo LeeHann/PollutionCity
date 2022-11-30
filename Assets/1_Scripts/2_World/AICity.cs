@@ -20,10 +20,9 @@ public class AICity : City
 		_coroutine = null;
 	}
 
-	Queue queue = new Queue();
-
 	HexCell SelectCell(HexUnit explorer)
 	{
+		Queue queue = new Queue();
 		HexCell cell = explorer.Location.GetNeighbor(0);
 		queue.Enqueue(explorer.Location);
 		while (queue.Count > 0)
@@ -42,7 +41,6 @@ public class AICity : City
 				queue.Enqueue(neighbor);
 			}
 		}
-		queue.Clear();
 		if (cell == explorer.Location) cell = explorer.Location.GetNeighbor(0);
 		Debug.Log(cell.coordinates.X + " : " + cell.coordinates.Z);
 		return cell;

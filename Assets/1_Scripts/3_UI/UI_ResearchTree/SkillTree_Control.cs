@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 public class SkillTree_Control : MonoBehaviour
 {
+    [HideInInspector] public RSUnit unit;
     public GameObject Skilltree;
     public GameObject ConnectorHolder;
     public GameObject SkillHolder;
@@ -19,7 +20,7 @@ public class SkillTree_Control : MonoBehaviour
         SkillHolder.SetActive(true);
         BackGround.SetActive(true);
         CloseBtn.SetActive(true);
-        Panel.SetActive(true);
+        Panel.SetActive(false);
     }
 
     public void CloseSkillTree()

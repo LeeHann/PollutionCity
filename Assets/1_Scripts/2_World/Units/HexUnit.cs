@@ -11,48 +11,7 @@ public class HexUnit : Unit, IPointerClickHandler
 	const float rotationSpeed = 180f;
 	const float travelSpeed = 1.5f;
 
-	// public static HexUnit LivingPrefab;
-	// public static HexUnit ResearchPrefab;
-	// public static HexUnit IndustrialPrefab;
-	// public HexGrid Grid { get; set; }
-
-	// public HexCell Location
-	// {
-	// 	get
-	// 	{
-	// 		return location;
-	// 	}
-	// 	set
-	// 	{
-	// 		if (location)
-	// 		{
-	// 			Grid.DecreaseVisibility(location, VisionRange);
-	// 			location.Unit = null;
-	// 		}
-	// 		location = value;
-	// 		value.Unit = this;
-	// 		Grid.IncreaseVisibility(value, VisionRange);
-	// 		transform.localPosition = value.Position;
-	// 		Grid.MakeChildOfColumn(transform, value.ColumnIndex);
-	// 	}
-	// }
-
-	// HexCell location;
 	HexCell currentTravelLocation;
-
-	// public float Orientation
-	// {
-	// 	get
-	// 	{
-	// 		return orientation;
-	// 	}
-	// 	set
-	// 	{
-	// 		orientation = value;
-	// 		transform.localRotation = Quaternion.Euler(0f, value, 0f);
-	// 	}
-	// }
-	// float orientation;
 
 	public int Speed
 	{
@@ -72,7 +31,6 @@ public class HexUnit : Unit, IPointerClickHandler
 
 	List<HexCell> pathToTravel;
 	List<HexCell> highlights = new List<HexCell>();
-	Queue queue = new Queue();
 
 	public void OnPointerClick(PointerEventData e)
 	{
@@ -85,6 +43,7 @@ public class HexUnit : Unit, IPointerClickHandler
 			});
 			MapSetter.occupiedCellList.Clear();
 		}
+		Queue queue = new Queue();
 		queue.Enqueue(Location);
 
 		while (queue.Count > 0)

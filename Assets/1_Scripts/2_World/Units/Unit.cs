@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public enum UnitType {
@@ -47,7 +45,8 @@ public class Unit : MonoBehaviour
 	}
 	protected float orientation;
 
-    public UnitType unitType;	
+    public UnitType unitType;
+
 	public bool TurnUnit {
 		get {
 			return turnUnit;
@@ -56,6 +55,5 @@ public class Unit : MonoBehaviour
 			turnUnit = value;
 		}
 	}
-
 	private bool turnUnit = false;
 }

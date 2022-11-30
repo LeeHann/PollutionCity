@@ -1,19 +1,8 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-/*
- Money로 연구하는거 아님 고쳐야함
-
- Money 사용은 타일구매 , 건물구매만
- 한턴에 1연구만 가능하도록 ( 플레이어 턴일때 기능 활성화 되도록 )
- 턴에 연구가 끝나면 더이상 연구유닛은 연구 못하도록
- 
- */
 public class UI_ResearchTree : MonoBehaviour
 {
-    public static UI_ResearchTree skilltree;
-    private void Awake() => skilltree = this;
-
     public int[] SkillLevels;
     public int[] SkillCaps; //스킬들의 최댓값
     public string[] SkillNames;
@@ -24,8 +13,6 @@ public class UI_ResearchTree : MonoBehaviour
 
     public List<GameObject> ConnectorList;
     public GameObject ConnectorHolder;
-
-    public int Money;
 
     private void Start()
     {
