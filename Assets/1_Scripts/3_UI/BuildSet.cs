@@ -1,43 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 public class BuildSet : MonoBehaviour
 {
-
     public HexGrid hexgrid;
-    public HexCell hexCell;
-    HexUnit hexUnit;
-    Transform container;
-
-    public GameObject ScrollView; // 제조 스크롤뷰 UI 연동
-    public GameObject ResearchTree;     //연구트리 UI  연동
-
-
-    public void Clear()
-    {
-        if (container)
-        {
-            Destroy(container.gameObject);
-        }
-        container = new GameObject("Features Container").transform;
-        container.SetParent(transform, false);
-    }
-
-    public HexCell Location
-    {
-        get
-        {
-            return location;
-        }
-        set
-        {
-            location = value;
-            transform.localPosition = value.Position;
-        }
-    }
-
-    HexCell location;
+    public GameObject LivingPrefab;
+	public GameObject ResearchPrefab;
+	public GameObject IndustrialPrefab;
 
     public HexCell GetCellUnderCursor()
     {
@@ -45,67 +13,46 @@ public class BuildSet : MonoBehaviour
             hexgrid.GetCell(Camera.main.ScreenPointToRay(Input.mousePosition));
     }
 
-
     public void LivingBuild()
     {
-            Debug.Log("Clicked Livingbuild Button");
+        HexCell cell = GetCellUnderCursor();        
+        if (cell && !cell.Unit && TurnSystem.turnCity.cells.Contains(cell))
+        {
+            var obj = Instantiate(LivingPrefab).GetComponent<Unit>();
+            obj.Grid = hexgrid;
+            obj.Location = cell;
+            obj.Orientation = Random.Range(0, 360f);
 
-
-            HexCell cell = GetCellUnderCursor();
-            
-            if (cell && !cell.Unit)
-            {
-                hexgrid.AddLivingBuilding(
-                Instantiate(HexUnit.LivingPrefab),
-                cell,
-                Random.Range(0f, 360f)
-                );
-            }
-
+            HexUnit hexUnit = hexgrid.AddUnit(
+                Instantiate(hexgrid.unitPrefab[(int)TurnSystem.turnCity.sit]), cell, Random.Range(0, 360f)
+            );
+            TurnSystem.turnCity.AddUnit(hexUnit);
+        }
     }
+
     public void IndustrialBuild()
     {
         HexCell cell = GetCellUnderCursor();
-
-        if (cell && !cell.Unit)
+        if (cell && !cell.Unit && TurnSystem.turnCity.cells.Contains(cell))
         {
-            hexgrid.AddIndustrialBuilding(
-                Instantiate(HexUnit.IndustrialPrefab),
-                cell,
-                Random.Range(0f, 360f)
-                );
+            var unit = Instantiate(IndustrialPrefab).GetComponent<MFCUnit>();
+            unit.Grid = hexgrid;
+            unit.Location = cell;
+            unit.Orientation = Random.Range(0, 360f);
+            TurnSystem.turnCity.AddUnit(unit);
         }
-
-        Debug.Log("Industrial build Button");
-
-        if (HexUnit.IndustrialPrefab && ScrollView != null)
-        {
-            bool isActivate = ScrollView.activeSelf;
-
-            ScrollView.SetActive(!isActivate);
-        }
-
     }
+
     public void ResearchBuild()
     {
-        Debug.Log("Research Button");
-
         HexCell cell = GetCellUnderCursor();
-
-        if (cell && !cell.Unit)
+        if (cell && !cell.Unit && TurnSystem.turnCity.cells.Contains(cell))
         {
-            hexgrid.AddResearchBuilding(
-                Instantiate(HexUnit.ResearchPrefab),
-                cell,
-                Random.Range(0f, 360f)
-                );
-        }
-        if (HexUnit.ResearchPrefab && ResearchTree != null)
-        {
-            bool isActivate = ResearchTree.activeSelf;
-
-            ResearchTree.SetActive(!isActivate);
+            var unit = Instantiate(ResearchPrefab).GetComponent<Skill>();
+            unit.Grid = hexgrid;
+            unit.Location = cell;
+            unit.Orientation = Random.Range(0, 360f);
+            TurnSystem.turnCity.AddUnit(unit);
         }
     }
-
 }

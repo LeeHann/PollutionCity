@@ -114,7 +114,6 @@ public class MapSetter : MonoBehaviour
         
         return cell;
     }
-
     
     City SetCityProperty(HexCell cell, bool isPlayer)
     {
@@ -142,7 +141,7 @@ public class MapSetter : MonoBehaviour
         if (isPlayer)
             city.GetComponent<PlayerCity>().notice += noticeUI.Notice;
         
-        // place units (explorer, lab)
+        // place units
         city.AddUnit(
             hexGrid.AddUnit(
                 Instantiate(hexGrid.unitPrefab[(int)city.sit]), cell, Random.Range(0f, 360f)

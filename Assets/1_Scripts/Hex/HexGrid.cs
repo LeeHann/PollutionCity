@@ -51,10 +51,9 @@ public class HexGrid : MonoBehaviour {
 	void Awake () {
 		HexMetrics.noiseSource = noiseSource;
 		HexMetrics.InitializeHashGrid(seed);
-		// HexUnit.unitPrefab = unitPrefab[0];
-		HexUnit.LivingPrefab = LiveBuildPrefab;
-		HexUnit.ResearchPrefab = ResearchPrefab;
-		HexUnit.IndustrialPrefab = IndustrialPrefab;
+		// HexUnit.LivingPrefab = LiveBuildPrefab;
+		// HexUnit.ResearchPrefab = ResearchPrefab;
+		// HexUnit.IndustrialPrefab = IndustrialPrefab;
 		cellShaderData = gameObject.AddComponent<HexCellShaderData>();
 		cellShaderData.Grid = this;
 		CreateMap(cellCountX, cellCountZ, wrapping);
@@ -69,28 +68,29 @@ public class HexGrid : MonoBehaviour {
 		return unit;
 	}
 
-	public void AddLivingBuilding(HexUnit unit, HexCell location, float orientation)
-	{
-		units.Add(unit);
-		unit.Grid = this;
-		unit.Location = location;
-		unit.Orientation = orientation;
-	}
-	public void AddResearchBuilding(HexUnit unit, HexCell location, float orientation)
-	{
-		units.Add(unit);
-		unit.Grid = this;
-		unit.Location = location;
-		unit.Orientation = orientation;
-	}
+	// public void AddLivingBuilding(HexUnit unit, HexCell location, float orientation)
+	// {
+	// 	units.Add(unit);
+	// 	unit.Grid = this;
+	// 	unit.Location = location;
+	// 	unit.Orientation = orientation;
+	// }
+	// public void AddResearchBuilding(HexUnit unit, HexCell location, float orientation)
+	// {
+	// 	units.Add(unit);
+	// 	unit.Grid = this;
+	// 	unit.Location = location;
+	// 	unit.Orientation = orientation;
+	// }
 
-	public void AddIndustrialBuilding(HexUnit unit, HexCell location, float orientation)
-	{
-		units.Add(unit);
-		unit.Grid = this;
-		unit.Location = location;
-		unit.Orientation = orientation;
-	}
+	// public void AddIndustrialBuilding(HexUnit unit, HexCell location, float orientation)
+	// {
+	// 	units.Add(unit);
+	// 	unit.Grid = this;
+	// 	unit.Location = location;
+	// 	unit.Orientation = orientation;
+	// }
+
 	public void RemoveUnit (HexUnit unit) {
 		units.Remove(unit);
 		unit.Die();
@@ -168,9 +168,9 @@ public class HexGrid : MonoBehaviour {
 			HexMetrics.noiseSource = noiseSource;
 			HexMetrics.InitializeHashGrid(seed);
 			// HexUnit.unitPrefab = unitPrefab[0];
-			HexUnit.LivingPrefab = LiveBuildPrefab;
-			HexUnit.ResearchPrefab = ResearchPrefab;
-			HexUnit.IndustrialPrefab = IndustrialPrefab;
+			// HexUnit.LivingPrefab = LiveBuildPrefab;
+			// HexUnit.ResearchPrefab = ResearchPrefab;
+			// HexUnit.IndustrialPrefab = IndustrialPrefab;
 			HexMetrics.wrapSize = wrapping ? cellCountX : 0;
 			ResetVisibility();
 		}
@@ -287,20 +287,20 @@ public class HexGrid : MonoBehaviour {
 		chunk.AddCell(localX + localZ * HexMetrics.chunkSizeX, cell);
 	}
 
-	public void Save (BinaryWriter writer) {
-		writer.Write(cellCountX);
-		writer.Write(cellCountZ);
-		writer.Write(wrapping);
+	// public void Save (BinaryWriter writer) {
+	// 	writer.Write(cellCountX);
+	// 	writer.Write(cellCountZ);
+	// 	writer.Write(wrapping);
 
-		for (int i = 0; i < cells.Length; i++) {
-			cells[i].Save(writer);
-		}
+	// 	for (int i = 0; i < cells.Length; i++) {
+	// 		cells[i].Save(writer);
+	// 	}
 
-		writer.Write(units.Count);
-		for (int i = 0; i < units.Count; i++) {
-			units[i].Save(writer);
-		}
-	}
+	// 	writer.Write(units.Count);
+	// 	for (int i = 0; i < units.Count; i++) {
+	// 		units[i].Save(writer);
+	// 	}
+	// }
 
 	public void Load (BinaryReader reader, int header) {
 		ClearPath();
@@ -330,7 +330,7 @@ public class HexGrid : MonoBehaviour {
 		if (header >= 2) {
 			int unitCount = reader.ReadInt32();
 			for (int i = 0; i < unitCount; i++) {
-				HexUnit.Load(reader, this);
+				// HexUnit.Load(reader, this);
 			}
 		}
 

@@ -44,12 +44,12 @@ public class SaveLoadMenu : MonoBehaviour {
 		if (path == null) {
 			return;
 		}
-		if (saveMode) {
-			Save(path);
-		}
-		else {
-			Load(path);
-		}
+		// if (saveMode) {
+		// 	Save(path);
+		// }
+		// else {
+		// 	Load(path);
+		// }
 		Close();
 	}
 
@@ -92,30 +92,30 @@ public class SaveLoadMenu : MonoBehaviour {
 		return Path.Combine(Application.persistentDataPath, mapName + ".map");
 	}
 
-	void Save (string path) {
-		using (
-			BinaryWriter writer =
-			new BinaryWriter(File.Open(path, FileMode.Create))
-		) {
-			writer.Write(mapFileVersion);
-			hexGrid.Save(writer);
-		}
-	}
+	// void Save (string path) {
+	// 	using (
+	// 		BinaryWriter writer =
+	// 		new BinaryWriter(File.Open(path, FileMode.Create))
+	// 	) {
+	// 		writer.Write(mapFileVersion);
+			// hexGrid.Save(writer);
+	// 	}
+	// }
 
-	void Load (string path) {
-		if (!File.Exists(path)) {
-			Debug.LogError("File does not exist " + path);
-			return;
-		}
-		using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
-			int header = reader.ReadInt32();
-			if (header <= mapFileVersion) {
-				hexGrid.Load(reader, header);
-				HexMapCamera.ValidatePosition();
-			}
-			else {
-				Debug.LogWarning("Unknown map format " + header);
-			}
-		}
-	}
+	// void Load (string path) {
+	// 	if (!File.Exists(path)) {
+	// 		Debug.LogError("File does not exist " + path);
+	// 		return;
+	// 	}
+	// 	using (BinaryReader reader = new BinaryReader(File.OpenRead(path))) {
+	// 		int header = reader.ReadInt32();
+	// 		if (header <= mapFileVersion) {
+	// 			hexGrid.Load(reader, header);
+	// 			HexMapCamera.ValidatePosition();
+	// 		}
+	// 		else {
+	// 			Debug.LogWarning("Unknown map format " + header);
+	// 		}
+	// 	}
+	// }
 }

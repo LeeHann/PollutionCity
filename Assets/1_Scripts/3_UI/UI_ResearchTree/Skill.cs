@@ -5,11 +5,10 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using TMPro;
 using static UI_ResearchTree;
+
 public class Skill : Unit
 {
     ResourceType resourceType;
-    HexCell cell;
-
     public int id;
 
     public TMP_Text TitleText;
@@ -21,9 +20,7 @@ public class Skill : Unit
     public Button UpgradeGlassBtn;
     public Button UpgradePlasticBtn;
 
-    [SerializeField]
-    SkillTree_Control skillTree_Control;
-
+    [SerializeField] SkillTree_Control skillTree_Control;
 
     public City city
     {
@@ -32,9 +29,6 @@ public class Skill : Unit
             return TurnSystem.turnCity;
         }
     }
-
-    City _City;
-
 
     public void UpdateUI()
     {

@@ -5,10 +5,10 @@ using UnityEngine.EventSystems;
 
 public class MFCUnit : Unit, IPointerClickHandler
 {
-	PlayerCity playerCity;
+	City city;
+
 	private void Start() {
-		playerCity = FindObjectOfType<PlayerCity>();
-		playerCity.AddUnit(this);
+		city = TurnSystem.turnCity;
 	}
 	
 	public void OnPointerClick(PointerEventData e)

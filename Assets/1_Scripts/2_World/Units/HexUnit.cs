@@ -11,48 +11,48 @@ public class HexUnit : Unit, IPointerClickHandler
 	const float rotationSpeed = 180f;
 	const float travelSpeed = 1.5f;
 
-	// public static HexUnit unitPrefab;
-	public static HexUnit LivingPrefab;
-	public static HexUnit ResearchPrefab;
-	public static HexUnit IndustrialPrefab;
-	public HexGrid Grid { get; set; }
+	// public static HexUnit LivingPrefab;
+	// public static HexUnit ResearchPrefab;
+	// public static HexUnit IndustrialPrefab;
+	// public HexGrid Grid { get; set; }
 
+	// public HexCell Location
+	// {
+	// 	get
+	// 	{
+	// 		return location;
+	// 	}
+	// 	set
+	// 	{
+	// 		if (location)
+	// 		{
+	// 			Grid.DecreaseVisibility(location, VisionRange);
+	// 			location.Unit = null;
+	// 		}
+	// 		location = value;
+	// 		value.Unit = this;
+	// 		Grid.IncreaseVisibility(value, VisionRange);
+	// 		transform.localPosition = value.Position;
+	// 		Grid.MakeChildOfColumn(transform, value.ColumnIndex);
+	// 	}
+	// }
 
-	public HexCell Location
-	{
-		get
-		{
-			return location;
-		}
-		set
-		{
-			if (location)
-			{
-				Grid.DecreaseVisibility(location, VisionRange);
-				location.Unit = null;
-			}
-			location = value;
-			value.Unit = this;
-			Grid.IncreaseVisibility(value, VisionRange);
-			transform.localPosition = value.Position;
-			Grid.MakeChildOfColumn(transform, value.ColumnIndex);
-		}
-	}
+	// HexCell location;
+	HexCell currentTravelLocation;
 
-	HexCell location, currentTravelLocation;
-
-	public float Orientation
-	{
-		get
-		{
-			return orientation;
-		}
-		set
-		{
-			orientation = value;
-			transform.localRotation = Quaternion.Euler(0f, value, 0f);
-		}
-	}
+	// public float Orientation
+	// {
+	// 	get
+	// 	{
+	// 		return orientation;
+	// 	}
+	// 	set
+	// 	{
+	// 		orientation = value;
+	// 		transform.localRotation = Quaternion.Euler(0f, value, 0f);
+	// 	}
+	// }
+	// float orientation;
 
 	public int Speed
 	{
@@ -69,8 +69,6 @@ public class HexUnit : Unit, IPointerClickHandler
 			return 3;
 		}
 	}
-
-	float orientation;
 
 	List<HexCell> pathToTravel;
 	List<HexCell> highlights = new List<HexCell>();
@@ -132,11 +130,6 @@ public class HexUnit : Unit, IPointerClickHandler
 		Grid.FindPath(Location, cell, this);
 		if (Grid.GetPath() != null)
 			Travel(Grid.GetPath());
-	}
-
-	public void ValidateLocation()
-	{
-		transform.localPosition = location.Position;
 	}
 
 	public bool IsValidDestination(HexCell cell)
@@ -307,23 +300,23 @@ public class HexUnit : Unit, IPointerClickHandler
 		writer.Write(orientation);
 	}
 
-	public static void Load(BinaryReader reader, HexGrid grid)
-	{
-		HexCoordinates coordinates = HexCoordinates.Load(reader);
-		float orientation = reader.ReadSingle();
-		// grid.AddUnit(
-		// 	Instantiate(unitPrefab), grid.GetCell(coordinates), orientation
-		// );
-		grid.AddLivingBuilding(
-			Instantiate(LivingPrefab), grid.GetCell(coordinates), orientation
-		);
-		grid.AddResearchBuilding(
-			Instantiate(ResearchPrefab), grid.GetCell(coordinates), orientation
-		);
-		grid.AddIndustrialBuilding(
-			Instantiate(IndustrialPrefab), grid.GetCell(coordinates), orientation
-		);
-	}
+	// public static void Load(BinaryReader reader, HexGrid grid)
+	// {
+	// 	HexCoordinates coordinates = HexCoordinates.Load(reader);
+	// 	float orientation = reader.ReadSingle();
+	// 	// grid.AddUnit(
+	// 	// 	Instantiate(unitPrefab), grid.GetCell(coordinates), orientation
+	// 	// );
+	// 	grid.AddLivingBuilding(
+	// 		Instantiate(LivingPrefab), grid.GetCell(coordinates), orientation
+	// 	);
+	// 	grid.AddResearchBuilding(
+	// 		Instantiate(ResearchPrefab), grid.GetCell(coordinates), orientation
+	// 	);
+	// 	grid.AddIndustrialBuilding(
+	// 		Instantiate(IndustrialPrefab), grid.GetCell(coordinates), orientation
+	// 	);
+	// }
 
 	void OnEnable()
 	{
@@ -337,10 +330,5 @@ public class HexUnit : Unit, IPointerClickHandler
 				currentTravelLocation = null;
 			}
 		}
-	}
-
-	public void OnClickResearchBuilding()
-	{
-
 	}
 }

@@ -289,7 +289,7 @@ public class HexCell : MonoBehaviour {
 		}
 	}
 
-	public HexUnit Unit { get; set; }
+	public Unit Unit { get; set; }
 
 	public HexCell PathFrom { get; set; }
 
@@ -512,7 +512,7 @@ public class HexCell : MonoBehaviour {
 				}
 			}
 			if (Unit) {
-				Unit.ValidateLocation();
+				Unit.transform.localPosition = Unit.Location.Position;
 			}
 		}
 	}
@@ -520,7 +520,7 @@ public class HexCell : MonoBehaviour {
 	void RefreshSelfOnly () {
 		chunk.Refresh();
 		if (Unit) {
-			Unit.ValidateLocation();
+			Unit.transform.localPosition = Unit.Location.Position;
 		}
 	}
 

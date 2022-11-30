@@ -1,40 +1,60 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
-using TMPro;
 
 public class Button_Build : MonoBehaviour
 {
-    HexUnit hexunit;
-    public GameObject Panel;
-    public GameObject Liv_Btn;
-    public GameObject Res_Btn;
-    public GameObject Ind_Btn;
-    public GameObject Res_Next;
-    public GameObject Ind_Next;
-
+    [SerializeField] GameObject Panel;
+    [SerializeField] GameObject Liv_Pan;
+    [SerializeField] GameObject Res_Pan;
+    [SerializeField] GameObject Ind_Pan;
+    [SerializeField] GameObject Liv_Next_Btn;
+    [SerializeField] GameObject Res_Next_Btn;
+    [SerializeField] GameObject Ind_Next_Btn;
 
     public void OpenPanel()
     {
-        Debug.Log("Button Clicked");
         if(Panel != null)
         {
             bool isActivate = Panel.activeSelf;
             
             Panel.SetActive(!isActivate);
         }
-        
+    
+        Liv_Pan.SetActive(false);
+        Res_Pan.SetActive(false);
+        Ind_Pan.SetActive(false);
+        Liv_Next_Btn.SetActive(true);
+        Res_Next_Btn.SetActive(true);
+        Ind_Next_Btn.SetActive(true);            
+    }
 
+    public void Liv_Next()
+    {
+        Liv_Pan.SetActive(true);
+        Res_Pan.SetActive(false);
+        Ind_Pan.SetActive(false);
+        Liv_Next_Btn.SetActive(true);
+        Res_Next_Btn.SetActive(true);
+        Ind_Next_Btn.SetActive(true);
+    }
 
-        Liv_Btn.SetActive(true);
-        Res_Btn.SetActive(false);
-        Ind_Btn.SetActive(false);
-        Res_Next.SetActive(true);
-        Ind_Next.SetActive(true);
+    public void Res_Next()
+    {
+        Liv_Pan.SetActive(false);
+        Res_Pan.SetActive(true);
+        Ind_Pan.SetActive(false);
+        Liv_Next_Btn.SetActive(true);
+        Res_Next_Btn.SetActive(true);
+        Ind_Next_Btn.SetActive(true);
+    }
 
-        
-            
+    public void Ind_Next()
+    {
+        Liv_Pan.SetActive(false);
+        Res_Pan.SetActive(false);
+        Ind_Pan.SetActive(true);
+        Liv_Next_Btn.SetActive(true);
+        Res_Next_Btn.SetActive(true);
+        Ind_Next_Btn.SetActive(true);
     }
 
     public void ClosePanel()
