@@ -17,7 +17,7 @@ public class PlayerCity : City
         {
             if (IsResearched(action.Location.Resource))
             {
-                UpdateTrash(action.Location.Resource, 1);
+                UpdateTrash(action.Location.Resource, UnityEngine.Random.Range(5, 20));
                 notice(action.Location.Resource.Rsc2Str() + " 획득");
                 action.Location.Resource = ResourceType.None;
             }

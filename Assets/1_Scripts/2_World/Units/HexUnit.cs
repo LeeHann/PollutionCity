@@ -42,6 +42,7 @@ public class HexUnit : Unit, IPointerClickHandler
 				cell.highlightBtn.onClick.RemoveAllListeners();
 			});
 			MapSetter.occupiedCellList.Clear();
+			return;
 		}
 		Queue queue = new Queue();
 		queue.Enqueue(Location);
@@ -80,6 +81,7 @@ public class HexUnit : Unit, IPointerClickHandler
 			highlights.RemoveAt(i);
 			MapSetter.occupiedCellList.Remove(cell);
 		}
+		MapSetter.occupiedCellList.Clear();
 		Grid.FindPath(Location, cell, this);
 		Travel(Grid.GetPath());
 	}
@@ -90,6 +92,11 @@ public class HexUnit : Unit, IPointerClickHandler
 		if (Grid.GetPath() != null && Grid.GetPath().Count > 1)
 		{
 			Travel(Grid.GetPath());
+			MapSetter.occupiedCellList.ForEach((cell)=> {
+				cell.DisableHighlight();
+				cell.highlightBtn.onClick.RemoveAllListeners();
+			});
+			MapSetter.occupiedCellList.Clear();
 			return true;
 		}
 		return false;

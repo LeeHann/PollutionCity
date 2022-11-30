@@ -30,7 +30,7 @@ public class MFCSystem : MonoBehaviour
     public void OnClickMFC(MFCItem item)
     {
         TurnSystem.turnCity.UpdateTrash(item.input, -item.inputCnt);
-        TurnSystem.turnCity.UpdateTrash(ResourceType.Money, item.getMoney);
+        TurnSystem.turnCity.Money += item.getMoney;
         noticer.Notice("제조를 수행합니다.");
         MFCUI.Instance.UIClose();
     }

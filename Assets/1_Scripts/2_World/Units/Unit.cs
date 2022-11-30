@@ -53,7 +53,9 @@ public class Unit : MonoBehaviour
 		}
 		set {
 			turnUnit = value;
+			count = 1;
 		}
 	}
 	private bool turnUnit = false;
+	public int count; // count 체제로 count =0이 되면 큐에서 빼기
 }

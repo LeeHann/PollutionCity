@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AICity : City
 {
-	protected override IEnumerator BuyLand()
+	protected override void BuyLandAndBuilding()
     {
 		// 빈 땅이 없다면 구매
 		int empty = 0;
@@ -21,8 +21,7 @@ public class AICity : City
         	    for (HexDirection d = HexDirection.NE; d <= HexDirection.NW; d++)
         	    {
         	        HexCell neighbor = cells[cell].GetNeighbor(d);
-        	        if (neighbor == null)
-        	            continue;
+        	        if (neighbor == null) continue;
 
 					int price = rootCell.coordinates.DistanceTo(neighbor.coordinates) * 100;
         	        if (neighbor.walled == false && Money > price)                //가장자리 cells
@@ -34,8 +33,31 @@ public class AICity : City
         	    }
         	}
 		}
-		yield return null;
-		_coroutine = null;
+		else
+		{
+			// 건설
+			for (int cell = 0; cell <= cells.Count-1; cell++)
+			{
+				if (cells[cell].Unit == null && Money >= buyBuildingPrice)
+				{
+					switch (Random.Range(0, 3))
+					{
+						case 0:
+							Grid.buildSet.InstanceLiving(cells[cell]);
+							break;
+						case 1:
+							Grid.buildSet.InstanceIndustrial(cells[cell]);
+							break;
+						case 2:
+							Grid.buildSet.InstanceResearch(cells[cell]);
+							break;
+					}
+					Money -= buyBuildingPrice;
+					buyBuildingPrice += 200;
+					break;
+				}
+			}
+		}
 	}
 
 	protected override IEnumerator ActionExplorer(HexUnit action) // 탐사 행동 결정 함수
@@ -58,7 +80,7 @@ public class AICity : City
 		{
 			if (action.Location.Resource <= ResourceType.Money || GetResearch((int)action.Location.Resource) > 0)
 			{
-				UpdateTrash(action.Location.Resource, 1);
+				UpdateTrash(action.Location.Resource, Random.Range(5, 20));
 				action.Location.Resource = ResourceType.None;
 			}
 		}
@@ -94,12 +116,25 @@ public class AICity : City
 
     protected override IEnumerator ActionResearcher(Unit action) // 연구 행동 결정 함수
     {
+		UpdateResearch(Random.Range(0, Research.Length));
+		action.count--;
 		yield return null;
 		_coroutine = null;
 	}
 
     protected override IEnumerator ActionManufacturer(Unit action) // 제조 행동 결정 함수
     {
+		for (int i=MFCSystem.Instance.mFCItems.Length-1; i>=0; i--)
+		{
+			var item = MFCSystem.Instance.mFCItems[i];
+			if (GetTrash(item.input) >= item.inputCnt)
+			{
+				UpdateTrash(item.input, -item.inputCnt);
+        		Money += item.getMoney;
+				break;
+			}
+		}
+		action.count--;
 		yield return null;
 		_coroutine = null;
 	}

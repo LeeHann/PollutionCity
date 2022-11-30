@@ -136,59 +136,59 @@ public class Skill : MonoBehaviour
     
         if (skilltree.SkillLevels[id] == 1)
         {
-            city.PA -= (int)(city.PA * 0.835f);
+            city.PA -= (int)(city.PA * 0.01165f);
         }
         else if (skilltree.SkillLevels[id] == 2)
         {
-            city.PA -= (int)(city.PA * 0.720f);
+            city.PA -= (int)(city.PA * 0.00720f);
         }
          else if (skilltree.SkillLevels[id] == 3)
         {
-            city.PA   -= (int)(city.PA * 0.445f);
+            city.PA   -= (int)(city.PA * 0.00445f);
         }
         else if (skilltree.SkillLevels[id] == 4)
         {
-            city.PA -= (int)(city.PA * 0.275f);
+            city.PA -= (int)(city.PA * 0.00275f);
         }
         else if (skilltree.SkillLevels[id] == 5)
         {
-            city.PA -= (int)(city.PA * 0.170f);
+            city.PA -= (int)(city.PA * 0.00170f);
         }
         else if (skilltree.SkillLevels[id] == 6)
         {
-            city.PA -= (int)(city.PA * 0.105f);
+            city.PA -= (int)(city.PA * 0.00105f);
         }
         else if (skilltree.SkillLevels[id] == 7)
         {
-            city.PA -= (int)(city.PA * 0.065f);
+            city.PA -= (int)(city.PA * 0.00065f);
         }
         else if (skilltree.SkillLevels[id] == 8)
         {
-            city.PA -= (int)(city.PA * 0.040f);
+            city.PA -= (int)(city.PA * 0.00040f);
         }
         else if (skilltree.SkillLevels[id] == 9)
         {
-            city.PA -= (int)(city.PA * 0.025f);
+            city.PA -= (int)(city.PA * 0.00025f);
         }
         else if (skilltree.SkillLevels[id] == 10)
         {
-            city.PA -= (int)(city.PA * 0.015f);
+            city.PA -= (int)(city.PA * 0.00015f);
         }
         else if (skilltree.SkillLevels[id] == 11)
         {
-            city.PA -= (int)(city.PA * 0.010f);
+            city.PA -= (int)(city.PA * 0.00010f);
         }
         else if (skilltree.SkillLevels[id] == 12)
         {
-            city.PA -= (int)(city.PA * 0.005f);
+            city.PA -= (int)(city.PA * 0.00005f);
         }
         else if (skilltree.SkillLevels[id] == 13)
         {
-            city.PA -= (int)(city.PA * 0.005f);
+            city.PA -= (int)(city.PA * 0.00005f);
         }
         else
         {
-            city.PA -= (int)(city.PA * 0.003f);
+            city.PA -= (int)(city.PA * 0.00003f);
         }
         skilltree.UpdateAllSkillUI();
         unit.TurnUnit = false;

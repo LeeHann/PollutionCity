@@ -9,6 +9,7 @@ public class MapSetter : MonoBehaviour
     [SerializeField] HexGrid hexGrid;
     [SerializeField] HexMapCamera cam;
     [SerializeField] UINoticer noticeUI;
+    [SerializeField] Display[] displays;
 
     private List<PlayerSit> sits = new List<PlayerSit>() {
         PlayerSit.Blue, PlayerSit.Red, PlayerSit.White, PlayerSit.Yellow
@@ -20,7 +21,7 @@ public class MapSetter : MonoBehaviour
 
     [SerializeField] string[] maps;
     const int mapFileVersion = 5;
-
+    int i = 0;
     private void Start() 
     {
         terrainMaterial.DisableKeyword("GRID_ON");
@@ -36,8 +37,8 @@ public class MapSetter : MonoBehaviour
 
 #endif
 
-        cities[0] = GenerateCity(isPlayer:true);
-        for (int i = 1; i < GameInfo.cityCount; i++)
+        cities[i] = GenerateCity(isPlayer:true);
+        for (i = 1; i < GameInfo.cityCount; i++)
         {
             cities[i] = GenerateCity();
         }
@@ -132,6 +133,7 @@ public class MapSetter : MonoBehaviour
             city.AddCell(cell.GetNeighbor(d));
         }
 
+        city.display = displays[i];
         city.Money = GameInfo.startMoney;
         if (isPlayer)
             city.PA = GameInfo.startPA;
@@ -189,14 +191,30 @@ public class MapSetter : MonoBehaviour
 
     public void OnClickLandbuyHighlight(HexCell cell)
     {
-        for (int i = highlights.Count - 1; i >= 0; i--)
+        int price = TurnSystem.turnCity.rootCell.coordinates.DistanceTo(cell.coordinates) * 100;
+        if (TurnSystem.turnCity.Money > price)
         {
-            highlights[i].DisableHighlight();
-            highlights[i].highlightBtn.onClick.RemoveAllListeners();
-            highlights.RemoveAt(i);
-            occupiedCellList.Remove(cell);
+            TurnSystem.turnCity.Money -= price;
+            for (int i = highlights.Count - 1; i >= 0; i--)
+            {
+                highlights[i].DisableHighlight();
+                highlights[i].highlightBtn.onClick.RemoveAllListeners();
+                highlights.RemoveAt(i);
+                occupiedCellList.Remove(cell);
+            }
+            TurnSystem.turnCity.AddCell(cell);
+        }  
+        else {
+            noticeUI.Notice("돈이 부족합니다.");
+            for (int i = highlights.Count - 1; i >= 0; i--)
+            {
+                highlights[i].DisableHighlight();
+                highlights[i].highlightBtn.onClick.RemoveAllListeners();
+                highlights.RemoveAt(i);
+                occupiedCellList.Remove(cell);
+            }
+            occupiedCellList.Clear();
         }
-        TurnSystem.turnCity.AddCell(cell);
     }
 
     public void ScatterResources(int rscVal)
