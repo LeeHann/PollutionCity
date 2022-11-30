@@ -273,14 +273,7 @@ public class HexUnit : Unit, IPointerClickHandler
 		}
 		HexEdgeType edgeType = fromCell.GetEdgeType(toCell);
 		int moveCost;
-		if (fromCell.HasRoadThroughEdge(direction))
-		{
-			moveCost = 1;
-		}
-		else
-		{
-			moveCost = edgeType == HexEdgeType.Flat ? 5 : 10;
-		}
+		moveCost = edgeType == HexEdgeType.Flat ? 5 : 10;
 		return moveCost;
 	}
 

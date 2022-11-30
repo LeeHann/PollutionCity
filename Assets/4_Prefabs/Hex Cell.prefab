@@ -73,6 +73,7 @@ MonoBehaviour:
   - {fileID: 5394514171147964200}
   - {fileID: 7689397252428669073}
   - {fileID: 3049921843499724776}
+  walled: 0
   neighbors:
   - {fileID: 0}
   - {fileID: 0}
@@ -1110,7 +1111,8 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 683533932060212687, guid: 56d0b754887758b49962efba2e995fc2, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 56d0b754887758b49962efba2e995fc2, type: 3}
 --- !u!1 &7689397252428669073 stripped
 GameObject:
