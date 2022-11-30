@@ -38,7 +38,6 @@ public class TurnSystem : MonoBehaviour
     [SerializeField] MapSetter mapSetter;
     int scatterTurn = 5;
     bool overCheck;
-    
 
     private void Start() 
     {

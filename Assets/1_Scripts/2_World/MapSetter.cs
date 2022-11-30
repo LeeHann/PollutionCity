@@ -139,8 +139,10 @@ public class MapSetter : MonoBehaviour
             city.PA = GameInfo.startPA + (int)(GameInfo.startPA * Random.Range(-0.1f, 0.15f));
         
         if (isPlayer)
-            city.GetComponent<PlayerCity>().notice += noticeUI.Notice;
-        
+        {
+            city.TryGetComponent<PlayerCity>(out PlayerCity p);
+            p.notice += noticeUI.Notice;
+        }
         // place units
         city.AddUnit(
             hexGrid.AddUnit(
@@ -224,8 +226,6 @@ public class MapSetter : MonoBehaviour
     {
         if (isPlayer)
             cam.transform.localPosition = 
-                hexGrid.wrapping ? 
-                cam.WrapPosition(cell.transform.localPosition) : 
-                cam.ClampPosition(cell.transform.localPosition);
+                cam.WrapPosition(cell.transform.localPosition);
     }
 }

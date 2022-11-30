@@ -8,7 +8,7 @@ public class UI_ResearchTree : MonoBehaviour
     public string[] SkillNames;
     public string[] SkillDescription;
 
-    public List<Skill> SkillList;
+    public List<Skill> SkillList = new List<Skill>();
     public GameObject SkillHolder;
 
     public List<GameObject> ConnectorList;
@@ -32,7 +32,6 @@ public class UI_ResearchTree : MonoBehaviour
             "플라스틱 해금",
         };
 
-        foreach (var skill in SkillHolder.GetComponentsInChildren<Skill>()) SkillList.Add(skill);                                           //스킬들
         foreach (var connector in ConnectorHolder.GetComponentsInChildren<RectTransform>()) ConnectorList.Add(connector.gameObject);        //ㅁ - ㅁ 선
 
         for (var i = 1; i < SkillList.Count; i++) SkillList[i].id = i;

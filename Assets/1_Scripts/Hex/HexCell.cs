@@ -226,7 +226,10 @@ public class HexCell : MonoBehaviour {
 				if (walled)
 				{
 					for (int child = 0; child < 6; child++)
-						walls[child].GetComponent<MeshRenderer>().material = materials[(int)sit < 0 ? 0 : (int)sit];
+					{
+						walls[child].TryGetComponent<MeshRenderer>(out MeshRenderer meshRenderer);
+						meshRenderer.material = materials[(int)sit < 0 ? 0 : (int)sit];
+					}
 					if (hexGrid.emptyCells.Contains(this))
 						hexGrid.emptyCells.Remove(this);
 				}
@@ -593,21 +596,30 @@ public class HexCell : MonoBehaviour {
 	}
 
 	public void SetLabel (string text) {
-		UnityEngine.UI.Text label = uiRect.GetComponent<Text>();
+		uiRect.TryGetComponent<Text>(out Text label);
 		label.text = text;
 	}
 
 	public void DisableHighlight () {
 		if (highlight == null)
-			highlight = uiRect.GetChild(0).GetComponent<Image>();
+		{
+			uiRect.GetChild(0).TryGetComponent<Image>(out Image highlight);
+			this.highlight = highlight;
+		}
 		highlight.enabled = false;
 	}
 
 	public void EnableHighlight (Color color) {
 		if (highlight == null)
-			highlight = uiRect.GetChild(0).GetComponent<Image>();
+		{
+			uiRect.GetChild(0).TryGetComponent<Image>(out Image highlight);
+			this.highlight = highlight;
+		}
 		if (highlightBtn == null)
-			highlightBtn = highlight.GetComponent<Button>();
+		{
+			highlight.TryGetComponent<Button>(out Button btn);
+			highlightBtn = btn;
+		}
 		highlight.color = color;
 		highlight.enabled = true;
 	}
@@ -615,9 +627,15 @@ public class HexCell : MonoBehaviour {
 	public bool IsEnabledHighlight ()
 	{
 		if (highlight == null)
-			highlight = uiRect.GetChild(0).GetComponent<Image>();
+		{
+			uiRect.GetChild(0).TryGetComponent<Image>(out Image highlight);
+			this.highlight = highlight;
+		}
 		if (highlightBtn == null)
-			highlightBtn = highlight.GetComponent<Button>();
+		{
+			highlight.TryGetComponent<Button>(out Button btn);
+			highlightBtn = btn;
+		}
 		return highlight.enabled;
 	}
 

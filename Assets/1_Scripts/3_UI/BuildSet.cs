@@ -20,7 +20,7 @@ public class BuildSet : MonoBehaviour
         HexCell cell = GetCellUnderCursor();        
         if (cell && !cell.Unit && TurnSystem.turnCity.cells.Contains(cell))
         {
-            var obj = Instantiate(LivingPrefab).GetComponent<Unit>();
+            Instantiate(LivingPrefab).TryGetComponent<Unit>(out Unit obj);
             obj.Grid = hexgrid;
             obj.Location = cell;
             obj.Orientation = Random.Range(0, 360f);
@@ -37,7 +37,7 @@ public class BuildSet : MonoBehaviour
         HexCell cell = GetCellUnderCursor();
         if (cell && !cell.Unit && TurnSystem.turnCity.cells.Contains(cell))
         {
-            var unit = Instantiate(IndustrialPrefab).GetComponent<MFCUnit>();
+            Instantiate(IndustrialPrefab).TryGetComponent<MFCUnit>(out MFCUnit unit);
             unit.Grid = hexgrid;
             unit.Location = cell;
             unit.Orientation = Random.Range(0, 360f);
@@ -50,7 +50,7 @@ public class BuildSet : MonoBehaviour
         HexCell cell = GetCellUnderCursor();
         if (cell && !cell.Unit && TurnSystem.turnCity.cells.Contains(cell))
         {
-            var unit = Instantiate(ResearchPrefab).GetComponent<RSUnit>();
+            Instantiate(ResearchPrefab).TryGetComponent<RSUnit>(out RSUnit unit);
             unit.skillTree = skillTree;
             unit.Grid = hexgrid;
             unit.Location = cell;

@@ -20,7 +20,7 @@ public class SkillTree_Control : MonoBehaviour
         SkillHolder.SetActive(true);
         BackGround.SetActive(true);
         CloseBtn.SetActive(true);
-        Panel.SetActive(false);
+        Panel.SetActive(true);
     }
 
     public void CloseSkillTree()
@@ -40,5 +40,6 @@ public class SkillTree_Control : MonoBehaviour
         SkillHolder.SetActive(true);
         BackGround.SetActive(true);
         CloseBtn.SetActive(true);
+        Panel.SetActive(false);
     }
 }

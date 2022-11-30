@@ -7,7 +7,7 @@ public enum UnitType {
 }
 public class Unit : MonoBehaviour
 {
-	public HexGrid Grid { get; set; }
+	public HexGrid Grid;
 
 	public HexCell Location
 	{

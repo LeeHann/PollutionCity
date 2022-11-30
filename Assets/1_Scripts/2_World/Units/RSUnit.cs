@@ -10,6 +10,6 @@ public class RSUnit : Unit, IPointerClickHandler
     public void OnPointerClick(PointerEventData e)
     {
         skillTree.unit = this;
-        skillTree.OpenSkillTree();
+        skillTree.OpenResearchBuilding();
     }
 }

@@ -8,34 +8,18 @@ public class MFCSystem : MonoBehaviour
     MFCUnit unit;
     public MFCItem[] mFCItems;
     [SerializeField] UINoticer noticer;
-    private static bool m_ShutDown = false;
-    private static object m_Lock = new object();
 
     private static MFCSystem instance;
 
     public static MFCSystem Instance {
         get {
-            if (m_ShutDown) {
-                return null;
-            }
-
-            lock (m_Lock) {
-                if (instance == null) {
-                    instance = (MFCSystem)FindObjectOfType(typeof(MFCSystem));
-                    
-                    if (instance == null) {
-                        var singletonObject = new GameObject();
-                        instance = singletonObject.AddComponent<MFCSystem>();
-                        singletonObject.name = "MFCSystem Singleton";
-                    }
-                    // DontDestroyOnLoad(instance.gameObject);
-                }
-                return instance;
-            }
+            return instance;
         }
     }
-    private void OnApplicationQuit() {
-        m_ShutDown = true;
+
+    private void Start() 
+    {
+        instance = this;
     }
 
     public void SetUnit(MFCUnit unit)
@@ -44,7 +28,7 @@ public class MFCSystem : MonoBehaviour
     }
     
     public void OnClickMFC(MFCItem item)
-    {Debug.Log("Clicked!");
+    {
         TurnSystem.turnCity.UpdateTrash(item.input, -item.inputCnt);
         TurnSystem.turnCity.UpdateTrash(ResourceType.Money, item.getMoney);
         noticer.Notice("제조를 수행합니다.");

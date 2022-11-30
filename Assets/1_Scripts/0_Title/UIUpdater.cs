@@ -11,7 +11,6 @@ public class UIUpdater : MonoBehaviour
     [Space(10f)]
     [Header("Text")]
     [SerializeField] TextMeshProUGUI targetTMP;
-    [SerializeField] string tmpString;
 
     public void SwapSprite(bool isOn)
     {

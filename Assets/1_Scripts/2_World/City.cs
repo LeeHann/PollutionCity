@@ -24,13 +24,12 @@ public class City : MonoBehaviour
 
     public int Money {
         get {
-            return money;
+            return trash[1] * 100;
         }
         set{
-            money = value;
+            trash[1] = value / 100;
         }
     }
-    private int money;
 
     public int PA {
         get {
@@ -66,11 +65,12 @@ public class City : MonoBehaviour
 
     protected virtual IEnumerator Scheduler()
     {
+        _coroutine = StartCoroutine(BuyLand());
+        yield return new WaitUntil(() => _coroutine == null);
         while (actions.Count > 0)
 		{
             Unit action = actions[actions.Count-1];
             action.TurnUnit = true;
-            CameraPositioning(action.gameObject);
 
             switch (action.unitType)
             {
@@ -89,11 +89,15 @@ public class City : MonoBehaviour
                     yield return new WaitUntil(() => _coroutine == null);
                     break;
             }
-            actions.RemoveAt(actions.Count-1);
+            actions.Remove(action);
             yield return dot5;
 		}
 		myTurn = false;	
     }
+
+    protected virtual IEnumerator BuyLand()
+    { yield return null;
+        _coroutine = null; }
 
     protected virtual IEnumerator ActionExplorer(HexUnit action)
     { yield return null; }

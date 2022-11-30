@@ -84,11 +84,15 @@ public class HexUnit : Unit, IPointerClickHandler
 		Travel(Grid.GetPath());
 	}
 
-	public void GoToTravel(HexCell cell)
+	public bool GoToTravel(HexCell cell)
 	{
 		Grid.FindPath(Location, cell, this);
-		if (Grid.GetPath() != null)
+		if (Grid.GetPath() != null && Grid.GetPath().Count > 1)
+		{
 			Travel(Grid.GetPath());
+			return true;
+		}
+		return false;
 	}
 
 	public bool IsValidDestination(HexCell cell)

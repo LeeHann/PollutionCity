@@ -21,7 +21,6 @@ public class BGSound : MonoBehaviour
         }
         instance = this;
         DontDestroyOnLoad(this);
-        this.gameObject.name += " (Singleton)";
 
         clips.Add(commonClips);
         clips.Add(warningClips);

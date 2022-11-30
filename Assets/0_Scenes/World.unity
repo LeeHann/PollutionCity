@@ -4037,7 +4037,15 @@ MonoBehaviour:
   SkillCaps: 
   SkillNames: []
   SkillDescription: []
-  SkillList: []
+  SkillList:
+  - {fileID: 3693560662433740441}
+  - {fileID: 1562720307}
+  - {fileID: 1266544975}
+  - {fileID: 1759387665}
+  - {fileID: 1418379778}
+  - {fileID: 1714234513}
+  - {fileID: 723043734}
+  - {fileID: 477547708}
   SkillHolder: {fileID: 306407168}
   ConnectorList: []
   ConnectorHolder: {fileID: 749948392}
