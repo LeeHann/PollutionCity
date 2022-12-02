@@ -5,7 +5,7 @@ using System.IO;
 public class HexMapEditor : MonoBehaviour {
 
 	public HexGrid hexGrid;
-	Living_Build living_Build;
+	// Living_Build living_Build;
 	public Material terrainMaterial;
 
 	int activeElevation;
@@ -137,16 +137,15 @@ public class HexMapEditor : MonoBehaviour {
 				HandleInput();
 				return;
 			}
-			if (Input.GetKeyDown(KeyCode.U)) {
-				if (Input.GetKey(KeyCode.LeftShift)) {
-					DestroyUnit();
-				}
-				else {
-					CreateUnit();
-				}
+			// if (Input.GetKeyDown(KeyCode.U)) {
+			// 	if (Input.GetKey(KeyCode.LeftShift)) {
+			// 		DestroyUnit();
+			// 	}
+				// else {
+				// 	CreateUnit();
+				// }
 				return;
-			}
-
+			// }
 		}
 		else if (Input.GetKeyDown(KeyCode.W))
         {
@@ -160,65 +159,60 @@ public class HexMapEditor : MonoBehaviour {
 			hexGrid.GetCell(Camera.main.ScreenPointToRay(Input.mousePosition));
 	}
 
+	// void CreateUnit () {
+	// 	HexCell cell = GetCellUnderCursor();
+	// 	if (cell && !cell.Unit) {
+	// 		hexGrid.AddUnit(
+	// 			Instantiate(HexUnit.unitPrefab), cell, Random.Range(0f, 360f)
+	// 		);
+	// 	}
+	// }
 
+	// public void CreateLivingBuilding()
+    // {
+	// 	HexCell cell = GetCellUnderCursor();
+	// 	if(cell && !cell.Unit)
+    //     {
+	// 		hexGrid.AddLivingBuilding(
+	// 			Instantiate(HexUnit.LivingPrefab),
+	// 			cell,
+	// 			Random.Range(0f, 360f)
+	// 			);
+    //     }
+    // }
 
-	void CreateUnit () {
-		HexCell cell = GetCellUnderCursor();
-		if (cell && !cell.Unit) {
-			hexGrid.AddUnit(
-				Instantiate(HexUnit.unitPrefab), cell, Random.Range(0f, 360f)
-			);
-		}
-	}
+	// public void CreateResearchBulding()
+    // {
+	// 	HexCell cell = GetCellUnderCursor();
+	// 	if (cell && !cell.Unit)
+	// 	{
+	// 		hexGrid.AddResearchBuilding(
+	// 			Instantiate(HexUnit.ResearchPrefab),
+	// 			cell,
+	// 			Random.Range(0f, 360f)
+	// 			);
+	// 	}
+	// }
 
-	public void CreateLivingBuilding()
-    {
-		HexCell cell = GetCellUnderCursor();
-		if(cell && !cell.Unit)
-        {
-			hexGrid.AddLivingBuilding(
-				Instantiate(HexUnit.LivingPrefab),
-				cell,
-				Random.Range(0f, 360f)
-				);
-        }
-    }
+	// public void CreateIndustrialBulding()
+	// {
+	// 	HexCell cell = GetCellUnderCursor();
+	// 	if (cell && !cell.Unit)
+	// 	{
+	// 		hexGrid.AddIndustrialBuilding(
+	// 			Instantiate(HexUnit.IndustrialPrefab),
+	// 			cell,
+	// 			Random.Range(0f, 360f)
+	// 			);
+	// 	}
+	// }
 
-	public void CreateResearchBulding()
-    {
-		HexCell cell = GetCellUnderCursor();
-		if (cell && !cell.Unit)
-		{
-			hexGrid.AddResearchBuilding(
-				Instantiate(HexUnit.ResearchPrefab),
-				cell,
-				Random.Range(0f, 360f)
-				);
-		}
-
-	}
-	public void CreateIndustrialBulding()
-	{
-		HexCell cell = GetCellUnderCursor();
-		if (cell && !cell.Unit)
-		{
-			hexGrid.AddIndustrialBuilding(
-				Instantiate(HexUnit.IndustrialPrefab),
-				cell,
-				Random.Range(0f, 360f)
-				);
-		}
-
-	}
-
-
-
-	void DestroyUnit () {
-		HexCell cell = GetCellUnderCursor();
-		if (cell && cell.Unit) {
-			hexGrid.RemoveUnit(cell.Unit);
-		}
-	}
+	// void DestroyUnit () {
+	// 	HexCell cell = GetCellUnderCursor();
+	// 	if (cell && cell.Unit) {
+	// 		hexGrid.RemoveUnit(cell.Unit);
+	// 	}
+	// }
 
 	void HandleInput () {
 		HexCell currentCell = GetCellUnderCursor();

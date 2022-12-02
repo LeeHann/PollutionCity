@@ -10,13 +10,14 @@ public class PlayerCity : City
 
     protected override IEnumerator ActionExplorer(HexUnit action) // 탐사 행동 결정 함수
     {
+        CameraPositioning(action.gameObject);
         yield return new WaitUntil(() => action.TurnUnit == false);
 
         if (action.Location.Resource != ResourceType.None)    // Obtain Resources
         {
             if (IsResearched(action.Location.Resource))
             {
-                UpdateTrash(action.Location.Resource, 1);
+                UpdateTrash(action.Location.Resource, UnityEngine.Random.Range(5, 20));
                 notice(action.Location.Resource.Rsc2Str() + " 획득");
                 action.Location.Resource = ResourceType.None;
             }
@@ -27,20 +28,22 @@ public class PlayerCity : City
 
     protected override IEnumerator ActionResearcher(Unit action) // 연구 행동 결정 함수
     {
-		
-
+		CameraPositioning(action.gameObject);
+        action.TurnUnit = false;
 		yield return new WaitUntil(() => action.TurnUnit == false);
 		_coroutine = null;
 	}
 
     protected override IEnumerator ActionManufacturer(Unit action) // 제조 행동 결정 함수
     {
+        CameraPositioning(action.gameObject);
 		yield return null;
 		_coroutine = null;
 	}
+    
     bool IsResearched(ResourceType type)
     {
-        if (GetResearch((int)type) <= 0)
+        if (type > ResourceType.Money && GetResearch((int)type) <= 0)
         {
             switch (type)
             {

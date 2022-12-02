@@ -9,34 +9,16 @@ public class MFCUI : MonoBehaviour
     [SerializeField] GameObject ui, bg;
     [SerializeField] Button[] MFCBtns;
 
-    private static bool m_ShutDown = false;
-    private static object m_Lock = new object();
-
     private static MFCUI instance;
 
     public static MFCUI Instance {
         get {
-            if (m_ShutDown) {
-                return null;
-            }
-
-            lock (m_Lock) {
-                if (instance == null) {
-                    instance = (MFCUI)FindObjectOfType(typeof(MFCUI));
-                    
-                    if (instance == null) {
-                        var singletonObject = new GameObject();
-                        instance = singletonObject.AddComponent<MFCUI>();
-                        singletonObject.name = "MFCUI Singleton";
-                    }
-                    // DontDestroyOnLoad(instance.gameObject);
-                }
                 return instance;
-            }
         }
     }
-    private void OnApplicationQuit() {
-        m_ShutDown = true;
+
+    private void Start() {
+        instance = this;
     }
 
     public void UIOpen()

@@ -9,27 +9,27 @@ public class HexGameUI : MonoBehaviour {
 
 	HexUnit selectedUnit;
 
-	void Update () {
-		if (!EventSystem.current.IsPointerOverGameObject()) {
-			if (Input.GetMouseButtonDown(0)) {
-				DoSelection();
-			}
-			else if (selectedUnit) {
-				if (Input.GetMouseButtonDown(1)) {
-					DoMove();
-				}
-				else {
-					DoPathfinding();
-				}
-			}
-		}
-	}
+	// void Update () {
+	// 	if (!EventSystem.current.IsPointerOverGameObject()) {
+	// 		if (Input.GetMouseButtonDown(0)) {
+	// 			DoSelection();
+	// 		}
+	// 		else if (selectedUnit) {
+	// 			if (Input.GetMouseButtonDown(1)) {
+	// 				DoMove();
+	// 			}
+	// 			else {
+	// 				DoPathfinding();
+	// 			}
+	// 		}
+	// 	}
+	// }
 
 	void DoSelection () {
 		grid.ClearPath();
 		UpdateCurrentCell();
 		if (currentCell) {
-			selectedUnit = currentCell.Unit;
+			selectedUnit = (HexUnit)currentCell.Unit;
 		}
 	}
 

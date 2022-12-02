@@ -10,7 +10,7 @@ public class City : MonoBehaviour
 
     public bool myTurn;
     public PlayerSit sit;
-    private int[] trash = new int[6];
+    public int[] trash = new int[6];
 
     public List<Unit> units = new List<Unit>();
     public List<Unit> actions = new List<Unit>();
@@ -20,17 +20,20 @@ public class City : MonoBehaviour
     
     protected Coroutine _coroutine = null;
     protected WaitForSeconds dot5 = new WaitForSeconds(0.5f);
-    Skill research;
+
+    public Display display;
+    
+    public int buyBuildingPrice = 100;
 
     public int Money {
         get {
-            return money;
+            return trash[1];
         }
         set{
-            money = value;
+            trash[1] = value;
+            display.money.text = (trash[1]).ToString();
         }
     }
-    private int money;
 
     public int PA {
         get {
@@ -38,6 +41,7 @@ public class City : MonoBehaviour
         }
         set {
             pa = value;
+            display.pa.text = PL.ToString();
         }
     }
     private int pa;
@@ -47,12 +51,6 @@ public class City : MonoBehaviour
             return PA / (float)GameInfo.maxPA;
         }
     }
-
-    public int VisionRange {
-		get {
-			return 3;
-		}
-	}
 
     public int[] Research = new int[6];
 
@@ -66,11 +64,11 @@ public class City : MonoBehaviour
 
     protected virtual IEnumerator Scheduler()
     {
+        BuyLandAndBuilding();
         while (actions.Count > 0)
 		{
             Unit action = actions[actions.Count-1];
             action.TurnUnit = true;
-            CameraPositioning(action.gameObject);
 
             switch (action.unitType)
             {
@@ -89,12 +87,14 @@ public class City : MonoBehaviour
                     yield return new WaitUntil(() => _coroutine == null);
                     break;
             }
-            action.TurnUnit = false;
-            actions.RemoveAt(actions.Count-1);
+            actions.Remove(action);
             yield return dot5;
 		}
 		myTurn = false;	
     }
+
+    protected virtual void BuyLandAndBuilding()
+    {}
 
     protected virtual IEnumerator ActionExplorer(HexUnit action)
     { yield return null; }
@@ -110,18 +110,12 @@ public class City : MonoBehaviour
         cells.Add(cell);
         cell.sit = sit;
         cell.Walled = true;
-        Grid.IncreaseVisibility(cell, VisionRange);
+        Grid.IncreaseVisibility(cell, 3);
     }
 
     public void AddUnit(Unit unit)
     {
         units.Add(unit);
-    }
-
-    public void AddLandMark(HexCell cell)
-    {
-        if(cell.walled != true)
-            cell.walled = true;
     }
 
     protected void CameraPositioning(GameObject obj)
@@ -138,9 +132,12 @@ public class City : MonoBehaviour
     public void UpdateTrash(ResourceType type, int num=0)
     {
         trash[(int)type] += num;
+        if (type == ResourceType.Money)
+        {
+            Money = trash[(int)type];
+        }
         if (trash[(int)type] < 0) trash[(int)type] = 0;
         if (trash[(int)type] > int.MaxValue) trash[(int)type] = int.MaxValue;
-        
     }
 
     public int GetResearch(int type)
@@ -152,8 +149,6 @@ public class City : MonoBehaviour
     {
         Research[type]++;
     }
-
-
 
     public void Lose()
     {

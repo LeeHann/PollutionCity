@@ -1,43 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 public class BuildSet : MonoBehaviour
 {
+    [SerializeField] UINoticer noticer;
+    [SerializeField] HexGrid hexgrid;
+    [SerializeField] GameObject LivingPrefab;
+	[SerializeField] GameObject ResearchPrefab;
+	[SerializeField] GameObject IndustrialPrefab;
 
-    public HexGrid hexgrid;
-    public HexCell hexCell;
-    HexUnit hexUnit;
-    Transform container;
-
-    public GameObject ScrollView; // Á¦Á¶ ½ºÅ©·Ñºä UI ¿¬µ¿
-    public GameObject ResearchTree;     //¿¬±¸Æ®¸® UI  ¿¬µ¿
-
-
-    public void Clear()
-    {
-        if (container)
-        {
-            Destroy(container.gameObject);
-        }
-        container = new GameObject("Features Container").transform;
-        container.SetParent(transform, false);
-    }
-
-    public HexCell Location
-    {
-        get
-        {
-            return location;
-        }
-        set
-        {
-            location = value;
-            transform.localPosition = value.Position;
-        }
-    }
-
-    HexCell location;
+    [SerializeField] SkillTree_Control skillTree;
+    [SerializeField] Button_Build button_Build;
 
     public HexCell GetCellUnderCursor()
     {
@@ -45,67 +17,80 @@ public class BuildSet : MonoBehaviour
             hexgrid.GetCell(Camera.main.ScreenPointToRay(Input.mousePosition));
     }
 
-
     public void LivingBuild()
     {
-            Debug.Log("Clicked Livingbuild Button");
-
-
-            HexCell cell = GetCellUnderCursor();
-            
-            if (cell && !cell.Unit)
-            {
-                hexgrid.AddLivingBuilding(
-                Instantiate(HexUnit.LivingPrefab),
-                cell,
-                Random.Range(0f, 360f)
-                );
-            }
-
+        HexCell cell = GetCellUnderCursor();        
+        if (cell && !cell.Unit && TurnSystem.turnCity.cells.Contains(cell)
+        && TurnSystem.turnCity.Money >= TurnSystem.turnCity.buyBuildingPrice)
+        {
+            InstanceLiving(cell);
+            TurnSystem.turnCity.Money -= TurnSystem.turnCity.buyBuildingPrice;
+            TurnSystem.turnCity.buyBuildingPrice += 200;
+            button_Build.ClosePanel();
+        } else if (!TurnSystem.turnCity.cells.Contains(cell)) {
+            noticer.Notice("ë„ì‹œ ì•ˆì—ë§Œ ì§€ì„ ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
+        }
     }
+
+    public void InstanceLiving(HexCell cell)
+    {
+        Instantiate(LivingPrefab).TryGetComponent<Unit>(out Unit obj);
+        obj.Grid = hexgrid;
+        obj.Location = cell;
+        obj.Orientation = Random.Range(0, 360f);
+
+        HexUnit hexUnit = hexgrid.AddUnit(
+            Instantiate(hexgrid.unitPrefab[(int)TurnSystem.turnCity.sit]), cell, Random.Range(0, 360f)
+        );
+        TurnSystem.turnCity.AddUnit(hexUnit);
+    }
+
     public void IndustrialBuild()
     {
         HexCell cell = GetCellUnderCursor();
-
-        if (cell && !cell.Unit)
+        if (cell && !cell.Unit && TurnSystem.turnCity.cells.Contains(cell)
+        && TurnSystem.turnCity.Money >= TurnSystem.turnCity.buyBuildingPrice)
         {
-            hexgrid.AddIndustrialBuilding(
-                Instantiate(HexUnit.IndustrialPrefab),
-                cell,
-                Random.Range(0f, 360f)
-                );
+            InstanceIndustrial(cell);
+            TurnSystem.turnCity.Money -= TurnSystem.turnCity.buyBuildingPrice;
+            TurnSystem.turnCity.buyBuildingPrice += 200;
+            button_Build.ClosePanel();
+        } else if (!TurnSystem.turnCity.cells.Contains(cell)) {
+            noticer.Notice("ë„ì‹œ ì•ˆì—ë§Œ ì§€ì„ ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
         }
-
-        Debug.Log("Industrial build Button");
-
-        if (HexUnit.IndustrialPrefab && ScrollView != null)
-        {
-            bool isActivate = ScrollView.activeSelf;
-
-            ScrollView.SetActive(!isActivate);
-        }
-
     }
+
+    public void InstanceIndustrial(HexCell cell)
+    {
+        Instantiate(IndustrialPrefab).TryGetComponent<MFCUnit>(out MFCUnit unit);
+        unit.Grid = hexgrid;
+        unit.Location = cell;
+        unit.Orientation = Random.Range(0, 360f);
+        TurnSystem.turnCity.AddUnit(unit);
+    }
+
     public void ResearchBuild()
     {
-        Debug.Log("Research Button");
-
         HexCell cell = GetCellUnderCursor();
-
-        if (cell && !cell.Unit)
+        if (cell && !cell.Unit && TurnSystem.turnCity.cells.Contains(cell)
+        && TurnSystem.turnCity.Money >= TurnSystem.turnCity.buyBuildingPrice)
         {
-            hexgrid.AddResearchBuilding(
-                Instantiate(HexUnit.ResearchPrefab),
-                cell,
-                Random.Range(0f, 360f)
-                );
-        }
-        if (HexUnit.ResearchPrefab && ResearchTree != null)
-        {
-            bool isActivate = ResearchTree.activeSelf;
-
-            ResearchTree.SetActive(!isActivate);
+            InstanceResearch(cell);
+            TurnSystem.turnCity.Money -= TurnSystem.turnCity.buyBuildingPrice;
+            TurnSystem.turnCity.buyBuildingPrice += 200;
+            button_Build.ClosePanel();
+        } else if (!TurnSystem.turnCity.cells.Contains(cell)) {
+            noticer.Notice("ë„ì‹œ ì•ˆì—ë§Œ ì§€ì„ ìˆ˜ ìˆìŠµë‹ˆë‹¤.");
         }
     }
 
+    public void InstanceResearch(HexCell cell)
+    {
+        Instantiate(ResearchPrefab).TryGetComponent<RSUnit>(out RSUnit unit);
+        unit.skillTree = skillTree;
+        unit.Grid = hexgrid;
+        unit.Location = cell;
+        unit.Orientation = Random.Range(0, 360f);
+        TurnSystem.turnCity.AddUnit(unit);
+    }
 }

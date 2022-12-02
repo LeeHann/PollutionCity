@@ -4,13 +4,13 @@ using UnityEngine;
 using UnityEngine.UI;
 public class SkillTree_Control : MonoBehaviour
 {
+    [HideInInspector] public RSUnit unit;
     public GameObject Skilltree;
     public GameObject ConnectorHolder;
     public GameObject SkillHolder;
     public GameObject BackGround;
     public GameObject CloseBtn;
     public GameObject Panel;
-    // Start is called before the first frame update
 
     //연구유닛누를때 이용
     public void OpenSkillTree()
@@ -40,5 +40,6 @@ public class SkillTree_Control : MonoBehaviour
         SkillHolder.SetActive(true);
         BackGround.SetActive(true);
         CloseBtn.SetActive(true);
+        Panel.SetActive(false);
     }
 }

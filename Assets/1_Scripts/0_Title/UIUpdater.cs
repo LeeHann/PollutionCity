@@ -1,12 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 public class UIUpdater : MonoBehaviour
 {
-    
     [Header("Image")]
     [SerializeField] Image targetImage;
     [SerializeField] Sprite[] sprites;
@@ -14,7 +11,6 @@ public class UIUpdater : MonoBehaviour
     [Space(10f)]
     [Header("Text")]
     [SerializeField] TextMeshProUGUI targetTMP;
-    [SerializeField] string tmpString;
 
     public void SwapSprite(bool isOn)
     {
