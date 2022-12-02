@@ -1,13 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using static UI_ResearchTree;
-public class Skill : Unit
-{
-    ResourceType resourceType;
-    HexCell cell;
-    HexCell cell;
-    HexCell cell;
 
 public class Skill : MonoBehaviour
 {
@@ -27,13 +20,13 @@ public class Skill : MonoBehaviour
     public Button UpgradeGlassBtn;
     public Button UpgradePlasticBtn;
 
+    [SerializeField] SkillTree_Control skillTree_Control;
     [SerializeField] Image m_Image;
-
 
     public City city
     {
-    City _City;
-
+        get { return TurnSystem.turnCity; }
+    }
 
     public void UpdateUI()
     {
@@ -205,7 +198,7 @@ public class Skill : MonoBehaviour
 
     public void OpenResBuild()
     {
+        skillTree_Control.OpenResearchBuilding();
         skilltree.UpdateAllSkillUI();
     }
-
 }
