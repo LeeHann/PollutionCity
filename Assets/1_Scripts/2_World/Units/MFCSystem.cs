@@ -31,6 +31,7 @@ public class MFCSystem : MonoBehaviour
     {
         TurnSystem.turnCity.UpdateTrash(item.input, -item.inputCnt);
         TurnSystem.turnCity.Money += item.getMoney;
+        TurnSystem.turnCity.PA -= item.getMoney;
         noticer.Notice("제조를 수행합니다.");
         MFCUI.Instance.UIClose();
     }

@@ -15,7 +15,6 @@ public class MapSetter : MonoBehaviour
         PlayerSit.Blue, PlayerSit.Red, PlayerSit.White, PlayerSit.Yellow
     };
     [SerializeField] List<City> cities = new List<City>();
-    [SerializeField] GameObject[] units;
     List<HexCell> highlights = new List<HexCell>();
     public static List<HexCell> occupiedCellList = new List<HexCell>();
 
@@ -122,7 +121,8 @@ public class MapSetter : MonoBehaviour
                                 : new GameObject(name:"AICity").AddComponent<AICity>();
         int random = Random.Range(0, sits.Count);
 
-        city.sit = sits[random];
+        city.display = displays[i];
+        city.Sit = sits[random];
         sits.RemoveAt(random);
         
         city.Grid = hexGrid;
@@ -132,8 +132,7 @@ public class MapSetter : MonoBehaviour
         {
             city.AddCell(cell.GetNeighbor(d));
         }
-
-        city.display = displays[i];
+        
         city.Money = GameInfo.startMoney;
         if (isPlayer)
             city.PA = GameInfo.startPA;
@@ -148,7 +147,7 @@ public class MapSetter : MonoBehaviour
         // place units
         city.AddUnit(
             hexGrid.AddUnit(
-                Instantiate(hexGrid.unitPrefab[(int)city.sit]), cell, Random.Range(0f, 360f)
+                Instantiate(hexGrid.unitPrefab[(int)city.Sit]), cell, Random.Range(0f, 360f)
             )
         );
         

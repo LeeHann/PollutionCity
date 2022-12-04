@@ -4,17 +4,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class MFCUnit : Unit, IPointerClickHandler
-{
-	City city;
-
-	private void Start() {
-		city = TurnSystem.turnCity;
-	}
-	
+{	
 	public void OnPointerClick(PointerEventData e)
 	{
 		if (count == 0) return;
-		count--;
 		// 클릭 시 제조 스크롤 뷰 활성화
 		MFCUI.Instance.UIOpen();
 		MFCUI.Instance.SetUnit(this);

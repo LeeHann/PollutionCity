@@ -61,12 +61,8 @@ public class HexGameUI : MonoBehaviour {
 		return false;
 	}
 
-	public void OnclickSetting()	// dev 
+	public void OnclickToTitle()
 	{
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#else
-        Application.Quit();
-#endif
+		Loading.LoadSceneHandle("Title");
 	}
 }

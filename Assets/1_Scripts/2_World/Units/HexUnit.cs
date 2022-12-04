@@ -34,7 +34,7 @@ public class HexUnit : Unit, IPointerClickHandler
 
 	public void OnPointerClick(PointerEventData e)
 	{
-		if (!TurnUnit) return;
+		if (count <= 0 || !city.isPlayer) return;
 		if (MapSetter.occupiedCellList.Count > 0)
 		{
 			MapSetter.occupiedCellList.ForEach((cell)=> {
@@ -192,6 +192,7 @@ public class HexUnit : Unit, IPointerClickHandler
 
 		Grid.ClearPath();
 		TurnUnit = false;
+		city.PostExplorer(this);
 	}
 
 	IEnumerator LookAt(Vector3 point)

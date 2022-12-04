@@ -9,8 +9,7 @@ public class RSUnit : Unit, IPointerClickHandler
 
     public void OnPointerClick(PointerEventData e)
     {
-        if (count == 0) return;
-        count--;
+        if (count <= 0) return;
         skillTree.unit = this;
         skillTree.OpenResearchBuilding();
     }
