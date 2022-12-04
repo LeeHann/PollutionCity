@@ -24,6 +24,7 @@ public class MapSetter : MonoBehaviour
     private void Start() 
     {
         terrainMaterial.DisableKeyword("GRID_ON");
+        Shader.DisableKeyword("HEX_MAP_EDIT_MODE");
 
         string fileName = "Maps/" + maps[UnityEngine.Random.Range(0, maps.Length)]  + ".map";
 
@@ -164,6 +165,7 @@ public class MapSetter : MonoBehaviour
 				cell.highlightBtn.onClick.RemoveAllListeners();
 			});
             occupiedCellList.Clear();
+            return;
 		}
 
         List<HexCell> cells = TurnSystem.turnCity.cells;
@@ -201,6 +203,7 @@ public class MapSetter : MonoBehaviour
                 highlights.RemoveAt(i);
                 occupiedCellList.Remove(cell);
             }
+            occupiedCellList.Clear();
             TurnSystem.turnCity.AddCell(cell);
         }  
         else {
