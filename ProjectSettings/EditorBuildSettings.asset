@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/0_Scenes/Title.unity
     guid: 017bd830bb7cdcc4a9bbe0fd62850569
   - enabled: 1
+    path: Assets/0_Scenes/MapEditScene.unity
+    guid: 97bc9753c78424d1e8b9a5f86a27ae68
+  - enabled: 1
     path: Assets/0_Scenes/Loading.unity
     guid: d232d42044e90cb478d439412a531b27
   - enabled: 1
