@@ -32,7 +32,7 @@ public class BuildSet : MonoBehaviour
         }
     }
 
-    public void InstanceLiving(HexCell cell)
+    public HexUnit InstanceLiving(HexCell cell)
     {
         Instantiate(LivingPrefab).TryGetComponent<Unit>(out Unit obj);
         obj.Grid = hexgrid;
@@ -40,9 +40,10 @@ public class BuildSet : MonoBehaviour
         obj.Orientation = Random.Range(0, 360f);
 
         HexUnit hexUnit = hexgrid.AddUnit(
-            Instantiate(hexgrid.unitPrefab[(int)TurnSystem.turnCity.sit]), cell, Random.Range(0, 360f)
+            Instantiate(hexgrid.unitPrefab[(int)TurnSystem.turnCity.Sit]), cell, Random.Range(0, 360f)
         );
         TurnSystem.turnCity.AddUnit(hexUnit);
+        return hexUnit;
     }
 
     public void IndustrialBuild()
@@ -60,13 +61,14 @@ public class BuildSet : MonoBehaviour
         }
     }
 
-    public void InstanceIndustrial(HexCell cell)
+    public MFCUnit InstanceIndustrial(HexCell cell)
     {
         Instantiate(IndustrialPrefab).TryGetComponent<MFCUnit>(out MFCUnit unit);
         unit.Grid = hexgrid;
         unit.Location = cell;
         unit.Orientation = Random.Range(0, 360f);
         TurnSystem.turnCity.AddUnit(unit);
+        return unit;
     }
 
     public void ResearchBuild()
@@ -84,7 +86,7 @@ public class BuildSet : MonoBehaviour
         }
     }
 
-    public void InstanceResearch(HexCell cell)
+    public RSUnit InstanceResearch(HexCell cell)
     {
         Instantiate(ResearchPrefab).TryGetComponent<RSUnit>(out RSUnit unit);
         unit.skillTree = skillTree;
@@ -92,5 +94,6 @@ public class BuildSet : MonoBehaviour
         unit.Location = cell;
         unit.Orientation = Random.Range(0, 360f);
         TurnSystem.turnCity.AddUnit(unit);
+        return unit;
     }
 }

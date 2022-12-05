@@ -7,6 +7,7 @@ public enum UnitType {
 }
 public class Unit : MonoBehaviour
 {
+	public City city;
 	public HexGrid Grid;
 
 	public HexCell Location
@@ -52,8 +53,21 @@ public class Unit : MonoBehaviour
 			return turnUnit;
 		}
 		set {
+			if (value) 
+			{ 
+				count = 1;
+				if (unitType == UnitType.Manufacturer)
+				{
+					city.Money += 100;
+				}
+			}
+			else 
+			{ 
+				count = 0;
+				if (city.actions.Contains(this))
+					city.actions.Remove(this);
+			}
 			turnUnit = value;
-			count = 1;
 		}
 	}
 	private bool turnUnit = false;

@@ -4,7 +4,41 @@ using UnityEngine;
 
 public class AICity : City
 {
-	protected override void BuyLandAndBuilding()
+	List<HexUnit> hexUnits = new List<HexUnit>();
+	List<RSUnit> rSUnits = new List<RSUnit>();
+	List<MFCUnit> mFCUnits = new List<MFCUnit>();
+
+	protected override IEnumerator Scheduler()
+    {
+        BuyLandAndBuilding();
+        while (actions.Count > 0)
+		{
+            Unit action = actions[actions.Count-1];
+            action.TurnUnit = true;
+
+            switch (action.unitType)
+            {
+                case UnitType.Explorer: // 탐사 유닛 행동을 결정하기
+                    _coroutine = StartCoroutine(ActionExplorer((HexUnit)action));
+                    yield return new WaitUntil(() => _coroutine == null);
+                    break;
+
+	            case UnitType.Researcher: // 연구 유닛 행동을 결정하기
+                    _coroutine = StartCoroutine(ActionResearcher(action));
+                    yield return new WaitUntil(() => _coroutine == null);
+                    break;
+
+	            case UnitType.Manufacturer: // 제조 유닛 행동을 결정하기
+                    _coroutine = StartCoroutine(ActionManufacturer(action));
+                    yield return new WaitUntil(() => _coroutine == null);
+                    break;
+            }
+            actions.Remove(action);
+            yield return dot5;
+		}
+		myTurn = false;	
+    }
+	protected void BuyLandAndBuilding()
     {
 		// 빈 땅이 없다면 구매
 		int empty = 0;
@@ -40,17 +74,12 @@ public class AICity : City
 			{
 				if (cells[cell].Unit == null && Money >= buyBuildingPrice)
 				{
-					switch (Random.Range(0, 3))
-					{
-						case 0:
-							Grid.buildSet.InstanceLiving(cells[cell]);
-							break;
-						case 1:
-							Grid.buildSet.InstanceIndustrial(cells[cell]);
-							break;
-						case 2:
-							Grid.buildSet.InstanceResearch(cells[cell]);
-							break;
+					if (rSUnits.Count > hexUnits.Count * 2) {
+						hexUnits.Add(Grid.buildSet.InstanceLiving(cells[cell]));
+					} else if (hexUnits.Count > mFCUnits.Count + 1) {
+						mFCUnits.Add(Grid.buildSet.InstanceIndustrial(cells[cell]));
+					} else {
+						rSUnits.Add(Grid.buildSet.InstanceResearch(cells[cell]));
 					}
 					Money -= buyBuildingPrice;
 					buyBuildingPrice += 200;
@@ -76,15 +105,21 @@ public class AICity : City
 			}
 		}
 		yield return new WaitUntil(() => action.TurnUnit == false);
+		_coroutine = null;
+	}
+
+	public override void PostExplorer(Unit action)
+	{
 		if (action.Location.Resource != ResourceType.None)	// Obtain Resources
 		{
 			if (action.Location.Resource <= ResourceType.Money || GetResearch((int)action.Location.Resource) > 0)
 			{
-				UpdateTrash(action.Location.Resource, Random.Range(5, 20));
+				int ran = Random.Range(5, 20);
+				UpdateTrash(action.Location.Resource, ran);
+				PA -= ran * 10;
 				action.Location.Resource = ResourceType.None;
 			}
 		}
-		_coroutine = null;
 	}
 
 	HexCell SelectCell(HexUnit explorer)

@@ -136,59 +136,59 @@ public class Skill : MonoBehaviour
     
         if (skilltree.SkillLevels[id] == 1)
         {
-            city.PA -= (int)(city.PA * 0.01165f);
+            city.Plrate -= 0.01165f;
         }
         else if (skilltree.SkillLevels[id] == 2)
         {
-            city.PA -= (int)(city.PA * 0.00720f);
+            city.Plrate -= 0.00720f;
         }
          else if (skilltree.SkillLevels[id] == 3)
         {
-            city.PA   -= (int)(city.PA * 0.00445f);
+            city.Plrate -= 0.00445f;
         }
         else if (skilltree.SkillLevels[id] == 4)
         {
-            city.PA -= (int)(city.PA * 0.00275f);
+            city.Plrate -= 0.00275f;
         }
         else if (skilltree.SkillLevels[id] == 5)
         {
-            city.PA -= (int)(city.PA * 0.00170f);
+            city.Plrate -= 0.00170f;
         }
         else if (skilltree.SkillLevels[id] == 6)
         {
-            city.PA -= (int)(city.PA * 0.00105f);
+            city.Plrate -= 0.00105f;
         }
         else if (skilltree.SkillLevels[id] == 7)
         {
-            city.PA -= (int)(city.PA * 0.00065f);
+            city.Plrate -= 0.00065f;
         }
         else if (skilltree.SkillLevels[id] == 8)
         {
-            city.PA -= (int)(city.PA * 0.00040f);
+            city.Plrate -= 0.00040f;
         }
         else if (skilltree.SkillLevels[id] == 9)
         {
-            city.PA -= (int)(city.PA * 0.00025f);
+            city.Plrate -= 0.00025f;
         }
         else if (skilltree.SkillLevels[id] == 10)
         {
-            city.PA -= (int)(city.PA * 0.00015f);
+            city.Plrate -= 0.00015f;
         }
         else if (skilltree.SkillLevels[id] == 11)
         {
-            city.PA -= (int)(city.PA * 0.00010f);
+            city.Plrate -= 0.00010f;
         }
         else if (skilltree.SkillLevels[id] == 12)
         {
-            city.PA -= (int)(city.PA * 0.00005f);
+            city.Plrate -= 0.00005f;
         }
         else if (skilltree.SkillLevels[id] == 13)
         {
-            city.PA -= (int)(city.PA * 0.00005f);
+            city.Plrate -= 0.00005f;
         }
         else
         {
-            city.PA -= (int)(city.PA * 0.00003f);
+            city.Plrate -= 0.00003f;
         }
         skilltree.UpdateAllSkillUI();
         unit.TurnUnit = false;

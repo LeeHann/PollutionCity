@@ -15,7 +15,6 @@ public class MapSetter : MonoBehaviour
         PlayerSit.Blue, PlayerSit.Red, PlayerSit.White, PlayerSit.Yellow
     };
     [SerializeField] List<City> cities = new List<City>();
-    [SerializeField] GameObject[] units;
     List<HexCell> highlights = new List<HexCell>();
     public static List<HexCell> occupiedCellList = new List<HexCell>();
 
@@ -25,6 +24,7 @@ public class MapSetter : MonoBehaviour
     private void Start() 
     {
         terrainMaterial.DisableKeyword("GRID_ON");
+        Shader.DisableKeyword("HEX_MAP_EDIT_MODE");
 
         string fileName = "Maps/" + maps[UnityEngine.Random.Range(0, maps.Length)]  + ".map";
 
@@ -122,7 +122,8 @@ public class MapSetter : MonoBehaviour
                                 : new GameObject(name:"AICity").AddComponent<AICity>();
         int random = Random.Range(0, sits.Count);
 
-        city.sit = sits[random];
+        city.display = displays[i];
+        city.Sit = sits[random];
         sits.RemoveAt(random);
         
         city.Grid = hexGrid;
@@ -132,8 +133,7 @@ public class MapSetter : MonoBehaviour
         {
             city.AddCell(cell.GetNeighbor(d));
         }
-
-        city.display = displays[i];
+        
         city.Money = GameInfo.startMoney;
         if (isPlayer)
             city.PA = GameInfo.startPA;
@@ -148,7 +148,7 @@ public class MapSetter : MonoBehaviour
         // place units
         city.AddUnit(
             hexGrid.AddUnit(
-                Instantiate(hexGrid.unitPrefab[(int)city.sit]), cell, Random.Range(0f, 360f)
+                Instantiate(hexGrid.unitPrefab[(int)city.Sit]), cell, Random.Range(0f, 360f)
             )
         );
         
@@ -165,6 +165,7 @@ public class MapSetter : MonoBehaviour
 				cell.highlightBtn.onClick.RemoveAllListeners();
 			});
             occupiedCellList.Clear();
+            return;
 		}
 
         List<HexCell> cells = TurnSystem.turnCity.cells;
@@ -202,6 +203,7 @@ public class MapSetter : MonoBehaviour
                 highlights.RemoveAt(i);
                 occupiedCellList.Remove(cell);
             }
+            occupiedCellList.Clear();
             TurnSystem.turnCity.AddCell(cell);
         }  
         else {

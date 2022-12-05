@@ -9,7 +9,6 @@ public class SkillTree_Control : MonoBehaviour
     public GameObject ConnectorHolder;
     public GameObject SkillHolder;
     public GameObject BackGround;
-    public GameObject CloseBtn;
     public GameObject Panel;
 
     //연구유닛누를때 이용
@@ -19,7 +18,6 @@ public class SkillTree_Control : MonoBehaviour
         ConnectorHolder.SetActive(true);
         SkillHolder.SetActive(true);
         BackGround.SetActive(true);
-        CloseBtn.SetActive(true);
         Panel.SetActive(true);
     }
 
@@ -29,7 +27,6 @@ public class SkillTree_Control : MonoBehaviour
         ConnectorHolder.SetActive(false);
         SkillHolder.SetActive(false);
         BackGround.SetActive(false);
-        CloseBtn.SetActive(false);
         Panel.SetActive(false);
     }
 
@@ -39,7 +36,6 @@ public class SkillTree_Control : MonoBehaviour
         ConnectorHolder.SetActive(true);
         SkillHolder.SetActive(true);
         BackGround.SetActive(true);
-        CloseBtn.SetActive(true);
         Panel.SetActive(false);
     }
 }

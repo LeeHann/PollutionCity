@@ -9,7 +9,19 @@ public class City : MonoBehaviour
     public bool IsLose { get; private set; }
 
     public bool myTurn;
-    public PlayerSit sit;
+    public PlayerSit Sit
+    {
+        get {
+            return sit;
+        }
+        set {
+            sit = value;
+            display.cityColor.color = display.colors[(int)sit];
+        }
+    }
+    private PlayerSit sit;
+    public bool isPlayer;
+
     public int[] trash = new int[6];
 
     public List<Unit> units = new List<Unit>();
@@ -41,7 +53,7 @@ public class City : MonoBehaviour
         }
         set {
             pa = value;
-            display.pa.text = PL.ToString();
+            display.pa.text = (PL*100).ToString("0.#")+"%";
         }
     }
     private int pa;
@@ -52,6 +64,8 @@ public class City : MonoBehaviour
         }
     }
 
+    public float Plrate = GameInfo.PLPercent;
+
     public int[] Research = new int[6];
 
     public void MyTurn()
@@ -60,41 +74,11 @@ public class City : MonoBehaviour
         actions.AddRange(units);
         CameraPositioning(actions[actions.Count-1].gameObject);
         StartCoroutine(Scheduler());
+        PA += (int)(PA * Plrate);
     }
 
     protected virtual IEnumerator Scheduler()
-    {
-        BuyLandAndBuilding();
-        while (actions.Count > 0)
-		{
-            Unit action = actions[actions.Count-1];
-            action.TurnUnit = true;
-
-            switch (action.unitType)
-            {
-                case UnitType.Explorer: // 탐사 유닛 행동을 결정하기
-                    _coroutine = StartCoroutine(ActionExplorer((HexUnit)action));
-                    yield return new WaitUntil(() => _coroutine == null);
-                    break;
-
-	            case UnitType.Researcher: // 연구 유닛 행동을 결정하기
-                    _coroutine = StartCoroutine(ActionResearcher(action));
-                    yield return new WaitUntil(() => _coroutine == null);
-                    break;
-
-	            case UnitType.Manufacturer: // 제조 유닛 행동을 결정하기
-                    _coroutine = StartCoroutine(ActionManufacturer(action));
-                    yield return new WaitUntil(() => _coroutine == null);
-                    break;
-            }
-            actions.Remove(action);
-            yield return dot5;
-		}
-		myTurn = false;	
-    }
-
-    protected virtual void BuyLandAndBuilding()
-    {}
+    { yield return null; }
 
     protected virtual IEnumerator ActionExplorer(HexUnit action)
     { yield return null; }
@@ -108,13 +92,14 @@ public class City : MonoBehaviour
     public void AddCell(HexCell cell)
     {
         cells.Add(cell);
-        cell.sit = sit;
+        cell.sit = Sit;
         cell.Walled = true;
         Grid.IncreaseVisibility(cell, 3);
     }
 
     public void AddUnit(Unit unit)
     {
+        unit.city = this;
         units.Add(unit);
     }
 
@@ -150,10 +135,16 @@ public class City : MonoBehaviour
         Research[type]++;
     }
 
+    public virtual void PostExplorer(Unit action)
+    {}
+
     public void Lose()
     {
-        // 유닛, 건물 제거
-        
+        // 유닛제거
+        for (int i=0; i<units.Count; i++)
+        {
+            units[i].gameObject.SetActive(false);
+        }
         IsLose = true;
     }
 }

@@ -6,6 +6,7 @@ using TMPro;
 
 public class TurnSystem : MonoBehaviour
 {
+    [SerializeField] Text TurnText;
     [SerializeField] GameObject ClearPanel;
     [SerializeField] TMP_Text ClearTMP;
     [SerializeField] Text ClearText;
@@ -20,15 +21,22 @@ public class TurnSystem : MonoBehaviour
             return cities[(int)whoseTurn];
         }
     }
-
+    
     public int Turn {
-        get;
-        private set; 
+        get {
+            return turn;
+        }
+        private set {
+            turn = value;
+            TurnText.text = turn + " / " + GameInfo.maxTurn;
+        }
     }
+    private int turn;
 
     enum ClearType {
         AllLose,
         AIWin,
+        AILose,
         PlayerWin,
         PlayerLose,
         Pass
@@ -36,7 +44,7 @@ public class TurnSystem : MonoBehaviour
 
     [SerializeField] HexGrid hexGrid;
     [SerializeField] MapSetter mapSetter;
-    int scatterTurn = 5;
+    int scatterTurn = 2;
     bool overCheck;
 
     private void Start() 
@@ -49,8 +57,6 @@ public class TurnSystem : MonoBehaviour
     IEnumerator SpinATurn()
     {   
         City turnPlayer = cities[(int)whoseTurn];
-        Debug.Log(string.Format("turnPlayer is {0} whose sit is {1}", whoseTurn, turnPlayer.sit));
-
         ClearType type = CheckClear(turnPlayer);
         if (type != ClearType.Pass) {
             switch (type)
@@ -64,6 +70,11 @@ public class TurnSystem : MonoBehaviour
                     ClearTMP.text = "패배";
                     ClearText.text = "다른 도시가 먼저 정화되었습니다.";
                     audioSource.clip = clips[0];
+                    break;
+                case ClearType.AILose:
+                    ClearTMP.text = "승리";
+                    ClearText.text = "다른 도시가 전부 오염되었습니다.";
+                    audioSource.clip = clips[1];
                     break;
                 case ClearType.PlayerLose:
                     ClearTMP.text = "패배";
@@ -83,14 +94,11 @@ public class TurnSystem : MonoBehaviour
             if (scatterTurn <= 0)
             {
                 mapSetter.ScatterResources(Random.Range(0, 5));
-                scatterTurn = 5;
+                scatterTurn = 2;
             }
 
             turnPlayer.MyTurn();
             yield return new WaitWhile(()=> turnPlayer.myTurn != false);
-            
-            turnPlayer.PA += (int)(turnPlayer.PA * GameInfo.PLPercent);
-            // turnPlayer.PA += (int)(turnPlayer.PA * 0.5);
             CheckSpin();
         }
     }
@@ -134,9 +142,11 @@ public class TurnSystem : MonoBehaviour
                 if (cities[i].PL >= GameInfo.losePL)
                 {
                     cities[i].Lose();
+                    cities.Remove(cities[i]);
                     if (i == 0) return ClearType.PlayerLose;
+                    if (cities.Count <= 1)
+                        return ClearType.AILose;
                 }
-                    
             }
         }
 

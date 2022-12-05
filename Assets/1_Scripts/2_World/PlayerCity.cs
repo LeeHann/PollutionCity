@@ -1,45 +1,47 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using System;
 
 public class PlayerCity : City
 {
 	public event Action<string> notice;
 
+    private void Start() {
+        isPlayer = true;
+    }
+    
+    protected override IEnumerator Scheduler()
+    {
+        CameraPositioning(rootCell.gameObject);
+        for (int i=0; i<actions.Count; i++)
+        {
+            actions[i].TurnUnit = true;
+        }
+        yield return new WaitUntil(() => actions.Count == 0);
+		myTurn = false;	
+    }
+
     protected override IEnumerator ActionExplorer(HexUnit action) // 탐사 행동 결정 함수
     {
         CameraPositioning(action.gameObject);
         yield return new WaitUntil(() => action.TurnUnit == false);
+        _coroutine = null;
+    }
 
+    public override void PostExplorer(Unit action)
+    {
         if (action.Location.Resource != ResourceType.None)    // Obtain Resources
         {
             if (IsResearched(action.Location.Resource))
             {
-                UpdateTrash(action.Location.Resource, UnityEngine.Random.Range(5, 20));
+                int ran = UnityEngine.Random.Range(20, 50);
+                UpdateTrash(action.Location.Resource, ran);
+                PA -= ran * 10;
                 notice(action.Location.Resource.Rsc2Str() + " 획득");
                 action.Location.Resource = ResourceType.None;
             }
         }
-        _coroutine = null;
     }
-
-
-    protected override IEnumerator ActionResearcher(Unit action) // 연구 행동 결정 함수
-    {
-		CameraPositioning(action.gameObject);
-        action.TurnUnit = false;
-		yield return new WaitUntil(() => action.TurnUnit == false);
-		_coroutine = null;
-	}
-
-    protected override IEnumerator ActionManufacturer(Unit action) // 제조 행동 결정 함수
-    {
-        CameraPositioning(action.gameObject);
-		yield return null;
-		_coroutine = null;
-	}
     
     bool IsResearched(ResourceType type)
     {
