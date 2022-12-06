@@ -29,7 +29,7 @@ public class UINoticer : MonoBehaviour
         
         noticeUI.color = color;
         text.color = textColor;
-        while (time < 0.5f)
+        while (time < 0.8f)
         {
             time += Time.deltaTime;
             yield return null;

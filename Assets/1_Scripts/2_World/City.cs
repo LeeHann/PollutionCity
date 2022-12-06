@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class City : MonoBehaviour
 {
+    public Text unitText;
     [HideInInspector] public HexMapCamera cam;
     public HexGrid Grid { get; set; }
     public bool IsLose { get; private set; }
@@ -26,7 +28,6 @@ public class City : MonoBehaviour
 
     public List<Unit> units = new List<Unit>();
     public List<Unit> actions = new List<Unit>();
-
     public List<HexCell> cells = new List<HexCell>();
     public HexCell rootCell;
     
@@ -34,7 +35,6 @@ public class City : MonoBehaviour
     protected WaitForSeconds dot5 = new WaitForSeconds(0.5f);
 
     public Display display;
-    
     public int buyBuildingPrice = 100;
 
     public int Money {
@@ -135,8 +135,7 @@ public class City : MonoBehaviour
         Research[type]++;
     }
 
-    public virtual void PostExplorer(Unit action)
-    {}
+    public virtual void PostExplorer(Unit action) {}
 
     public void Lose()
     {

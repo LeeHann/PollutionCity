@@ -65,7 +65,13 @@ public class Unit : MonoBehaviour
 			{ 
 				count = 0;
 				if (city.actions.Contains(this))
+				{
 					city.actions.Remove(this);
+					if (city.isPlayer)
+					{
+						city.unitText.text = city.actions.Count + " / " + city.units.Count;
+					}
+				}
 			}
 			turnUnit = value;
 		}
