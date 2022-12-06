@@ -34,6 +34,7 @@ public class HexUnit : Unit, IPointerClickHandler
 
 	public void OnPointerClick(PointerEventData e)
 	{
+		if (Grid.isMoving) return;
 		if (count <= 0 || !city.isPlayer) return;
 		if (MapSetter.occupiedCellList.Count > 0)
 		{
@@ -121,6 +122,7 @@ public class HexUnit : Unit, IPointerClickHandler
 
 	IEnumerator TravelPath()
 	{
+		Grid.isMoving = true;
 		Vector3 a, b, c = pathToTravel[0].Position;
 		yield return LookAt(pathToTravel[1].Position);
 
@@ -191,6 +193,7 @@ public class HexUnit : Unit, IPointerClickHandler
 		anim.SetInteger("AnimationPar", 0);
 
 		Grid.ClearPath();
+		Grid.isMoving = false;
 		TurnUnit = false;
 		city.PostExplorer(this);
 	}

@@ -305,7 +305,13 @@ public class HexGrid : MonoBehaviour {
 		cellShaderData.ImmediateMode = originalImmediateMode;
 	}
 
+	public bool isMoving = false;
+
 	public List<HexCell> GetPath () {
+		if (isMoving)
+		{
+			return null;
+		}
 		if (!currentPathExists) {
 			return null;
 		}
