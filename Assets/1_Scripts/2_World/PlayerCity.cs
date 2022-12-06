@@ -5,7 +5,6 @@ using System;
 public class PlayerCity : City
 {
 	public event Action<string> notice;
-
     private void Start() {
         isPlayer = true;
     }

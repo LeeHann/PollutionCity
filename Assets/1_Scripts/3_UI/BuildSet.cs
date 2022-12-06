@@ -19,6 +19,7 @@ public class BuildSet : MonoBehaviour
 
     public void LivingBuild()
     {
+        if (!TurnSystem.turnCity.isPlayer) return;
         HexCell cell = GetCellUnderCursor();        
         if (cell && !cell.Unit && TurnSystem.turnCity.cells.Contains(cell)
         && TurnSystem.turnCity.Money >= TurnSystem.turnCity.buyBuildingPrice)
@@ -48,6 +49,7 @@ public class BuildSet : MonoBehaviour
 
     public void IndustrialBuild()
     {
+        if (!TurnSystem.turnCity.isPlayer) return;
         HexCell cell = GetCellUnderCursor();
         if (cell && !cell.Unit && TurnSystem.turnCity.cells.Contains(cell)
         && TurnSystem.turnCity.Money >= TurnSystem.turnCity.buyBuildingPrice)
@@ -73,6 +75,7 @@ public class BuildSet : MonoBehaviour
 
     public void ResearchBuild()
     {
+        if (!TurnSystem.turnCity.isPlayer) return;
         HexCell cell = GetCellUnderCursor();
         if (cell && !cell.Unit && TurnSystem.turnCity.cells.Contains(cell)
         && TurnSystem.turnCity.Money >= TurnSystem.turnCity.buyBuildingPrice)

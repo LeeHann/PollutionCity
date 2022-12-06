@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 public class MapSetter : MonoBehaviour
 {
@@ -160,6 +161,7 @@ public class MapSetter : MonoBehaviour
 
     public void OnLandBuyButton()
     {
+        if (!TurnSystem.turnCity.isPlayer) return;
         if (occupiedCellList.Count > 0)
 		{
 			occupiedCellList.ForEach((cell)=> {
