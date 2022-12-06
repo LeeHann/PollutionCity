@@ -106,7 +106,7 @@ public class TurnSystem : MonoBehaviour
     void CheckSpin()
     {
         do{
-            whoseTurn = (PlayerNum)((int)(whoseTurn + 1) % 4);
+            whoseTurn = (PlayerNum)((int)(whoseTurn + 1) % 3);
             if (whoseTurn == 0) Turn++;
         } while (cities[(int)whoseTurn] == null);
         scatterTurn--;
