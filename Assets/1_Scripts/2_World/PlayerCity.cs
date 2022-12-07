@@ -5,13 +5,13 @@ using System;
 public class PlayerCity : City
 {
 	public event Action<string> notice;
-
     private void Start() {
         isPlayer = true;
     }
     
     protected override IEnumerator Scheduler()
     {
+        unitText.text = actions.Count + " / " + units.Count;
         CameraPositioning(rootCell.gameObject);
         for (int i=0; i<actions.Count; i++)
         {
@@ -37,7 +37,7 @@ public class PlayerCity : City
                 int ran = UnityEngine.Random.Range(20, 50);
                 UpdateTrash(action.Location.Resource, ran);
                 PA -= ran * 10;
-                notice(action.Location.Resource.Rsc2Str() + " 획득");
+                notice(action.Location.Resource.Rsc2Str() + " 획득\n<size=30>오염 " + (ran*10).ToString()+" 감소</size>");
                 action.Location.Resource = ResourceType.None;
             }
         }

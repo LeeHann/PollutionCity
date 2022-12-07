@@ -186,4 +186,12 @@ public class TurnSystem : MonoBehaviour
     {
         overCheck = true;
     }
+
+    public void OnClickTurnPass()
+    {
+        if (turnCity.isPlayer == true)
+        {
+            turnCity.actions.Clear();
+        }
+    }
 }

@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.UI;
+using DG.Tweening;
 
 public class MapSetter : MonoBehaviour
 {
@@ -10,6 +12,7 @@ public class MapSetter : MonoBehaviour
     [SerializeField] HexMapCamera cam;
     [SerializeField] UINoticer noticeUI;
     [SerializeField] Display[] displays;
+    [SerializeField] Text unitText;
 
     private List<PlayerSit> sits = new List<PlayerSit>() {
         PlayerSit.Blue, PlayerSit.Red, PlayerSit.White, PlayerSit.Yellow
@@ -87,7 +90,6 @@ public class MapSetter : MonoBehaviour
     {
         HexCell cell = SearchValidCityPoint();
         City city = SetCityProperty(cell, isPlayer);
-        cell.SetLabel(isPlayer.ToString());
         CameraPositioning(cell, isPlayer);
         return city;
     }
@@ -144,6 +146,7 @@ public class MapSetter : MonoBehaviour
         {
             city.TryGetComponent<PlayerCity>(out PlayerCity p);
             p.notice += noticeUI.Notice;
+            city.unitText = unitText;
         }
         // place units
         city.AddUnit(
@@ -158,6 +161,7 @@ public class MapSetter : MonoBehaviour
 
     public void OnLandBuyButton()
     {
+        if (!TurnSystem.turnCity.isPlayer) return;
         if (occupiedCellList.Count > 0)
 		{
 			occupiedCellList.ForEach((cell)=> {
