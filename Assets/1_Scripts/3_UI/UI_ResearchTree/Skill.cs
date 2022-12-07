@@ -36,8 +36,8 @@ public class Skill : MonoBehaviour
         DescriptionText.text = $"{""}";//$"{skilltree.SkillDescription[id]}\n{"턴당한번만 가능합니다"}";
 
         m_Image.color = skilltree.SkillLevels[id] >= skilltree.SkillCaps[id] ? 
-                        Color.white   // 레벨max다다르면 흰색
-                        : Color.green; // 연구 가능 초록
+                        Color.gray   // 레벨max다다르면 흰색
+                        : Color.white; // 연구 가능 초록
 
         foreach(var connectedSkill in ConnectedSkills)
         {
