@@ -192,6 +192,7 @@ public class TurnSystem : MonoBehaviour
         if (turnCity.isPlayer == true)
         {
             turnCity.actions.Clear();
+            turnCity.unitText.text = turnCity.actions.Count + " / " + turnCity.units.Count;
         }
     }
 }

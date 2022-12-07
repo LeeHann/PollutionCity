@@ -88,7 +88,7 @@ PlayerSettings:
   bakeCollisionMeshes: 1
   forceSingleInstance: 0
   useFlipModelSwapchain: 1
-  resizableWindow: 0
+  resizableWindow: 1
   useMacAppStoreValidation: 0
   macAppStoreCategory: public.app-category.games
   gpuSkinning: 1
@@ -155,7 +155,8 @@ PlayerSettings:
   androidSupportedAspectRatio: 1
   androidMaxAspectRatio: 2.1
   applicationIdentifier:
-    Android: com.PollutionCity.HannaAndBrian
+    Android: com.PollutionCity.PollutionCity
+    Standalone: com.PollutionCity.------------
   buildNumber:
     Standalone: 0
     iPhone: 0

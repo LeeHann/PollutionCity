@@ -35,7 +35,7 @@ public class UINoticer : MonoBehaviour
     {
         float time = 0;
 
-        noticeUI.DOFade(0.5f, 0.5f);
+        noticeUI.DOFade(0.8f, 0.5f);
         text.DOFade(1, 0.5f);
         while (time < 1.5f)
         {

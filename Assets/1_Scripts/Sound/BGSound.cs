@@ -19,12 +19,14 @@ public class BGSound : MonoBehaviour
         if (instance != null) {
             Destroy(this.gameObject);
         }
-        instance = this;
-        DontDestroyOnLoad(this);
+        else {
+            instance = this;
+            DontDestroyOnLoad(this);
 
-        clips.Add(commonClips);
-        clips.Add(warningClips);
-        StartCoroutine(NextTrack());
+            clips.Add(commonClips);
+            clips.Add(warningClips);
+            StartCoroutine(NextTrack());
+        } 
     }
 
     IEnumerator NextTrack()
