@@ -97,11 +97,10 @@ public class TurnSystem : MonoBehaviour
                 mapSetter.ScatterResources(Random.Range(0, 5));
                 scatterTurn = 2;
             }
-
-            turnPlayer.display.cityColor.transform.DOLocalMoveX(turnPlayer.display.cityColor.transform.localPosition.x-15f, 0.5f, false);
+            turnPlayer.display.cityColor.transform.DOLocalMoveX(-285, 0.5f, false);
             turnPlayer.MyTurn();
             yield return new WaitWhile(()=> turnPlayer.myTurn != false);
-            turnPlayer.display.cityColor.transform.DOLocalMoveX(turnPlayer.display.cityColor.transform.localPosition.x+15f, 0.5f, false);
+            turnPlayer.display.cityColor.transform.DOLocalMoveX(-270, 0.5f, false);
             CheckSpin();
         }
     }
