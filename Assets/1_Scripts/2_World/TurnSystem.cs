@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class TurnSystem : MonoBehaviour
 {
@@ -97,8 +98,10 @@ public class TurnSystem : MonoBehaviour
                 scatterTurn = 2;
             }
 
+            turnPlayer.display.cityColor.transform.DOLocalMoveX(turnPlayer.display.cityColor.transform.localPosition.x-15f, 0.5f, false);
             turnPlayer.MyTurn();
             yield return new WaitWhile(()=> turnPlayer.myTurn != false);
+            turnPlayer.display.cityColor.transform.DOLocalMoveX(turnPlayer.display.cityColor.transform.localPosition.x+15f, 0.5f, false);
             CheckSpin();
         }
     }
@@ -191,7 +194,7 @@ public class TurnSystem : MonoBehaviour
     {
         if (turnCity.isPlayer == true)
         {
-            turnCity.actions.Clear();
+            turnCity.actions[turnCity.actions.Count-1].TurnUnit = false;
             turnCity.unitText.text = turnCity.actions.Count + " / " + turnCity.units.Count;
         }
     }

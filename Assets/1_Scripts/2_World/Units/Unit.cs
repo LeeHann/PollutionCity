@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public enum UnitType {
 	Explorer,
@@ -48,6 +49,8 @@ public class Unit : MonoBehaviour
 
     public UnitType unitType;
 
+	protected Coroutine hexunitCoroutine = null;
+
 	public bool TurnUnit {
 		get {
 			return turnUnit;
@@ -64,6 +67,26 @@ public class Unit : MonoBehaviour
 			else 
 			{ 
 				count = 0;
+				if (unitType == UnitType.Explorer && hexunitCoroutine != null)
+				{
+					StopAllCoroutines();
+					Grid.IncreaseVisibility(location, 3);
+					transform.localPosition = location.Position;
+					orientation = transform.localRotation.eulerAngles.y;
+
+					TryGetComponent<HexUnit>(out HexUnit unit);
+					Debug.Log(unit.pathToTravel);
+					ListPool<HexCell>.Add(unit.pathToTravel);
+					unit.pathToTravel = null;
+
+					gameObject.transform.GetChild(0).TryGetComponent<Animator>(out Animator anim);
+					anim.SetInteger("AnimationPar", 0);
+					
+					Grid.ClearPath();
+					Grid.isMoving = false;
+					city.PostExplorer(this);
+					hexunitCoroutine = null;
+				}
 				if (city.actions.Contains(this))
 				{
 					city.actions.Remove(this);

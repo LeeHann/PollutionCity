@@ -29,7 +29,7 @@ public class HexUnit : Unit, IPointerClickHandler
 		}
 	}
 
-	List<HexCell> pathToTravel;
+	public List<HexCell> pathToTravel;
 	List<HexCell> highlights = new List<HexCell>();
 
 	public void OnPointerClick(PointerEventData e)
@@ -115,7 +115,7 @@ public class HexUnit : Unit, IPointerClickHandler
 		location.Unit = this;
 		pathToTravel = path;
 		StopAllCoroutines();
-		StartCoroutine(TravelPath());
+		hexunitCoroutine = StartCoroutine(TravelPath());
 
 		anim.SetInteger("AnimationPar", 1);
 	}
@@ -194,8 +194,9 @@ public class HexUnit : Unit, IPointerClickHandler
 
 		Grid.ClearPath();
 		Grid.isMoving = false;
-		TurnUnit = false;
 		city.PostExplorer(this);
+		hexunitCoroutine = null;
+		TurnUnit = false;
 	}
 
 	IEnumerator LookAt(Vector3 point)
