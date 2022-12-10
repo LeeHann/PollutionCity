@@ -30,6 +30,8 @@ public class BuildSet : MonoBehaviour
             button_Build.ClosePanel();
         } else if (!TurnSystem.turnCity.cells.Contains(cell)) {
             noticer.Notice("도시 안에만 지을 수 있습니다.");
+        } else if (TurnSystem.turnCity.Money < TurnSystem.turnCity.buyBuildingPrice) {
+            noticer.Notice("돈이 부족합니다.");
         }
     }
 
@@ -60,6 +62,8 @@ public class BuildSet : MonoBehaviour
             button_Build.ClosePanel();
         } else if (!TurnSystem.turnCity.cells.Contains(cell)) {
             noticer.Notice("도시 안에만 지을 수 있습니다.");
+        } else if (TurnSystem.turnCity.Money < TurnSystem.turnCity.buyBuildingPrice) {
+            noticer.Notice("돈이 부족합니다.");
         }
     }
 
@@ -86,6 +90,8 @@ public class BuildSet : MonoBehaviour
             button_Build.ClosePanel();
         } else if (!TurnSystem.turnCity.cells.Contains(cell)) {
             noticer.Notice("도시 안에만 지을 수 있습니다.");
+        } else if (TurnSystem.turnCity.Money < TurnSystem.turnCity.buyBuildingPrice) {
+            noticer.Notice("돈이 부족합니다.");
         }
     }
 

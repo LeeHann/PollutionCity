@@ -26,6 +26,7 @@ public class UINoticer : MonoBehaviour
         if (coroutine == null) {
             coroutine = StartCoroutine(Fade());
         } else {
+            DOTween.Clear();
             StopCoroutine(coroutine);
             coroutine = StartCoroutine(Fade());
         }
@@ -43,7 +44,11 @@ public class UINoticer : MonoBehaviour
             yield return null;
         }
         noticeUI.DOFade(0, 1.0f);
-        text.DOFade(0, 1.0f).OnComplete(() => noticeUI.gameObject.SetActive(false));
-        coroutine = null;
+        text.DOFade(0, 1.0f).OnComplete(() => 
+            {
+                noticeUI.gameObject.SetActive(false);
+                coroutine = null;
+            }
+        );
     }
 }
